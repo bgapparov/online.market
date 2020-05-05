@@ -1,60 +1,66 @@
 package edu.miu.cs545.group01.online.market.config;
 
-import edu.miu.cs545.group01.online.market.domain.enums.Role;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .passwordEncoder(passwordEncoder)
+                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
+    }
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/home").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
-            http.httpBasic()
-                    .and()
-                    .csrf().disable()
+            http
+//                    .httpBasic()
+//                    .and()
+//                    .csrf().disable()
     //                .anonymous()
                     .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/sections/**").hasRole(Role.ADMIN.toString())
-                    .antMatchers(HttpMethod.PUT, "/sections/**").hasRole(Role.ADMIN.toString())
-                    .antMatchers(HttpMethod.DELETE, "/sections/**").hasRole(Role.ADMIN.toString())
-                    .antMatchers(HttpMethod.GET, "/sections/**").hasAnyRole(Role.ADMIN.toString(), Role.SELLER.toString(), Role.BUYER.toString())
 
-                    .antMatchers("/**").anonymous()// access=none
-                    .antMatchers("/login*").permitAll()
+                    .antMatchers("/**").permitAll()// access=none
+                    .antMatchers("/resources/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .formLogin()
-//                    .loginProcessingUrl("/login")
                     .loginPage("/login")
-                    .defaultSuccessUrl("/", true)
-                    .failureUrl("/login?error=true");
+                    .failureUrl("/login?error=1")
+                    .loginProcessingUrl("/login")
+                    .permitAll()
+//                    .loginProcessingUrl("/login")
+//                    .defaultSuccessUrl("/", true)
+//                    .failureUrl("/login?error=true");
     //                .and()
     //                .logout()
     //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
     //                .logoutSuccessUrl("/login")
     //                .logoutUrl("/logout")
     //                .deleteCookies("JSESSIONID");
-            http
-                    .sessionManagement()
-                    .maximumSessions(3)
-                    .maxSessionsPreventsLogin(true)
-                    .and()
-                    .sessionFixation();
+        ;
+//            http
+//                    .sessionManagement()
+//                    .maximumSessions(5)
+//                    .maxSessionsPreventsLogin(true)
+//                    .and()
+//                    .sessionFixation();
     }
 
 
@@ -71,4 +77,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //        return new InMemoryUserDetailsManager(user);
 //    }
+
 }

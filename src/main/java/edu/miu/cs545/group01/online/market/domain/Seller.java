@@ -12,7 +12,7 @@ public class Seller extends User {
     public Seller() {
     }
 
-    public Seller(String Email, String Password, Set<Role> roles, Set<UserStatus> status) {
+    public Seller(String Email, String Password, Set<Role> roles, UserStatus status) {
         super(Email, Password, roles, status);
     }
 

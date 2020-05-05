@@ -16,58 +16,56 @@ public abstract class User {
 
     @Id
     @GeneratedValue
-    private long Id;
+    private long id;
 
     @Column(unique = true)
     @NotBlank(message = "this field is required")
     @Email
-    private String Email;
+    private String email;
 
     @JsonIgnore
-    private String Password;
+    private String password;
 
     @JsonIgnore
     @ElementCollection
-//    @CollectionTable(name = "userRole", joinColumns = @JoinColumn(name = "personId"))
+//    @CollectionTable(name = "userRole", joinColumns = @JoinColumn(name = "userId"))
 //    @Column(name = "authority", nullable = false)
     @Enumerated(EnumType.STRING)
     @Size(min = 1)
     private Set<Role> roles;
 
-    @ElementCollection
     @Enumerated(EnumType.STRING)
-    @Size(min = 1)
-    private Set<UserStatus> status;
+    private UserStatus status;
 
     public User() {
     }
 
-    public User(String Email, String Password, Set<Role> roles, Set<UserStatus> status) {
+    public User(String Email, String Password, Set<Role> roles, UserStatus status) {
         super();
-        this.Email = Email;
-        this.Password = Password;
+        this.email = Email;
+        this.password = Password;
         this.roles = roles;
         this.status = status;
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        email = email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        password = password;
     }
 
     public Set<Role> getRoles() {
@@ -78,11 +76,11 @@ public abstract class User {
         this.roles = roles;
     }
 
-    public Set<UserStatus> getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Set<UserStatus> status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 }
