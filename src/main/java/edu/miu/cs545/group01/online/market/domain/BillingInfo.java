@@ -1,5 +1,6 @@
 package edu.miu.cs545.group01.online.market.domain;
 
+import edu.miu.cs545.group01.online.market.domain.enums.BIllingInfoStatus;
 import edu.miu.cs545.group01.online.market.domain.enums.BillingType;
 
 import javax.persistence.Entity;
@@ -32,17 +33,23 @@ public class BillingInfo {
     @ManyToOne
     private Address billingAddress;
 
-    private String status;
+    private BIllingInfoStatus status;
 
     public BillingInfo() {
     }
 
-    public BillingInfo(BillingType type, long cardNo, String cardName, Date expirationDate, String securityNumber, String accountName, long accountNumber, long routingNumber, Address billingAddress, String status) {
-        this.type = type;
+    public BillingInfo(long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress, BIllingInfoStatus status) {
+        this.type = BillingType.CREDITCARD;
         this.cardNo = cardNo;
         this.cardName = cardName;
         this.expirationDate = expirationDate;
         this.securityNumber = securityNumber;
+        this.billingAddress = billingAddress;
+        this.status = status;
+    }
+
+    public BillingInfo( String accountName, long accountNumber, long routingNumber, Address billingAddress, BIllingInfoStatus status) {
+        this.type = BillingType.BANKACCOUNT;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.routingNumber = routingNumber;
@@ -126,11 +133,11 @@ public class BillingInfo {
         this.billingAddress = billingAddress;
     }
 
-    public String getStatus() {
+    public BIllingInfoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BIllingInfoStatus status) {
         this.status = status;
     }
 }
