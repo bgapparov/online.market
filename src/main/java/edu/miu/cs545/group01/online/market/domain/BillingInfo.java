@@ -1,9 +1,10 @@
 package edu.miu.cs545.group01.online.market.domain;
 
-import edu.miu.cs545.group01.online.market.domain.enums.BIllingInfoStatus;
+import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
 import edu.miu.cs545.group01.online.market.domain.enums.BillingType;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
 public class BillingInfo {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     private BillingType type;
@@ -33,12 +35,12 @@ public class BillingInfo {
     @ManyToOne
     private Address billingAddress;
 
-    private BIllingInfoStatus status;
+    private BillingInfoStatus status;
 
     public BillingInfo() {
     }
 
-    public BillingInfo(long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress, BIllingInfoStatus status) {
+    public BillingInfo(long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress, BillingInfoStatus status) {
         this.type = BillingType.CREDITCARD;
         this.cardNo = cardNo;
         this.cardName = cardName;
@@ -48,7 +50,7 @@ public class BillingInfo {
         this.status = status;
     }
 
-    public BillingInfo( String accountName, long accountNumber, long routingNumber, Address billingAddress, BIllingInfoStatus status) {
+    public BillingInfo( String accountName, long accountNumber, long routingNumber, Address billingAddress, BillingInfoStatus status) {
         this.type = BillingType.BANKACCOUNT;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
@@ -133,11 +135,11 @@ public class BillingInfo {
         this.billingAddress = billingAddress;
     }
 
-    public BIllingInfoStatus getStatus() {
+    public BillingInfoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(BIllingInfoStatus status) {
+    public void setStatus(BillingInfoStatus status) {
         this.status = status;
     }
 }

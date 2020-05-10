@@ -1,6 +1,7 @@
 package edu.miu.cs545.group01.online.market.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
 public class ShoppingCart {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     @ManyToOne

@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Address {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     private String zipcode;
