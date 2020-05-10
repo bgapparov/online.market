@@ -4,4 +4,5 @@ import edu.miu.cs545.group01.online.market.domain.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SellerRepository extends JpaRepository<Seller, Long> {
+    Seller findFirstByOrderByNameAsc();
 }

@@ -6,3 +6,18 @@
 body {
   padding-top: 56px;
 }
+
+
+.product-card{
+  margin-top: 10px;
+}
+
+.logout{
+  color: rgba(255,255,255,.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.logout:hover{
+  color: rgba(255,255,255,.75);
+}

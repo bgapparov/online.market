@@ -3,30 +3,30 @@
 	  xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8">
-	<title>Online Market</title>
-	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<title>MIU Online Market</title>
+<!--	<link rel="stylesheet" href="css/style.css" type="text/css">-->
 </head>
 <body>
-		<div id="contents" layout:fragment="main-content">
-			<div id="main">
-				<div id="sale">
-					<h4><span>Sale Items</span></h4>
-					<ul class="items">
-						<li>
-							<a href="product.html"> <img class="prod-img" src="images/laptop1.jpg" alt="Img"> <span>$850.50</span> Laptop </a>
-						</li>
-						<li>
-							<a href="product.html"> <img class="prod-img" src="images/laptop-aser.jpg" alt="Img"> <span>$1080.50</span> Aser laptop </a>
-						</li>
-						<li>
-							<a href="product.html"> <img class="prod-img" src="images/iphone.jpg" alt="Img"> <span>$800.50</span> Iphone 11 </a>
-						</li>
-						<li>
-							<a href="product.html"> <img class="prod-img" src="images/boots-green.jpg" alt="Img"> <span>$8.50</span> Hukbalahap Boots </a>
-						</li>
-					</ul>
+		<div id="contents" class="row" layout:fragment="main-content">
+			<div class="col-lg-3">
+				<h1 class="my-4">Online Market</h1>
+				<div class="list-group">
+					<a href="#" class="list-group-item">Category 1</a>
+					<a href="#" class="list-group-item">Category 2</a>
+					<a href="#" class="list-group-item">Category 3</a>
 				</div>
+
 			</div>
+			<!-- /.col-lg-3 -->
+			<div class="col-lg-9">
+				<div class="row">
+					<th:block th:each="product : ${products}">
+						<div th:replace="components/productCard :: prod(${product})">Product</div>
+					</th:block>
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.col-lg-9 -->
 		</div>
 </body>
 </html>
