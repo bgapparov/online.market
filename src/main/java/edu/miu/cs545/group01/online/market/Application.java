@@ -41,6 +41,8 @@ public class Application {
 			sellerPending = sellerRepository.save(sellerPending);
 			Buyer buyer = new Buyer("Yafet", "yafet@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			buyer = buyerRepository.save(buyer);
+			Buyer buyer2 = new Buyer("Robel", "Robel@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
+			buyer2 = buyerRepository.save(buyer2);
 		};
 	}
 }
