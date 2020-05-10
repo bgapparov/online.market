@@ -2,6 +2,7 @@ package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.Category;
 import edu.miu.cs545.group01.online.market.domain.Product;
+import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
 import edu.miu.cs545.group01.online.market.repository.SellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,25 +19,25 @@ public class MainController extends BaseController {
     SellerRepository sellerRepository;
     @GetMapping
     public String mainPage(Model model){
-        Product prod = new Product("iPhone", new Category("phone"), 1000, "Active", ".jpg",
+        Product prod = new Product("iPhone", new Category("phone"), 1000, ProductStatus.ACTIVE, ".jpg",
                 "Fully unlocked and compatible with any carrier of choice (e.g. AT&T, T-Mobile, Sprint, Verizon, US-Cellular, Cricket, Metro, etc.).\n",
                 sellerRepository.findFirstByOrderByNameAsc()
         );
         List<Product> products = Arrays.asList(
                 prod,
-                new Product("iPhone", new Category("phone"), 1000, "Active", ".jpg",
+                new Product("iPhone", new Category("phone"), 1000, ProductStatus.ACTIVE, ".jpg",
                         "Fully unlocked and compatible with any carrier of choice (e.g. AT&T, T-Mobile, Sprint, Verizon, US-Cellular, Cricket, Metro, etc.).\n",
                         sellerRepository.findFirstByOrderByNameAsc()
                 ),
-                new Product("iPhone", new Category("phone"), 1000, "Active", ".jpg",
+                new Product("iPhone", new Category("phone"), 1000, ProductStatus.ACTIVE, ".jpg",
                         "Fully unlocked and compatible with any carrier of choice (e.g. AT&T, T-Mobile, Sprint, Verizon, US-Cellular, Cricket, Metro, etc.).\n",
                         sellerRepository.findFirstByOrderByNameAsc()
                 ),
-                new Product("iPhone", new Category("phone"), 1000, "Active", ".jpg",
+                new Product("iPhone", new Category("phone"), 1000, ProductStatus.ACTIVE, ".jpg",
                         "Fully unlocked and compatible with any carrier of choice (e.g. AT&T, T-Mobile, Sprint, Verizon, US-Cellular, Cricket, Metro, etc.).\n",
                         sellerRepository.findFirstByOrderByNameAsc()
                 ),
-                new Product("iPhone", new Category("phone"), 1000, "Active", ".jpg",
+                new Product("iPhone", new Category("phone"), 1000, ProductStatus.ACTIVE, ".jpg",
                         "Fully unlocked and compatible with any carrier of choice (e.g. AT&T, T-Mobile, Sprint, Verizon, US-Cellular, Cricket, Metro, etc.).\n",
                         sellerRepository.findFirstByOrderByNameAsc()
                 )
