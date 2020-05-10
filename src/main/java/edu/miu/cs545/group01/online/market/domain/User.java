@@ -27,7 +27,7 @@ public abstract class User {
     private String password;
 
     @JsonIgnore
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
 //    @CollectionTable(name = "userRole", joinColumns = @JoinColumn(name = "userId"))
 //    @Column(name = "authority", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -37,11 +37,15 @@ public abstract class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @NotBlank
+    private String name;
+
     public User() {
     }
 
-    public User(String Email, String Password, Set<Role> roles, UserStatus status) {
+    public User(String name, String Email, String Password, Set<Role> roles, UserStatus status) {
         super();
+        this.name = name;
         this.email = Email;
         this.password = Password;
         this.roles = roles;
@@ -50,6 +54,18 @@ public abstract class User {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

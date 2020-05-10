@@ -13,7 +13,7 @@ public class Admin extends User{
     public Admin() {
     }
 
-    public Admin(String Email, String Password, UserStatus status) {
-        super(Email, Password, new HashSet<>(Arrays.asList(Role.ADMIN)), status);
+    public Admin(String name, String Email, String Password, UserStatus status) {
+        super(name, Email, Password, new HashSet<>(Arrays.asList(Role.ADMIN)), status);
     }
 }

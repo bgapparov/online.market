@@ -14,7 +14,7 @@ public class Buyer extends  User{
     public Buyer() {
     }
 
-    public Buyer(String Email, String Password, UserStatus status) {
-        super(Email, Password, new HashSet<>(Arrays.asList(Role.BUYER)), status);
+    public Buyer(String name, String Email, String Password, UserStatus status) {
+        super(name, Email, Password, new HashSet<>(Arrays.asList(Role.BUYER)), status);
     }
 }

@@ -634,3 +634,20 @@ ul.items li a span {
 .prod-img{
 	width: 170px;
 }
+
+.logout{
+	font-family: 'HammersmithOneRegular';
+	color: #527b99;
+	font-size: 15px;
+	text-decoration: none;
+	text-shadow: 1px 1px #e5f0f2;
+	text-transform: uppercase;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+.logout:hover{
+	background: url(../images/bg-menu-selected.gif) no-repeat center top;
+	color: #21c1c5;
+	padding-top: 5px;
+}

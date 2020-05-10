@@ -3,7 +3,6 @@ package edu.miu.cs545.group01.online.market.domain;
 import edu.miu.cs545.group01.online.market.domain.enums.AddressStatus;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Address {
@@ -11,7 +10,7 @@ public class Address {
     @Id
     private long Id;
 
-    private int zipcode;
+    private String zipcode;
 
     private String street;
 
@@ -31,7 +30,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(int zipcode, String street, String city, String state, String phoneNo, String country, Buyer buyer, AddressStatus status) {
+    public Address(String zipcode, String street, String city, String state, String phoneNo, String country, Buyer buyer, AddressStatus status) {
         this.zipcode = zipcode;
         this.street = street;
         this.city = city;
@@ -46,11 +45,11 @@ public class Address {
         return Id;
     }
 
-    public int getZipcode() {
+    public String getZipcode() {
         return zipcode;
     }
 
-    public void setZipcode(int zipcode) {
+    public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
 

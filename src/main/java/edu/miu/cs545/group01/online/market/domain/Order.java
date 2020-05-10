@@ -3,10 +3,10 @@ package edu.miu.cs545.group01.online.market.domain;
 import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Entity
+@Entity(name = "orderTable")
+//@Table(name = "order")
 public class Order {
 
     @Id

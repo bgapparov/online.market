@@ -7,5 +7,5 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<@Valid User> findByEmail (String email);
+    Optional<User> findByEmail (String email);
 }

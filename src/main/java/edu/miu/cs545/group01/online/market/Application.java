@@ -33,13 +33,13 @@ public class Application {
 			SellerRepository sellerRepository,
 			BuyerRepository buyerRepository){
 		return args -> {
-			Admin admin = new Admin("nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
+			Admin admin = new Admin("Nurlan Kustutinov","nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			admin = adminRepository.save(admin);
-			Seller seller = new Seller("girma@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
+			Seller seller = new Seller("Girma","girma@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			seller = sellerRepository.save(seller);
-			Seller sellerPending = new Seller("pending@gmail.com", passwordEncoder.encode("123"), UserStatus.PENDING);
+			Seller sellerPending = new Seller("Big Seller","pending@gmail.com", passwordEncoder.encode("123"), UserStatus.PENDING);
 			sellerPending = sellerRepository.save(sellerPending);
-			Buyer buyer = new Buyer("yafet@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
+			Buyer buyer = new Buyer("Yafet", "yafet@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			buyer = buyerRepository.save(buyer);
 		};
 	}

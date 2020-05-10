@@ -14,8 +14,8 @@ public class Seller extends User {
     public Seller() {
     }
 
-    public Seller(String Email, String Password, UserStatus status) {
-        super(Email, Password, new HashSet<>(Arrays.asList(Role.SELLER)), status);
+    public Seller(String name, String Email, String Password, UserStatus status) {
+        super(name, Email, Password, new HashSet<>(Arrays.asList(Role.SELLER)), status);
     }
 
 }
