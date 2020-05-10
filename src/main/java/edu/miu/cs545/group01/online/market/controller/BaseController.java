@@ -17,6 +17,8 @@ public abstract class BaseController {
   
     @Autowired
     UserService userService;
+    @Autowired
+    BuyerRepository buyerRepository;
 
     protected String getCurrentUserEmail(){
         return authenticationFacade.getAuthentication().getName();
