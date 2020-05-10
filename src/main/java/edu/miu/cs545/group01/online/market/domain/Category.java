@@ -1,12 +1,14 @@
 package edu.miu.cs545.group01.online.market.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Category {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     private String name;
