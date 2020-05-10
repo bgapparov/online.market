@@ -27,7 +27,7 @@ public class Address {
 
     private AddressStatus status;
 
-    public Address(String s, String fairfield, String iowa, String s1, String usa, Buyer buyer, AddressStatus active) {
+    public Address() {
     }
 
     public Address(String zipcode, String street, String city, String state, String phoneNo, String country, Buyer buyer, AddressStatus status) {
