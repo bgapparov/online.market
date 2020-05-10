@@ -10,6 +10,7 @@ import java.util.Date;
 public class Review {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     @ManyToOne

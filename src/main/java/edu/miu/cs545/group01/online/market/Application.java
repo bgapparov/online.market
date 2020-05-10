@@ -1,15 +1,12 @@
 package edu.miu.cs545.group01.online.market;
 
-import edu.miu.cs545.group01.online.market.config.SecurityConfig;
 import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.domain.enums.*;
 import edu.miu.cs545.group01.online.market.helper.Helper;
 import edu.miu.cs545.group01.online.market.repository.*;
-import edu.miu.cs545.group01.online.market.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,22 +41,23 @@ public class Application {
 			seller2 = sellerRepository.save(seller2);
 			Seller sellerPending = new Seller("Big Seller","pending@gmail.com", passwordEncoder.encode("123"), UserStatus.PENDING);
 			sellerPending = sellerRepository.save(sellerPending);
-			Buyer buyer = new Buyer("Yafet", "yafet@gmail.com", passwordEncoder.encode("123456"), UserStatus.ACTIVE);
-			buyer = buyerRepository.save(buyer);
-			Buyer buyer2 = new Buyer("Robel", "Robel@gmail.com", passwordEncoder.encode("1234567"), UserStatus.ACTIVE);
-			buyer2 = buyerRepository.save(buyer2);
+			Buyer buyerYafet = new Buyer("Yafet", "yafet@gmail.com", passwordEncoder.encode("123456"), UserStatus.ACTIVE);
+			buyerYafet = buyerRepository.save(buyerYafet);
+			Buyer buyerRobel = new Buyer("Robel", "Robel@gmail.com", passwordEncoder.encode("1234567"), UserStatus.ACTIVE);
+			buyerRobel = buyerRepository.save(buyerRobel);
 
 			Category category = new Category("Electronic Devices");
 			category = categoryRepository.save(category);
 
-			Address yafetaddress = new Address("4th street", "Fairfield", "Iowa", "644-000-1111","USA",buyer,AddressStatus.ACTIVE);
+
+			Address yafetaddress = new Address("52557", "2000 N", "fairfield","Iowa","644-000-789","USA",buyerYafet,AddressStatus.ACTIVE);
 			yafetaddress = addressRepository.save(yafetaddress);
-			Address robelAddress = new Address("52557", "2000 N", "fairfield","Iowa","234-567-789","USA",buyer2,AddressStatus.ACTIVE);
+			Address robelAddress = new Address("52557", "2000 N", "fairfield","Iowa","234-567-789","USA",buyerRobel,AddressStatus.ACTIVE);
 			robelAddress = addressRepository.save(robelAddress);
-			BillingInfo yafetbillingInfo = new BillingInfo(123456, "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress, BIllingInfoStatus.ACTIVE );
+			BillingInfo yafetbillingInfo = new BillingInfo(123456, "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress, BillingInfoStatus.ACTIVE );
 			yafetbillingInfo = billingInfoRepository.save(yafetbillingInfo);
-			BillingInfo robelbillingInfo = new BillingInfo(9876, "111-111-222", Helper.getDate(2024,11,01, 19), "123", robelAddress, BIllingInfoStatus.ACTIVE );
-			yafetbillingInfo = billingInfoRepository.save(yafetbillingInfo);
+			BillingInfo robelbillingInfo = new BillingInfo(9876, "111-111-222", Helper.getDate(2024,11,01, 19), "123", robelAddress, BillingInfoStatus.ACTIVE );
+			robelbillingInfo = billingInfoRepository.save(robelbillingInfo);
 
 			Product productIphone = new Product("iPhone 11",category, 1100, ProductStatus.ACTIVE, "iphone.jpg", "Brand new", seller );
 			productIphone = productRepository.save(productIphone);
@@ -69,11 +67,11 @@ public class Application {
 			productAserLaptop = productRepository.save(productAserLaptop);
 
 
-			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyer,seller, yafetaddress, yafetbillingInfo, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00),1);
+			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfo, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00));
 			order1 = orderRepository.save(order1);
-			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyer2,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) ,2 );
+			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order2 = orderRepository.save(order2);
-			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyer,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00) ,1);
+			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
 			order3 = orderRepository.save(order3);
 
 

@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Product {
 
     @Id
+    @GeneratedValue
     private  long Id;
 
     private String title;
