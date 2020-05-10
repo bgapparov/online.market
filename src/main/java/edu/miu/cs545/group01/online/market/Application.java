@@ -52,7 +52,14 @@ public class Application {
 			Category category = new Category("Electronic Devices");
 			category = categoryRepository.save(category);
 
-
+			Address yafetaddress = new Address("4th street", "Fairfield", "Iowa", "644-000-1111","USA",buyer,AddressStatus.ACTIVE);
+			yafetaddress = addressRepository.save(yafetaddress);
+			Address robelAddress = new Address("52557", "2000 N", "fairfield","Iowa","234-567-789","USA",buyer2,AddressStatus.ACTIVE);
+			robelAddress = addressRepository.save(robelAddress);
+			BillingInfo yafetbillingInfo = new BillingInfo(123456, "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress, BIllingInfoStatus.ACTIVE );
+			yafetbillingInfo = billingInfoRepository.save(yafetbillingInfo);
+			BillingInfo robelbillingInfo = new BillingInfo(9876, "111-111-222", Helper.getDate(2024,11,01, 19), "123", robelAddress, BIllingInfoStatus.ACTIVE );
+			yafetbillingInfo = billingInfoRepository.save(yafetbillingInfo);
 
 			Product productIphone = new Product("iPhone 11",category, 1100, ProductStatus.ACTIVE, "iphone.jpg", "Brand new", seller );
 			productIphone = productRepository.save(productIphone);
@@ -62,7 +69,12 @@ public class Application {
 			productAserLaptop = productRepository.save(productAserLaptop);
 
 
-
+			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyer,seller, yafetaddress, yafetbillingInfo, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00),1);
+			order1 = orderRepository.save(order1);
+			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyer2,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) ,2 );
+			order2 = orderRepository.save(order2);
+			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyer,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00) ,1);
+			order3 = orderRepository.save(order3);
 
 
 		};
