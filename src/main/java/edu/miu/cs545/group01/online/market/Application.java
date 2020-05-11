@@ -90,7 +90,6 @@ public class Application {
 			productAserLaptop = productRepository.save(productAserLaptop);
 			Product converseshoes =new Product ( "converse shoes" , fashion, 60, ProductStatus.ACTIVE,"converseshoes.jpg","Brand new", seller);
 			converseshoes = productRepository.save(converseshoes);
-
 			Product applewatch = new Product("Apple Watch",category, 450, ProductStatus.ACTIVE, "applewatch.jpg", "Brand new", seller );
 			applewatch = productRepository.save(applewatch);
 			Product samsungNote10 = new Product("Samsung Note 10",category, 1200, ProductStatus.ACTIVE, "samsung10plus.jpg", "Brand new", seller );
@@ -99,6 +98,21 @@ public class Application {
 			kidscar = productRepository.save(kidscar);
 			Product ball = new Product("Balls",toys, 70, ProductStatus.ACTIVE, "ball.jpg", "All Sport Ball", seller );
 			ball = productRepository.save(ball);
+			Product greenMenSuit =new Product ( "Green Men Suit" , fashion, 360, ProductStatus.ACTIVE,"greensuit.jpg","Brand new", seller2);
+			greenMenSuit = productRepository.save(greenMenSuit);
+			Product womenredshoes =new Product ( "Women high-hill" , fashion, 200, ProductStatus.ACTIVE,"highhillshoes.jpg","fashin shoes", seller2);
+			womenredshoes = productRepository.save(womenredshoes);
+			Product greendress =new Product ( "Women Dress" , fashion, 150, ProductStatus.ACTIVE,"greendress.jpg","New style", seller);
+			greendress = productRepository.save(greendress);
+			Product pinksuit =new Product ( "Men Pink Suit" , fashion, 450, ProductStatus.ACTIVE,"pinksuit.jpg","New style", seller);
+			pinksuit = productRepository.save(pinksuit);
+			Product versaceshoes =new Product ( "Men Versace shoes" , fashion, 2450, ProductStatus.ACTIVE,"versaceshoes.jpg","Funcy shoes", seller2);
+			versaceshoes = productRepository.save(versaceshoes);
+			Product mendressingshoes =new Product ( "Men Dressing shoes" , fashion, 250, ProductStatus.ACTIVE,"mendressingshoes.jpg","Nice Shoes", seller);
+			mendressingshoes = productRepository.save(mendressingshoes);
+			Product womenflatshoes =new Product ( "Woman Flat shoes" , fashion, 80, ProductStatus.ACTIVE,"redflatshoes.jpg","Nice Shoes", seller2);
+			womenflatshoes = productRepository.save(womenflatshoes);
+
 			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfo, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00));
 			order1 = orderRepository.save(order1);
 			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
