@@ -4,7 +4,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>MIU Online Market</title>
-<!--	<link rel="stylesheet" href="css/style.css" type="text/css">-->
 </head>
 <body>
 		<div id="contents" class="row" layout:fragment="main-content">
@@ -13,7 +12,6 @@
 				<div class="list-group">
 					<a href="#" th:each="cat : ${categories}" th:href="@{/(category=${cat.id})}" th:text="${cat.name}" class="list-group-item">Category 1</a>
 				</div>
-
 			</div>
 			<!-- /.col-lg-3 -->
 			<div class="col-lg-9">

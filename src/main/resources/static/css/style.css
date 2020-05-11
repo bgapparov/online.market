@@ -21,3 +21,8 @@ body {
 .logout:hover{
   color: rgba(255,255,255,.75);
 }
+
+.main-container{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

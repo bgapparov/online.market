@@ -38,6 +38,7 @@ public class Application {
 	){
 		return args -> {
 			Admin admin = new Admin("Nurlan Kustutinov","nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
+			admin.addRole(Role.BUYER);
 			admin = adminRepository.save(admin);
 			Seller seller = new Seller("Girma","girma@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			seller = sellerRepository.save(seller);

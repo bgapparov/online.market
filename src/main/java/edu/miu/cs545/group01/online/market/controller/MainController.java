@@ -2,7 +2,9 @@ package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.Category;
 import edu.miu.cs545.group01.online.market.domain.Product;
+import edu.miu.cs545.group01.online.market.domain.User;
 import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
+import edu.miu.cs545.group01.online.market.domain.enums.Role;
 import edu.miu.cs545.group01.online.market.repository.SellerRepository;
 import edu.miu.cs545.group01.online.market.service.CategoryService;
 import edu.miu.cs545.group01.online.market.service.ProductService;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,5 +40,14 @@ public class MainController extends BaseController {
 
 //        model.addAttribute("product", prod);
         return "index";
+    }
+    @GetMapping("/homepage")
+    public String homepage(HttpServletRequest request){
+        User curUser = getCurrentUser();
+        if(curUser == null){
+            return "redirect:/";
+        }
+        return "homepage";
+//        if(request.isUserInRole(Role.))
     }
 }

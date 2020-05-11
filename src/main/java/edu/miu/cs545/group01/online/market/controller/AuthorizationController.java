@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
-public class LogingController extends BaseController {
+public class AuthorizationController extends BaseController {
     @Autowired
     private UserService userService;
 

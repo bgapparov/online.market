@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="mnu" class="col-lg-3">
+    <div th:if="${#request.isUserInRole('ADMIN')}">
+        <h1 class="h4">Admin menu</h1>
+        <div class="list-group">
+            <a href="#" th:href="@{/admin/pending-sellers}" class="list-group-item">Pending sellers</a>
+        </div>
+    </div>
+    <div th:if="${#request.isUserInRole('SELLER')}">
+        <h1 class="h4">Seller menu</h1>
+        <div class="list-group">
+            <a href="#" th:href="@{/seller/products}" class="list-group-item">Products</a>
+        </div>
+    </div>
+    <div th:if="${#request.isUserInRole('BUYER')}">
+        <h1 class="h4">Buyer menu</h1>
+        <div class="list-group">
+            <a href="#" th:href="@{/pending-sellers}" class="list-group-item">Pending users</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
