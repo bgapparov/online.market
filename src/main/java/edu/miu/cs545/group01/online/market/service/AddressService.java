@@ -8,6 +8,6 @@ public interface AddressService {
     Address createAddress(Address address);
     List<Address> getAddresses();
     Address getAddress(Long id);
-    Address updateAddress(Long id, Address address) throws Exception;
-    Address deleteAddress(Long id) throws Exception;
+  //  Address updateAddress(Long id, Address address) throws Exception;
+    void deleteAddress(Long id) throws Exception;
 }

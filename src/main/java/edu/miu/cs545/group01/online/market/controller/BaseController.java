@@ -4,7 +4,9 @@ import edu.miu.cs545.group01.online.market.domain.User;
 import edu.miu.cs545.group01.online.market.domain.Buyer;
 import edu.miu.cs545.group01.online.market.repository.BuyerRepository;
 import edu.miu.cs545.group01.online.market.repository.UserRepository;
+import edu.miu.cs545.group01.online.market.service.BuyerService;
 import edu.miu.cs545.group01.online.market.service.IAuthenticationFacade;
+import edu.miu.cs545.group01.online.market.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -18,7 +20,7 @@ public abstract class BaseController {
     @Autowired
     UserService userService;
     @Autowired
-    BuyerRepository buyerRepository;
+    BuyerService buyerService;
 
     protected String getCurrentUserEmail(){
         return authenticationFacade.getAuthentication().getName();
@@ -34,7 +36,7 @@ public abstract class BaseController {
     protected Buyer getCurrentBuyer(){
         String email = getCurrentUserEmail();
         if(!isNullOrEmpty(email)&& !"anonymousUser".equalsIgnoreCase(email)) {
-            return buyerRepository.findByEmail(email).orElse(null);
+            return buyerService.getBuyerByEmail(email);
         }
         return null;
     }
