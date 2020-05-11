@@ -78,7 +78,7 @@ public class Application {
 			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
 			order3 = orderRepository.save(order3);
 			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
-			order2 = orderRepository.save(order2);
+			order4 = orderRepository.save(order4);
 
 			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,0,1100,1100);
 			orderProduct1 = orderProductRepository.save(orderProduct1);
