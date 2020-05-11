@@ -14,7 +14,7 @@ public class BillingInfo {
 
     @Id
     @GeneratedValue
-    private long Id;
+    private long id;
 
     private BillingType type;
 
@@ -60,7 +60,7 @@ public class BillingInfo {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public BillingType getType() {

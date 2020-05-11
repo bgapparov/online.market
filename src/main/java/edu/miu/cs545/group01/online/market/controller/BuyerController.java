@@ -4,8 +4,8 @@ import edu.miu.cs545.group01.online.market.domain.User;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class SellerController extends BaseController {
+public class BuyerController extends BaseController{
     void test(){
-        User user = getCurrentUser();
+        User user = getCurrentBuyer();
     }
 }
