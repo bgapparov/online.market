@@ -89,7 +89,7 @@ public class Application {
 			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,1,1100,1100);
 			orderProduct4 = orderProductRepository.save(orderProduct4);
 
-			Review review1 = new Review(orderProduct1, ReviewStatus.POSTED, buyerYafet,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));
+			Review review1 = new Review(orderProduct4, ReviewStatus.POSTED, buyerRobel,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));
 			review1 = reviewRepository.save(review1);
 			Review review2 = new Review(orderProduct2, ReviewStatus.CREATED, buyerRobel,Helper.getDate(2020,05,19,14,00,00),4,"Good Product", Helper.getDate(2020,05,20,14,00,00));
 			review2 = reviewRepository.save(review2);
@@ -104,8 +104,6 @@ public class Application {
 
 			Follows follows1 = new Follows(seller,buyerRobel);
 			follows1 = followsRepository.save(follows1);
-			Follows follows2 = new Follows(seller,buyerYafet);
-			follows2 = followsRepository.save(follows2);
 		};
 	}
 }
