@@ -76,19 +76,22 @@ public class Application {
 			order2 = orderRepository.save(order2);
 			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
 			order3 = orderRepository.save(order3);
+			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
+			order2 = orderRepository.save(order2);
 
-			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,0,1100,2200);
+			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,0,1100,1100);
 			orderProduct1 = orderProductRepository.save(orderProduct1);
 			OrderProduct orderProduct2 = new OrderProduct(order2,productLaptop,0,1100,1800);
 			orderProduct2 = orderProductRepository.save(orderProduct2);
 			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,0,1100,3500);
 			orderProduct3 = orderProductRepository.save(orderProduct3);
-			OrderProduct orderProduct4 = new OrderProduct(order3,productIphone,1,1100,2200);
+			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,1,1100,1100);
 			orderProduct4 = orderProductRepository.save(orderProduct4);
 
-
-			Review review1 = new Review(orderProduct2, ReviewStatus.CREATED, buyerRobel,Helper.getDate(2020,05,19,13,00,00),4,"Good Product", Helper.getDate(2020,05,20,13,00,00));
+			Review review1 = new Review(orderProduct1, ReviewStatus.POSTED, buyerYafet,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));
 			review1 = reviewRepository.save(review1);
+			Review review2 = new Review(orderProduct2, ReviewStatus.CREATED, buyerRobel,Helper.getDate(2020,05,19,14,00,00),4,"Good Product", Helper.getDate(2020,05,20,14,00,00));
+			review2 = reviewRepository.save(review2);
 
 
 			ShoppingCart shoppingCart1 = new ShoppingCart(buyerYafet,productIphone,2,Helper.getDate(2020, 5, 11, 13, 50, 8));
