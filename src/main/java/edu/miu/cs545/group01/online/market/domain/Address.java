@@ -8,8 +8,8 @@ import javax.persistence.*;
 public class Address {
 
     @Id
-    @GeneratedValue
-    private long Id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     private String zipcode;
 
@@ -43,7 +43,7 @@ public class Address {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public String getZipcode() {
@@ -108,5 +108,10 @@ public class Address {
 
     public void setStatus(AddressStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return city + ", " + state + ", " + street + ", " + zipcode + ", " + phoneNo + ", " + country;
     }
 }

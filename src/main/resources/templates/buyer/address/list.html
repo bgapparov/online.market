@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Address List</title>
+</head>
+<body>
+        <div id="contents" class="row" layout:fragment="main-content">
+            <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+            <div class="col-lg-9">
+                <form method="post" action="/buyer/billing/save">
+                    <input name="" value="Add" type="submit">
+                </form>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Address</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="address : ${addresses}">
+                        <th scope="row">1</th>
+                        <td th:text="${address}">address</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</body>
+</html>

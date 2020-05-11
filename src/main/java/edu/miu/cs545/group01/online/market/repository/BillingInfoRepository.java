@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface BillingInfoRepository extends JpaRepository<BillingInfo, Long> {
-    @Query("select b from BillingInfo  b where b.id=:id")
-    BillingInfo findByBillingInfoById(@Param("id") long id);
+    @Query(value = "from BillingInfo where status = 'ACTIVE'")
+    List<BillingInfo> findAllByStatusActive();
 }

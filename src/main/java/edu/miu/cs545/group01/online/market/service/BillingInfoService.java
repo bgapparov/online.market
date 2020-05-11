@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface BillingInfoService {
     BillingInfo createBilling(BillingInfo billingInfo);
-    List<BillingInfo> getBillingInfos();
-    BillingInfo findByBillingInfoById(Long id);
+    List<BillingInfo> getBills();
+    BillingInfo getBilling(Long id);
+    void deleteBilling(long id) throws Exception;
 }

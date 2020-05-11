@@ -20,12 +20,17 @@ public class BillingInfoServiceImpl implements BillingInfoService {
     }
 
     @Override
-    public List<BillingInfo> getBillingInfos(){
+    public List<BillingInfo> getBills(){
         return billingInfoRepository.findAll();
     }
 
     @Override
-    public BillingInfo findByBillingInfoById(Long id){
-        return billingInfoRepository.findByBillingInfoById(id);
+    public BillingInfo getBilling(Long id){
+        return billingInfoRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteBilling(long id){
+        billingInfoRepository.deleteById(id);
     }
 }

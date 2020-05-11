@@ -16,8 +16,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     BuyerRepository buyerRepository;
+
     @Autowired
     SellerRepository sellerRepository;
 
