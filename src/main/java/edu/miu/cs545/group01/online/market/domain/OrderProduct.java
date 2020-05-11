@@ -27,12 +27,12 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, float pointPayment, float cashPayment, float totalPayment) {
+    public OrderProduct(Order order, Product product, float pointPayment, float cashPayment) {
         this.order = order;
         this.product = product;
         this.pointPayment = pointPayment;
         this.cashPayment = cashPayment;
-        this.totalPayment = totalPayment;
+        this.totalPayment = pointPayment + cashPayment;
     }
 
     public long getId() {
@@ -61,6 +61,7 @@ public class OrderProduct {
 
     public void setPointPayment(float pointPayment) {
         this.pointPayment = pointPayment;
+        this.totalPayment = this.cashPayment + this.pointPayment;
     }
 
     public float getCashPayment() {
@@ -69,13 +70,14 @@ public class OrderProduct {
 
     public void setCashPayment(float cashPayment) {
         this.cashPayment = cashPayment;
+        this.totalPayment = this.cashPayment + this.pointPayment;
     }
 
     public float getTotalPayment() {
         return totalPayment;
     }
 
-    public void setTotalPayment(float totalPayment) {
-        this.totalPayment = totalPayment;
-    }
+//    public void setTotalPayment(float totalPayment) {
+//        this.totalPayment = totalPayment;
+//    }
 }
