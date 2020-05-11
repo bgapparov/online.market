@@ -49,7 +49,7 @@
                         <a  class="nav-link" href="/login">Login</a>
                     </li>
                     <li sec:authorize="!isAuthenticated()" class="nav-item">
-                        <a  class="nav-link" href="/">Signup</a>
+                        <a  class="nav-link" href="#" th:href="@{/signup/select-user-type}">Signup</a>
                     </li>
                 </ul>
             </div>

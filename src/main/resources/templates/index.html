@@ -11,9 +11,7 @@
 			<div class="col-lg-3">
 				<h1 class="my-4">Online Market</h1>
 				<div class="list-group">
-					<a href="#" class="list-group-item">Category 1</a>
-					<a href="#" class="list-group-item">Category 2</a>
-					<a href="#" class="list-group-item">Category 3</a>
+					<a href="#" th:each="cat : ${categories}" th:href="@{/(category=${cat.id})}" th:text="${cat.name}" class="list-group-item">Category 1</a>
 				</div>
 
 			</div>

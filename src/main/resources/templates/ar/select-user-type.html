@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Select registration type</title>
+</head>
+<body>
+<div id="selectUserType" layout:fragment="main-content">
+    <div class="card">
+        <div class="card-header">Please select registration type</div>
+        <div class="card-body">
+            <a href="#" th:href="@{/signup/{userType}(userType=buyer)}"
+               class="btn btn-secondary btn-lg btn-block">Buyer</a>
+            <a href="#" th:href="@{/signup/{userType}(userType=seller)}" class="btn btn-secondary btn-lg btn-block">Seller</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

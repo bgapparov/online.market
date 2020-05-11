@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/**").permitAll()// access=none
                     .antMatchers("/h2-console/**").permitAll()
-                    .anyRequest().authenticated()
+//                    .anyRequest().authenticated()
                     .and()
                         .formLogin()
                         .usernameParameter("email")
@@ -76,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .maxSessionsPreventsLogin(true)
                     .and()
                     .sessionFixation();
+            http.headers().frameOptions().disable();
     }
 
     @Override

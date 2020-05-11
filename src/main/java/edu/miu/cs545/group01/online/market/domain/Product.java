@@ -10,7 +10,7 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private  long Id;
+    private  long id;
 
     private String title;
 
@@ -43,7 +43,7 @@ public class Product {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public String getTitle() {
