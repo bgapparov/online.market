@@ -30,7 +30,10 @@ public class Application {
 			ProductRepository productRepository,
 			OrderRepository orderRepository,
 			AddressRepository addressRepository,
-			BillingInfoRepository billingInfoRepository
+			BillingInfoRepository billingInfoRepository,
+			OrderProductRepository orderProductRepository,
+			ReviewRepository reviewRepository,
+			ShoppingCartRepository shoppingCartRepository
 	){
 		return args -> {
 			Admin admin = new Admin("Nurlan Kustutinov","nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
@@ -74,7 +77,28 @@ public class Application {
 			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
 			order3 = orderRepository.save(order3);
 
+			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,0,1100,2200);
+			orderProduct1 = orderProductRepository.save(orderProduct1);
+			OrderProduct orderProduct2 = new OrderProduct(order2,productLaptop,0,1100,1800);
+			orderProduct2 = orderProductRepository.save(orderProduct2);
+			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,0,1100,3500);
+			orderProduct3 = orderProductRepository.save(orderProduct3);
+			OrderProduct orderProduct4 = new OrderProduct(order3,productIphone,1,1100,2200);
+			orderProduct4 = orderProductRepository.save(orderProduct4);
 
+			Review review1 = new Review(orderProduct1, ReviewStatus.CREATED, buyerYafet,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));
+				review1 = reviewRepository.save(review1);
+			Review review2 = new Review(orderProduct2, ReviewStatus.CREATED, buyerRobel,Helper.getDate(2020,05,19,13,00,00),4,"Good Product", Helper.getDate(2020,05,20,13,00,00));
+			review2 = reviewRepository.save(review2);
+			Review review3 = new Review(orderProduct3, ReviewStatus.CREATED, buyerYafet,Helper.getDate(2020,06,26,13,00,00),5,"Very Good Product", Helper.getDate(2020,06,26,13,00,00));
+			review3 = reviewRepository.save(review3);
+
+			ShoppingCart shoppingCart1 = new ShoppingCart(buyerYafet,productIphone,2,Helper.getDate(2020, 5, 11, 13, 50, 8));
+			shoppingCart1 = shoppingCartRepository.save(shoppingCart1);
+			ShoppingCart shoppingCart2 = new ShoppingCart(buyerRobel,productLaptop,1,Helper.getDate(2020,05, 12,14,34,44));
+			shoppingCart2 = shoppingCartRepository.save(shoppingCart2);
+			ShoppingCart shoppingCart3 = new ShoppingCart(buyerYafet,productAserLaptop,1,Helper.getDate(2020,16,04,11,45,22));
+			shoppingCart3 = shoppingCartRepository.save(shoppingCart3);
 		};
 	}
 }
