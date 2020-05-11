@@ -21,8 +21,8 @@ public class Follows {
     public Follows() {
     }
 
-    public Follows(long id, Seller seller, Buyer buyer) {
-        Id = id;
+    public Follows(Seller seller, Buyer buyer) {
+
         this.seller = seller;
         this.buyer = buyer;
     }

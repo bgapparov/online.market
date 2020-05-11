@@ -33,7 +33,8 @@ public class Application {
 			BillingInfoRepository billingInfoRepository,
 			OrderProductRepository orderProductRepository,
 			ReviewRepository reviewRepository,
-			ShoppingCartRepository shoppingCartRepository
+			ShoppingCartRepository shoppingCartRepository,
+			FollowsRepository followsRepository
 	){
 		return args -> {
 			Admin admin = new Admin("Nurlan Kustutinov","nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
@@ -100,6 +101,11 @@ public class Application {
 			shoppingCart2 = shoppingCartRepository.save(shoppingCart2);
 			ShoppingCart shoppingCart3 = new ShoppingCart(buyerYafet,productAserLaptop,1,Helper.getDate(2020,16,04,11,45,22));
 			shoppingCart3 = shoppingCartRepository.save(shoppingCart3);
+
+			Follows follows1 = new Follows(seller,buyerRobel);
+			follows1 = followsRepository.save(follows1);
+			Follows follows2 = new Follows(seller,buyerYafet);
+			follows2 = followsRepository.save(follows2);
 		};
 	}
 }
