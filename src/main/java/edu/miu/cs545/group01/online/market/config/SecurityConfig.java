@@ -1,5 +1,6 @@
 package edu.miu.cs545.group01.online.market.config;
 
+import edu.miu.cs545.group01.online.market.domain.enums.Role;
 import edu.miu.cs545.group01.online.market.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,9 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
+                    .antMatchers("/admin/**").hasRole(Role.ADMIN.toString())
                     .antMatchers("/**").permitAll()// access=none
                     .antMatchers("/h2-console/**").permitAll()
-//                    .anyRequest().authenticated()
+                    .anyRequest().authenticated()
                     .and()
                         .formLogin()
                         .usernameParameter("email")

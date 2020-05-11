@@ -15,6 +15,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Seller name</th>
                 <th scope="col">Seller email</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -22,10 +23,18 @@
                 <th scope="row">1</th>
                 <td th:text="${seller.name}">Mark</td>
                 <td th:text="${seller.email}">mark@gmail.com</td>
+                <td>
+                    <a href="#" id="approveSeller" th:data-seller-id="${seller.id}">Approve</a>
+                    <a href="#" id="rejectSeller" th:data-seller-id="${seller.id}">Reject</a>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script th:src="@{/js/admin.js}"></script>
+</th:block>
 </body>
 </html>

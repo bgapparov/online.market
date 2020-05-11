@@ -10,6 +10,7 @@
         <h1 class="h4">Admin menu</h1>
         <div class="list-group">
             <a href="#" th:href="@{/admin/pending-sellers}" class="list-group-item">Pending sellers</a>
+            <a href="#" th:href="@{/admin/created-reviews}" class="list-group-item">Created reviews</a>
         </div>
     </div>
     <div th:if="${#request.isUserInRole('SELLER')}">

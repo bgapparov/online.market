@@ -87,13 +87,13 @@ public class Application {
 			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order4 = orderRepository.save(order4);
 
-			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,0,1100);
+			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,1,0,1100);
 			orderProduct1 = orderProductRepository.save(orderProduct1);
-			OrderProduct orderProduct2 = new OrderProduct(order2,productLaptop,0,1800);
+			OrderProduct orderProduct2 = new OrderProduct(order2,productLaptop,1,0,1800);
 			orderProduct2 = orderProductRepository.save(orderProduct2);
-			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,0,3500);
+			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,1,0,3500);
 			orderProduct3 = orderProductRepository.save(orderProduct3);
-			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,1,1100);
+			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,2,0,2200);
 			orderProduct4 = orderProductRepository.save(orderProduct4);
 
 			Review review1 = new Review(orderProduct4, ReviewStatus.POSTED, buyerRobel,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));

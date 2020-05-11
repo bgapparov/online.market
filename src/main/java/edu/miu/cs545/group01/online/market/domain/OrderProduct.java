@@ -17,19 +17,18 @@ public class OrderProduct {
 
     @ManyToOne
     private Product product;
-
     private float pointPayment;
-
     private float cashPayment;
-
     private float totalPayment;
+    private int quantity;
 
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, float pointPayment, float cashPayment) {
+    public OrderProduct(Order order, Product product, int quantity, float pointPayment, float cashPayment) {
         this.order = order;
         this.product = product;
+        this.quantity = quantity;
         this.pointPayment = pointPayment;
         this.cashPayment = cashPayment;
         this.totalPayment = pointPayment + cashPayment;
@@ -55,6 +54,14 @@ public class OrderProduct {
         this.product = product;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public float getPointPayment() {
         return pointPayment;
     }
@@ -77,7 +84,8 @@ public class OrderProduct {
         return totalPayment;
     }
 
-//    public void setTotalPayment(float totalPayment) {
-//        this.totalPayment = totalPayment;
-//    }
+    @Override
+    public String toString() {
+        return product + "; quantity: " + quantity;
+    }
 }

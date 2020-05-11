@@ -101,4 +101,9 @@ public class Product {
     public void setSeller(Seller seller) {
         this.seller = seller;
     }
+
+    @Override
+    public String toString() {
+        return title + ". price: " + price;
+    }
 }
