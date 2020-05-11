@@ -1,6 +1,7 @@
 package edu.miu.cs545.group01.online.market.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -8,6 +9,7 @@ import javax.persistence.ManyToOne;
 public class OrderProduct {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     @ManyToOne
@@ -15,22 +17,21 @@ public class OrderProduct {
 
     @ManyToOne
     private Product product;
-
     private float pointPayment;
-
     private float cashPayment;
-
     private float totalPayment;
+    private int quantity;
 
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, float pointPayment, float cashPayment, float totalPayment) {
+    public OrderProduct(Order order, Product product, int quantity, float pointPayment, float cashPayment) {
         this.order = order;
         this.product = product;
+        this.quantity = quantity;
         this.pointPayment = pointPayment;
         this.cashPayment = cashPayment;
-        this.totalPayment = totalPayment;
+        this.totalPayment = pointPayment + cashPayment;
     }
 
     public long getId() {
@@ -53,12 +54,21 @@ public class OrderProduct {
         this.product = product;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public float getPointPayment() {
         return pointPayment;
     }
 
     public void setPointPayment(float pointPayment) {
         this.pointPayment = pointPayment;
+        this.totalPayment = this.cashPayment + this.pointPayment;
     }
 
     public float getCashPayment() {
@@ -67,13 +77,15 @@ public class OrderProduct {
 
     public void setCashPayment(float cashPayment) {
         this.cashPayment = cashPayment;
+        this.totalPayment = this.cashPayment + this.pointPayment;
     }
 
     public float getTotalPayment() {
         return totalPayment;
     }
 
-    public void setTotalPayment(float totalPayment) {
-        this.totalPayment = totalPayment;
+    @Override
+    public String toString() {
+        return product + "; quantity: " + quantity;
     }
 }

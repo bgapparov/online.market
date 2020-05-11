@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller signup</title>
+</head>
+<body>
+<div id="selectUserType" layout:fragment="main-content">
+    <div class="card">
+        <div class="card-header">Seller registration</div>
+        <div class="card-body">
+            <form th:object="${user}" action="#" th:action="@{/signup/seller}"
+                  method="post">
+                <ul th:if="${#fields.hasErrors('*')}">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                </ul>
+                <div class="form-group">
+                    <label for="userName">Seller name</label>
+                    <input type="text" class="form-control" id="userName" name="userName" placeholder="Seller name" required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">
+                        Incorrect Seller name
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                        Incorrect email
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                        Incorrect password
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                           placeholder="Confirm password" required>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}"
+                         th:errors="*{confirmPassword}">Incorrect name
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Signup</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -10,10 +10,8 @@ import java.util.Set;
 
 @Entity
 public class Seller extends User {
-
     public Seller() {
     }
-
     public Seller(String name, String Email, String Password, UserStatus status) {
         super(name, Email, Password, new HashSet<>(Arrays.asList(Role.SELLER)), status);
     }

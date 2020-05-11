@@ -17,4 +17,9 @@ public class Buyer extends  User{
     public Buyer(String name, String Email, String Password, UserStatus status) {
         super(name, Email, Password, new HashSet<>(Arrays.asList(Role.BUYER)), status);
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

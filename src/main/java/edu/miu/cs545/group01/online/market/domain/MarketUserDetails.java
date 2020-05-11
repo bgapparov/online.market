@@ -46,6 +46,6 @@ public class MarketUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getStatus() == UserStatus.ACTIVE;
+        return user.getStatus() == UserStatus.ACTIVE || user.getStatus() == UserStatus.PENDING;
     }
 }

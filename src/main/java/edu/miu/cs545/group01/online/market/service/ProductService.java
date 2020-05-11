@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductService {
     Product createProduct(Product product);
-    List<Product> getProducts();
+    List<Product> getTop9Products(int categoryId);
     Product  getProduct(Long id);
     Product updateProduct(Long id, Product product) throws Exception;
     Product deleteProduct(Long id) throws Exception;

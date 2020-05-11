@@ -1,8 +1,10 @@
 package edu.miu.cs545.group01.online.market.domain;
 
+import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
 import edu.miu.cs545.group01.online.market.domain.enums.BillingType;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
@@ -11,6 +13,7 @@ import java.util.Date;
 public class BillingInfo {
 
     @Id
+    @GeneratedValue
     private long id;
 
     private BillingType type;
@@ -32,17 +35,23 @@ public class BillingInfo {
     @ManyToOne
     private Address billingAddress;
 
-    private String status;
+    private BillingInfoStatus status;
 
     public BillingInfo() {
     }
 
-    public BillingInfo(BillingType type, long cardNo, String cardName, Date expirationDate, String securityNumber, String accountName, long accountNumber, long routingNumber, Address billingAddress, String status) {
-        this.type = type;
+    public BillingInfo(long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress, BillingInfoStatus status) {
+        this.type = BillingType.CREDITCARD;
         this.cardNo = cardNo;
         this.cardName = cardName;
         this.expirationDate = expirationDate;
         this.securityNumber = securityNumber;
+        this.billingAddress = billingAddress;
+        this.status = status;
+    }
+
+    public BillingInfo( String accountName, long accountNumber, long routingNumber, Address billingAddress, BillingInfoStatus status) {
+        this.type = BillingType.BANKACCOUNT;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.routingNumber = routingNumber;
@@ -126,11 +135,11 @@ public class BillingInfo {
         this.billingAddress = billingAddress;
     }
 
-    public String getStatus() {
+    public BillingInfoStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BillingInfoStatus status) {
         this.status = status;
     }
 }

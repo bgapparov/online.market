@@ -10,11 +10,13 @@ import java.util.Date;
 public class Review {
 
     @Id
-    private long Id;
+    @GeneratedValue
+    private long id;
 
     @ManyToOne
     private OrderProduct orderProduct;
 
+    @Enumerated(EnumType.STRING)
     private ReviewStatus status;
 
     @ManyToOne
@@ -42,7 +44,7 @@ public class Review {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public OrderProduct getOrderProduct() {

@@ -13,9 +13,10 @@ public abstract class BaseController {
     IAuthenticationFacade authenticationFacade;
 
     @Autowired
-    UserRepository userRepository;
-    @Autowired
     BuyerRepository buyerRepository;
+  
+    @Autowired
+    UserService userService;
 
     protected String getCurrentUserEmail(){
         return authenticationFacade.getAuthentication().getName();
@@ -24,7 +25,7 @@ public abstract class BaseController {
     protected User getCurrentUser(){
         String email = getCurrentUserEmail();
         if(!isNullOrEmpty(email)&& !"anonymousUser".equalsIgnoreCase(email)) {
-            return userRepository.findByEmail(email).orElse(null);
+            return userService.getUserByEmail(email);
         }
         return null;
     }

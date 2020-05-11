@@ -1,14 +1,16 @@
 package edu.miu.cs545.group01.online.market.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
+import edu.miu.cs545.group01.online.market.domain.enums.UserStatus;
+
+import javax.persistence.*;
 
 @Entity
 public class Product {
 
     @Id
-    private  long Id;
+    @GeneratedValue
+    private  long id;
 
     private String title;
 
@@ -17,7 +19,8 @@ public class Product {
 
     private float price;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
 
     private String imgName;
 
@@ -29,18 +32,18 @@ public class Product {
     public Product() {
     }
 
-    public Product(String title, Category category, float price, String status, String imgName, String description, Seller seller) {
+    public Product(String title, Category category, float price, ProductStatus status, String imgExtend, String description, Seller seller) {
         this.title = title;
         this.category = category;
         this.price = price;
         this.status = status;
-        this.imgName = imgName;
+        this.imgName = imgExtend;
         this.description = description;
         this.seller = seller;
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public String getTitle() {
@@ -67,11 +70,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getStatus() {
+    public ProductStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ProductStatus status) {
         this.status = status;
     }
 
@@ -97,5 +100,10 @@ public class Product {
 
     public void setSeller(Seller seller) {
         this.seller = seller;
+    }
+
+    @Override
+    public String toString() {
+        return title + ". price: " + price;
     }
 }

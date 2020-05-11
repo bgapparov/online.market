@@ -10,6 +10,7 @@ import java.util.Date;
 public class Order {
 
     @Id
+    @GeneratedValue
     private long Id;
 
     private Date orderDate;
@@ -32,12 +33,11 @@ public class Order {
 
     private Date deliveredDate;
 
-    private int quantity;
 
     public Order() {
     }
 
-    public Order(Date orderDate, OrderStatus status, Buyer buyer, Seller seller, Address shippingAddress, BillingInfo billingInfo, Date shippingDate, Date deliveredDate, int quantity) {
+    public Order(Date orderDate, OrderStatus status, Buyer buyer, Seller seller, Address shippingAddress, BillingInfo billingInfo, Date shippingDate, Date deliveredDate) {
         this.orderDate = orderDate;
         this.status = status;
         this.buyer = buyer;
@@ -46,7 +46,6 @@ public class Order {
         this.billingInfo = billingInfo;
         this.shippingDate = shippingDate;
         this.deliveredDate = deliveredDate;
-        this.quantity = quantity;
     }
 
     public long getId() {
@@ -117,12 +116,5 @@ public class Order {
         this.deliveredDate = deliveredDate;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }
 
