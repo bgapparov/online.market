@@ -90,7 +90,6 @@ public class Application {
 			productAserLaptop = productRepository.save(productAserLaptop);
 			Product converseshoes =new Product ( "converse shoes" , fashion, 60, ProductStatus.ACTIVE,"converseshoes.jpg","Brand new", seller);
 			converseshoes = productRepository.save(converseshoes);
-
 			Product applewatch = new Product("Apple Watch",category, 450, ProductStatus.ACTIVE, "applewatch.jpg", "Brand new", seller );
 			applewatch = productRepository.save(applewatch);
 			Product samsungNote10 = new Product("Samsung Note 10",category, 1200, ProductStatus.ACTIVE, "samsung10plus.jpg", "Brand new", seller );
@@ -99,6 +98,7 @@ public class Application {
 			kidscar = productRepository.save(kidscar);
 			Product ball = new Product("Balls",toys, 70, ProductStatus.ACTIVE, "ball.jpg", "All Sport Ball", seller );
 			ball = productRepository.save(ball);
+
 			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfo, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00));
 			order1 = orderRepository.save(order1);
 			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
