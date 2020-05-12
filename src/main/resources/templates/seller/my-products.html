@@ -33,14 +33,16 @@
                 <td th:text="${product.status}">Active</td>
                 <td th:text="${product.description}">Cool phone</td>
                 <td>
-                    <a href="#" id="editProduct" th:href="@{/seller/product/edit/{productId}(productId=${product.id})}">Edit</a>
-                    <a href="#" id="deleteProduct" th:data-product-id="${product.id}">Remove</a>
+                    <a href="#" class="editProduct" th:href="@{/seller/product/edit/{productId}(productId=${product.id})}">Edit</a>
+                    <a href="#" class="deleteProduct" th:data-product-id="${product.id}">Remove</a>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-
+<th:block layout:fragment="script">
+    <script th:src="@{/js/seller.js}"></script>
+</th:block>
 </body>
 </html>

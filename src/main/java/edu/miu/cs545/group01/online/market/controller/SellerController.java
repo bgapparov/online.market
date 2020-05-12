@@ -3,12 +3,14 @@ package edu.miu.cs545.group01.online.market.controller;
 import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
+import edu.miu.cs545.group01.online.market.exception.RemoveException;
 import edu.miu.cs545.group01.online.market.exception.UploadImageException;
 import edu.miu.cs545.group01.online.market.helper.Helper;
 import edu.miu.cs545.group01.online.market.service.CategoryService;
 import edu.miu.cs545.group01.online.market.service.ProductService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,5 +86,10 @@ public class SellerController extends BaseController {
         productService.updateProduct(productId, product);
 
         return "redirect:/seller/my-products";
+    }
+    @DeleteMapping("/product/remove/{productId}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteProduct(@PathVariable("productId") long productId) throws NotFoundException, RemoveException {
+        productService.deleteProduct(productId);
     }
 }

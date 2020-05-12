@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers("/admin/**").hasRole(Role.ADMIN.toString())
                     .antMatchers("/seller/**").hasRole(Role.SELLER.toString())
+                    .antMatchers("/buyer/**").hasRole(Role.BUYER.toString())
                     .antMatchers("/**").permitAll()// access=none
                     .antMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()

@@ -3,6 +3,8 @@ package edu.miu.cs545.group01.online.market.service.impl;
 import edu.miu.cs545.group01.online.market.domain.Category;
 import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.domain.Seller;
+import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
+import edu.miu.cs545.group01.online.market.exception.RemoveException;
 import edu.miu.cs545.group01.online.market.repository.CategoryRepository;
 import edu.miu.cs545.group01.online.market.repository.ProductRepository;
 import edu.miu.cs545.group01.online.market.service.ProductService;
@@ -56,7 +58,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product deleteProduct(Long id) throws Exception {
-        return null;
+    public Product deleteProduct(Long id) throws NotFoundException, RemoveException {
+        Product product = productRepository.findById(id).orElseThrow(()->new NotFoundException("Product is not found. ProductId="+id));
+        if(product.getOrderProducts().size()>0){
+            throw new RemoveException("Product cannot be removed! Product already purchased.");
+        }
+        product.setStatus(ProductStatus.REMOVED);
+        return productRepository.save(product);
     }
 }

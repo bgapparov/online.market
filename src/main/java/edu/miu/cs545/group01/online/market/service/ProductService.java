@@ -2,6 +2,7 @@ package edu.miu.cs545.group01.online.market.service;
 
 import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.domain.Seller;
+import edu.miu.cs545.group01.online.market.exception.RemoveException;
 import javassist.NotFoundException;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ProductService {
     List<Product> findAllProductsBySeller(Seller seller);
     Product  getProduct(Long id) throws NotFoundException;
     Product updateProduct(Long id, Product product) throws NotFoundException;
-    Product deleteProduct(Long id) throws Exception;
+    Product deleteProduct(Long id) throws NotFoundException, RemoveException;
 }
