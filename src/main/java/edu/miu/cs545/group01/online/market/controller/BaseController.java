@@ -1,5 +1,6 @@
 package edu.miu.cs545.group01.online.market.controller;
 
+import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.User;
 import edu.miu.cs545.group01.online.market.domain.Buyer;
 import edu.miu.cs545.group01.online.market.repository.BuyerRepository;
@@ -32,6 +33,13 @@ public abstract class BaseController {
             return userService.getUserByEmail(email);
         }
         return null;
+    }
+    protected Seller getCurrentSeller(){
+        User curUser = getCurrentUser();
+        if(curUser == null){
+            return null;
+        }
+        return (Seller)curUser;
     }
     protected Buyer getCurrentBuyer(){
         String email = getCurrentUserEmail();

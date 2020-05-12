@@ -35,8 +35,8 @@ public class MainController extends BaseController {
 //        );
         List<Product> products = productService.getTop9Products(category);
 
-        model.addAttribute("products", products.toArray());
-        model.addAttribute("categories", categoryService.allServices());
+        model.addAttribute("products", products);
+        model.addAttribute("categories", categoryService.allCategories());
 
 //        model.addAttribute("product", prod);
         return "index";

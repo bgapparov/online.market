@@ -19,13 +19,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="seller : ${pendingSellers}">
-                <th scope="row">1</th>
+            <tr th:each="seller,iter : ${pendingSellers}">
+                <th scope="row" th:text="${iter.index+1}">1</th>
                 <td th:text="${seller.name}">Mark</td>
                 <td th:text="${seller.email}">mark@gmail.com</td>
                 <td>
-                    <a href="#" id="approveSeller" th:data-seller-id="${seller.id}">Approve</a>
-                    <a href="#" id="rejectSeller" th:data-seller-id="${seller.id}">Reject</a>
+                    <a href="#" class="approveSeller" th:data-seller-id="${seller.id}">Approve</a>
+                    <a href="#" class="rejectSeller" th:data-seller-id="${seller.id}">Reject</a>
                 </td>
             </tr>
             </tbody>

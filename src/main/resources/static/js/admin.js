@@ -6,7 +6,7 @@ $(document).ready(function () {
             xhr.setRequestHeader(header, token);
         });
     }
-    $("#approveSeller").click(function () {
+    $(".approveSeller").click(function () {
         setUpCsrfToken();
         let sellerId = $(this).data("sellerId");
         $.ajax("/admin/approve-seller/" + sellerId,
@@ -18,7 +18,7 @@ $(document).ready(function () {
             });
     });
 
-    $("#rejectSeller").click(function () {
+    $(".rejectSeller").click(function () {
         setUpCsrfToken();
         let sellerId = $(this).data("sellerId");
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
             });
     });
 
-    $("#postReview").click(function () {
+    $(".postReview").click(function () {
         setUpCsrfToken();
         let reviewId = $(this).data("reviewId");
         $.ajax("/admin/post-review/" + reviewId,
@@ -43,7 +43,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#declineReview").click(function () {
+    $(".declineReview").click(function () {
         setUpCsrfToken();
         let reviewId = $(this).data("reviewId");
         $.ajax("/admin/decline-review/" + reviewId,

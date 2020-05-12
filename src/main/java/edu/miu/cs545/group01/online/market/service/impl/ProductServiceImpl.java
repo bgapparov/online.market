@@ -2,6 +2,7 @@ package edu.miu.cs545.group01.online.market.service.impl;
 
 import edu.miu.cs545.group01.online.market.domain.Category;
 import edu.miu.cs545.group01.online.market.domain.Product;
+import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.repository.CategoryRepository;
 import edu.miu.cs545.group01.online.market.repository.ProductRepository;
 import edu.miu.cs545.group01.online.market.service.ProductService;
@@ -18,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryRepository categoryRepository;
     @Override
     public Product createProduct(Product product) {
-        return null;
+        return productRepository.save(product);
     }
 
     @Override
@@ -31,6 +32,11 @@ public class ProductServiceImpl implements ProductService {
             result = productRepository.findTop9ByCategoryOrderByIdDesc(categoryRepository.getOne(categoryId));
         }
         return result;
+    }
+
+    @Override
+    public List<Product> findAllProductsBySeller(Seller seller) {
+        return productRepository.findAllNotRemovedProductsBySeller(seller);
     }
 
     @Override

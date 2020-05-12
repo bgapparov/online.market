@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product</title>
+</head>
+<body>
+
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+        <form th:object="${product}" action="#" th:action="@{/seller/product/add}" enctype="multipart/form-data"
+              method="post">
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+            <div class="form-group">
+                <label for="image">Product photo:</label>
+                <input id="image" th:field="*{image}" type="file" class="form-control-file">
+                <p th:if="${#fields.hasErrors('image')}" th:errors="*{image}"
+                   th:class="${'text-danger'}">Incorrect file</p>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select class="form-control" th:field="*{category}" id="category" required>
+                    <option value="">Select category</option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" th:class="${'text-danger'}">
+                    Incorrect name</p>
+            </div>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Title">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:class="${'text-danger'}">
+                    Incorrect name</p>
+            </div>
+            <div class="form-group">
+                <label for="price">Title</label>
+                <input type="number" min="0" step="0.01" class="form-control currency" id="price" th:field="*{price}"
+                       placeholder="0.00">
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" th:class="${'text-danger'}">
+                    Incorrect name</p>
+            </div>
+            <div class="form-group">
+                <label for="description">Title</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}"
+                       placeholder="Description">
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" th:class="${'text-danger'}">
+                    Incorrect name</p>
+            </div>
+
+            <div id="form-group">
+                <input class="btn btn-primary btn-sm" id="reset" type="reset" value="Rest"/>
+                <input class="btn btn-primary btn-sm" id="submit" type="submit" value="Add product"/>
+            </div>
+    </form>
+</div>
+</div>
+</body>
+</html>

@@ -16,7 +16,7 @@
     <div th:if="${#request.isUserInRole('SELLER')}">
         <h1 class="h4">Seller menu</h1>
         <div class="list-group">
-            <a href="#" th:href="@{/seller/products}" class="list-group-item">Products</a>
+            <a href="#" th:href="@{/seller/my-products}" class="list-group-item">My products</a>
         </div>
     </div>
     <div th:if="${#request.isUserInRole('BUYER')}">

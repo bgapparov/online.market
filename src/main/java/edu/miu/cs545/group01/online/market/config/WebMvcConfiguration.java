@@ -1,8 +1,10 @@
 package edu.miu.cs545.group01.online.market.config;
 
 import edu.miu.cs545.group01.online.market.converter.StringToUserTypeEnum;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -11,6 +13,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
+
+//    @Bean
+//    public CommonsMultipartResolver multipartResolver() {
+//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//        resolver.setDefaultEncoding("utf-8");
+//        resolver.setMaxUploadSize(10240000);
+//        return resolver;
+//    }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -23,11 +33,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-        registry.addResourceHandler( "/img/**")//temp
-                .addResourceLocations("classpath:/static/images/")
-                .setCachePeriod(31556926);
-
         registry.addResourceHandler( "/images/**")
                 .addResourceLocations("classpath:/static/images/")
                 .setCachePeriod(31556926);
@@ -37,6 +42,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler( "/js/**")
                 .addResourceLocations("classpath:/static/js/")
                 .setCachePeriod(31556926);
+
+        registry.addResourceHandler("/img/**").addResourceLocations("/images/");
     }
 
     @Override

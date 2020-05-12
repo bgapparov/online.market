@@ -30,8 +30,8 @@
                 <td th:text="${review.stars}">5</td>
                 <td th:text="${review.comment}">Good</td>
                 <td>
-                    <a href="#" id="postReview" th:data-review-id="${review.id}">Post</a>
-                    <a href="#" id="declineReview" th:data-review-id="${review.id}">Decline</a>
+                    <a href="#" class="postReview" th:data-review-id="${review.id}">Post</a>
+                    <a href="#" class="declineReview" th:data-review-id="${review.id}">Decline</a>
                 </td>
             </tr>
             </tbody>

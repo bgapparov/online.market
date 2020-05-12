@@ -11,6 +11,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.servlet.ServletContext;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Set;
+
 @SpringBootApplication
 public class Application {
 
@@ -20,6 +28,9 @@ public class Application {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	ServletContext servletContext;
 
 	@Bean
 	public CommandLineRunner demo(
@@ -151,6 +162,23 @@ public class Application {
 
 			Follows follows1 = new Follows(seller,buyerRobel);
 			follows1 = followsRepository.save(follows1);
+
+
+
+			try {
+				String imagesFolder = Helper.getImagesFolder(servletContext);
+				List<Product> products = productRepository.findAll();
+				URL resource = Application.class.getResource("/");
+				Path sourceFolder = Paths.get(resource.toURI());//"images";//servletContext.getResourcePaths("/");
+				for (Product product : products) {
+					String fileName = product.getImgName();
+					Path sourceFile = Paths.get(sourceFolder.toString(), "static", "images", fileName);
+					Path targetFile = Paths.get(imagesFolder, fileName);
+					Files.copy(sourceFile, targetFile);
+				}
+			}catch (Exception ex){
+				System.out.println(ex.toString());
+			}
 		};
 	}
 }

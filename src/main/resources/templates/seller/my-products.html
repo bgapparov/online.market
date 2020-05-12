@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>My products</title>
+</head>
+<body>
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+        <div class="panel-body">
+            <a class="btn btn-secondary btn-sm" href="#" th:href="@{/seller/product/add}">Add product</a>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product,iter : ${myProducts}">
+                <th scope="row" th:text="${iter.index+1}">1</th>
+                <td th:text="${product.category}">Phones</td>
+                <td th:text="${product.title}">iPhone</td>
+                <td th:text="${product.price}">1000</td>
+                <td th:text="${product.status}">Active</td>
+                <td th:text="${product.description}">Cool phone</td>
+                <td>
+                    <a href="#" id="editProduct" th:data-product-id="${product.id}">Edit</a>
+                    <a href="#" id="deleteProduct" th:data-product-id="${product.id}">Remove</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
