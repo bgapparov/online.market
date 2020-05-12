@@ -2,6 +2,7 @@ package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.Address;
 import edu.miu.cs545.group01.online.market.domain.BillingInfo;
+import edu.miu.cs545.group01.online.market.domain.BillingInfoCreditCard;
 import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.service.AddressService;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
@@ -29,7 +30,7 @@ public class BuyerController extends BaseController{
 
     @GetMapping("/billing/list")
     public String getBills(Model model){
-        model.addAttribute("bills", billingInfoService.getBills());
+        model.addAttribute("bills", billingInfoService.getBillsByBuyer(getCurrentBuyer()));
         return "buyer/billing/list";
     }
 
@@ -40,8 +41,8 @@ public class BuyerController extends BaseController{
     }
 
     @PostMapping("/billing/edit/{billingId}")
-    public String editBilling(@PathVariable("billingId") long id, BillingInfo billingInfo) throws NotFoundException{
-        BillingInfo updateBilling = billingInfoService.updateAddress(id, billingInfo);
+    public String editBilling(@PathVariable("billingId") long id, BillingInfoCreditCard billingInfo) throws NotFoundException{
+        BillingInfo updateBilling = billingInfoService.updateCreditCard(id, billingInfo);
         return "redirect:/buyer/billing/list";
     }
 

@@ -1,7 +1,7 @@
 package edu.miu.cs545.group01.online.market.service.impl;
 
-import edu.miu.cs545.group01.online.market.domain.Address;
-import edu.miu.cs545.group01.online.market.domain.BillingInfo;
+import edu.miu.cs545.group01.online.market.domain.*;
+import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
 import edu.miu.cs545.group01.online.market.repository.BillingInfoRepository;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
 import javassist.NotFoundException;
@@ -22,8 +22,8 @@ public class BillingInfoServiceImpl implements BillingInfoService {
     }
 
     @Override
-    public List<BillingInfo> getBills(){
-        return billingInfoRepository.findAll();
+    public List<BillingInfo> getBillsByBuyer(Buyer buyer) {
+        return billingInfoRepository.findAllByStatusAndBuyer(BillingInfoStatus.ACTIVE, buyer);
     }
 
     @Override
@@ -31,15 +31,22 @@ public class BillingInfoServiceImpl implements BillingInfoService {
         return billingInfoRepository.findById(id).orElse(null);
     }
 
-    public BillingInfo updateAddress(long id, BillingInfo billing) throws NotFoundException{
-        BillingInfo bill = billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("Address is not found"));
-        bill.setCardNo(billing.getCardNo());
-        bill.setCardName(billing.getCardName());
-        bill.setExpirationDate(billing.getExpirationDate());
-        bill.setSecurityNumber(billing.getSecurityNumber());
-        bill.setAccountName(billing.getAccountName());
-        bill.setAccountNumber(billing.getAccountNumber());
-        bill.setRoutingNumber(billing.getRoutingNumber());
+    @Override
+    public BillingInfo updateCreditCard(long id, BillingInfoCreditCard card) throws NotFoundException {
+        BillingInfoCreditCard bill = (BillingInfoCreditCard)billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("BillingInfoCreditCard is not found"));
+        bill.setCardNo(card.getCardNo());
+        bill.setCardName(card.getCardName());
+        bill.setExpirationDate(card.getExpirationDate());
+        bill.setSecurityNumber(card.getSecurityNumber());
+        return billingInfoRepository.save(bill);
+    }
+
+    @Override
+    public BillingInfo updateBankAccount(long id, BillingInfoBankAccount bank) throws NotFoundException {
+        BillingInfoBankAccount bill = (BillingInfoBankAccount)billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("BillingInfoBankAccount is not found"));
+        bill.setAccountName(bank.getAccountName());
+        bill.setAccountNumber(bank.getAccountNumber());
+        bill.setRoutingNumber(bank.getRoutingNumber());
         return billingInfoRepository.save(bill);
     }
 

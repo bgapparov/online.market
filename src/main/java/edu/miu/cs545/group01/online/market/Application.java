@@ -86,11 +86,11 @@ public class Application {
 			jiromAddress = addressRepository.save(jiromAddress);
 
 
-			BillingInfo yafetbillingInfo = new BillingInfo(123456, "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress, BillingInfoStatus.ACTIVE );
-			yafetbillingInfo = billingInfoRepository.save(yafetbillingInfo);
-			BillingInfo robelbillingInfo = new BillingInfo(9876, "111-111-222", Helper.getDate(2024,11,01, 19), "123", robelAddress, BillingInfoStatus.ACTIVE );
-			robelbillingInfo = billingInfoRepository.save(robelbillingInfo);
-			BillingInfo jirombillingInfo = new BillingInfo(100876, "323-111-222", Helper.getDate(2024,11,01, 19), "123", jiromAddress, BillingInfoStatus.ACTIVE );
+			BillingInfo yafetbillingInfoCard = new BillingInfoCreditCard(buyerYafet, 123456, "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress, BillingInfoStatus.ACTIVE );
+			yafetbillingInfoCard = billingInfoRepository.save(yafetbillingInfoCard);
+			BillingInfo robelbillingInfoBank = new BillingInfoBankAccount(buyerRobel, "Robel's MidWestBank", "0123456","014444", robelAddress, BillingInfoStatus.ACTIVE );
+			robelbillingInfoBank = billingInfoRepository.save(robelbillingInfoBank);
+			BillingInfo jirombillingInfo = new BillingInfoCreditCard(buyerjirom, 100876, "323-111-222", Helper.getDate(2024,11,01, 19), "123", jiromAddress, BillingInfoStatus.ACTIVE );
 			jirombillingInfo = billingInfoRepository.save(jirombillingInfo);
 
 			Product productIphone = new Product("iPhone 11",category, 1100, ProductStatus.ACTIVE, "iphone.jpg", "Brand new", seller );
@@ -124,13 +124,13 @@ public class Application {
 			Product womenflatshoes =new Product ( "Woman Flat shoes" , fashion, 80, ProductStatus.ACTIVE,"redflatshoes.jpg","Nice Shoes", seller2);
 			womenflatshoes = productRepository.save(womenflatshoes);
 
-			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfo, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00));
+			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfoCard, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00));
 			order1 = orderRepository.save(order1);
-			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
+			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order2 = orderRepository.save(order2);
-			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfo,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
+			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfoCard,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
 			order3 = orderRepository.save(order3);
-			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
+			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order4 = orderRepository.save(order4);
 			Order order5 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerjirom,mike,jiromAddress,jirombillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order5 = orderRepository.save(order5);
