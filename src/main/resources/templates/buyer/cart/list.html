@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping-Cart list</title>
+</head>
+<body>
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+                <div class="h4">Shopping cart</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cart, iter : ${items}">
+                <th scope="row" th:text="${iter.index+1}">1</th>
+                <td th:text="${cart.product}">iPhone</td>
+                <td>
+                    <a href="#" class="remove-shopping-cart" th:data-cart-id="${cart.id}">Remove Item</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/buyer.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,19 +1,18 @@
 package edu.miu.cs545.group01.online.market.service;
 
 import edu.miu.cs545.group01.online.market.domain.ShoppingCart;
+import edu.miu.cs545.group01.online.market.domain.Buyer;
+import edu.miu.cs545.group01.online.market.domain.ShoppingCart;
+import javassist.NotFoundException;
 
 import java.util.List;
 
 public interface ShoppingCartService {
-    ShoppingCart addShoppingCart(ShoppingCart cart);
 
-    ShoppingCart getShoppingCart(long id);
+    List<ShoppingCart> getMyShoppingCarts(Buyer buyer);
+    ShoppingCart addShoppingCart(Buyer buyer, long prorductId) throws NotFoundException;
 
-    List<ShoppingCart> getShoppingCarts();
-
-    // void update(String cartId, ShoppingCart cart);
-
-    void deleteShoppingCart(long id);
+    ShoppingCart deleteShoppingCart(long buyerId, long id);
 }
 
 

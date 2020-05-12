@@ -8,6 +8,7 @@ import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.service.AddressService;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
 import edu.miu.cs545.group01.online.market.service.OrderService;
+import edu.miu.cs545.group01.online.market.service.FollowService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,11 @@ public class BuyerController extends BaseController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    FollowService followService;
+
     @GetMapping("/")
-    public String buyer() {
+    public String buyer(){
         return "buyer/buyerCabinet";
     }
 
@@ -141,7 +145,6 @@ public class BuyerController extends BaseController {
             return "buyer/address/create";
         }
         Address address1 = addressService.createAddress(getCurrentBuyer(), address);
-
         return "redirect:/buyer/address/list";
     }
 
@@ -162,5 +165,16 @@ public class BuyerController extends BaseController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
         orderService.cancelOrder(getCurrentBuyer(), orderId);
+    }
+
+    @PutMapping("/follow-seller/{sellerId}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void followSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
+        followService.followSeller(getCurrentBuyer(), sellerId);
+    }
+    @PutMapping("/unfollow-seller/{sellerId}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void unfollowSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
+        followService.unfollowSeller(getCurrentBuyer(), sellerId);
     }
 }
