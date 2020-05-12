@@ -13,7 +13,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @OneToOne
     private OrderProduct orderProduct;
 
     @Enumerated(EnumType.STRING)

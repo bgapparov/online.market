@@ -33,7 +33,7 @@
                 <td th:text="${product.status}">Active</td>
                 <td th:text="${product.description}">Cool phone</td>
                 <td>
-                    <a href="#" id="editProduct" th:data-product-id="${product.id}">Edit</a>
+                    <a href="#" id="editProduct" th:href="@{/seller/product/edit/{productId}(productId=${product.id})}">Edit</a>
                     <a href="#" id="deleteProduct" th:data-product-id="${product.id}">Remove</a>
                 </td>
             </tr>

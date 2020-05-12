@@ -23,6 +23,9 @@ public class OrderProduct {
     private float totalPayment;
     private int quantity;
 
+    @OneToOne(mappedBy = "orderProduct")
+    private Review review;
+
     public OrderProduct() {
     }
 
@@ -37,6 +40,14 @@ public class OrderProduct {
 
     public long getId() {
         return Id;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     public Order getOrder() {

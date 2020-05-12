@@ -5,11 +5,13 @@
  */
 body {
   padding-top: 56px;
+  /*font-size: 12px;*/
 }
-
 
 .product-card{
   margin-top: 10px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .logout{

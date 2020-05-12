@@ -7,20 +7,22 @@ import edu.miu.cs545.group01.online.market.exception.UploadImageException;
 import edu.miu.cs545.group01.online.market.helper.Helper;
 import edu.miu.cs545.group01.online.market.service.CategoryService;
 import edu.miu.cs545.group01.online.market.service.ProductService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/seller")
@@ -40,7 +42,7 @@ public class SellerController extends BaseController {
         return "seller/my-products";
     }
     @GetMapping("/product/add")
-    public String addProduct(@Valid @ModelAttribute("product") Product product, Model model){
+    public String addProduct(@ModelAttribute("product") Product product, Model model){
         model.addAttribute("categories", categoryService.allCategories());
         return "seller/add-product";
     }
@@ -64,6 +66,22 @@ public class SellerController extends BaseController {
         product.setSeller(getCurrentSeller());
         product.setStatus(ProductStatus.ACTIVE);
         productService.createProduct(product);
+
+        return "redirect:/seller/my-products";
+    }
+    @GetMapping("/product/edit/{productId}")
+    public String editProduct(@PathVariable("productId") long productId, Model model) throws NotFoundException {
+        model.addAttribute("categories", categoryService.allCategories());
+        Product product = productService.getProduct(productId);
+        model.addAttribute("product", product);
+        return "seller/edit-product";
+    }
+    @PostMapping("/product/edit/{productId}")
+    public String updateProduct(@PathVariable("productId") long productId, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult) throws NotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "seller/edit-product";
+        }
+        productService.updateProduct(productId, product);
 
         return "redirect:/seller/my-products";
     }

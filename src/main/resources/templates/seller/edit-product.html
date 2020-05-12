@@ -3,24 +3,17 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Add product</title>
+    <title>Edit product</title>
 </head>
 <body>
-
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
-        <form th:object="${product}" action="#" th:action="@{/seller/product/add}" enctype="multipart/form-data"
+        <form th:object="${product}" action="#" th:action="@{/seller/product/edit/{productId}(productId=${product.id})}" enctype="multipart/form-data"
               method="post">
             <ul th:if="${#fields.hasErrors('*')}">
                 <li class="text-danger" th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
-            <div class="form-group">
-                <label for="image">Product photo:</label>
-                <input id="image" th:field="*{image}" type="file" class="form-control-file">
-                <p th:if="${#fields.hasErrors('image')}" th:errors="*{image}"
-                   th:class="${'text-danger'}">Incorrect file</p>
-            </div>
             <div class="form-group">
                 <label for="category">Category</label>
                 <select class="form-control" th:field="*{category}" id="category" required>
@@ -53,10 +46,10 @@
 
             <div id="form-group">
                 <input class="btn btn-primary btn-sm" id="reset" type="reset" value="Rest"/>
-                <input class="btn btn-primary btn-sm" id="submit" type="submit" value="Add product"/>
+                <input class="btn btn-primary btn-sm" id="submit" type="submit" value="Update product"/>
             </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

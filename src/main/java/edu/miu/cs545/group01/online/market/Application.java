@@ -150,7 +150,7 @@ public class Application {
 			review1 = reviewRepository.save(review1);
 			Review review2 = new Review(orderProduct2, ReviewStatus.CREATED, buyerRobel,Helper.getDate(2020,05,19,14,00,00),4,"Good Product", Helper.getDate(2020,05,20,14,00,00));
 			review2 = reviewRepository.save(review2);
-			Review review3 = new Review(orderProduct5, ReviewStatus.POSTED, buyerYafet,Helper.getDate(2020,06,26,13,00,00),5,"Very Good Product", Helper.getDate(2020,06,26,13,00,00));
+			Review review3 = new Review(orderProduct5, ReviewStatus.POSTED, buyerYafet,Helper.getDate(2020,06,26,13,00,00),3,"Very Good Product", Helper.getDate(2020,06,26,13,00,00));
 			review3 = reviewRepository.save(review3);
 
 			ShoppingCart shoppingCart1 = new ShoppingCart(buyerYafet,productIphone,2,Helper.getDate(2020, 5, 11, 13, 50, 8));

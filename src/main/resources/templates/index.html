@@ -10,6 +10,7 @@
 			<div class="col-lg-3">
 				<h1 class="h4">Online Market</h1>
 				<div class="list-group">
+					<a href="#" th:href="@{/}" class="list-group-item">All categories</a>
 					<a href="#" th:each="cat : ${categories}" th:href="@{/(category=${cat.id})}" th:text="${cat.name}" class="list-group-item">Category 1</a>
 				</div>
 			</div>

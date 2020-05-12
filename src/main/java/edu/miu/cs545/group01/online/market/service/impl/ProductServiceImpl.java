@@ -6,6 +6,7 @@ import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.repository.CategoryRepository;
 import edu.miu.cs545.group01.online.market.repository.ProductRepository;
 import edu.miu.cs545.group01.online.market.service.ProductService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,13 +41,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProduct(Long id) {
-        return null;
+    public Product getProduct(Long id) throws NotFoundException {
+        return productRepository.findById(id).orElseThrow(()->new NotFoundException("Product is not found. ProductId = "+id));
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) throws Exception {
-        return null;
+    public Product updateProduct(Long id, Product product) throws NotFoundException {
+        Product prod = productRepository.findById(id).orElseThrow(()->new NotFoundException("Product is not found. ProductId = "+id));
+        prod.setCategory(product.getCategory());
+        prod.setTitle(product.getTitle());
+        prod.setPrice(product.getPrice());
+        prod.setDescription(product.getDescription());
+        return productRepository.save(prod);
     }
 
     @Override
