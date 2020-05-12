@@ -1,11 +1,5 @@
 $(document).ready(function () {
-    function setUpCsrfToken(){
-        let token = $("input[name='_csrf']").val();
-        let header = "X-CSRF-TOKEN";
-        $(document).ajaxSend(function(e, xhr, options) {
-            xhr.setRequestHeader(header, token);
-        });
-    }
+
     $(".deleteAddress").click(function () {
         setUpCsrfToken();
         let addressId = $(this).data("addressId");
@@ -21,6 +15,18 @@ $(document).ready(function () {
         setUpCsrfToken();
         let billingId = $(this).data("billingId");
         $.ajax("/buyer/billing/delete/" + billingId,
+            {type: "DELETE"})
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
+
+    $(".cancelOrder").click(function () {
+        setUpCsrfToken();
+        let orderId = $(this).data("orderId");
+        $.ajax("/buyer/order/cancel/" + orderId,
             {type: "DELETE"})
             .done(function (result) {
                 location.reload();

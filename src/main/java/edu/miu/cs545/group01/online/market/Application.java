@@ -61,7 +61,7 @@ public class Application {
 			john = sellerRepository.save(john);
 			Seller sam = new Seller("Sam","sam@gmail.com", passwordEncoder.encode("123"), UserStatus.PENDING);
 			sam = sellerRepository.save(sam);
-			Buyer buyerYafet = new Buyer("Yafet", "yafet@gmail.com", passwordEncoder.encode("123456"), UserStatus.ACTIVE);
+			Buyer buyerYafet = new Buyer("Yafet", "yafet@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			buyerYafet = buyerRepository.save(buyerYafet);
 			Buyer buyerRobel = new Buyer("Robel", "Robel@gmail.com", passwordEncoder.encode("1234567"), UserStatus.ACTIVE);
 			buyerRobel = buyerRepository.save(buyerRobel);
@@ -125,11 +125,11 @@ public class Application {
 			Product womenflatshoes =new Product ( "Woman Flat shoes" , fashion, 80, ProductStatus.ACTIVE,"redflatshoes.jpg","Nice Shoes", seller2);
 			womenflatshoes = productRepository.save(womenflatshoes);
 
-			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfoCard, Helper.getDate(2020,05,1,13,00,00),  Helper.getDate(2020,05,16,13,00,00));
+			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfoCard,null, null);
 			order1 = orderRepository.save(order1);
 			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order2 = orderRepository.save(order2);
-			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfoCard,Helper.getDate(2020,05,16,13,00,00), Helper.getDate(2020,05,16,16,00,00));
+			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfoCard,Helper.getDate(2020,05,16,13,00,00), null);
 			order3 = orderRepository.save(order3);
 			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order4 = orderRepository.save(order4);
@@ -142,6 +142,10 @@ public class Application {
 			orderProduct2 = orderProductRepository.save(orderProduct2);
 			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,1,0,3500);
 			orderProduct3 = orderProductRepository.save(orderProduct3);
+
+			OrderProduct orderProduct33 = new OrderProduct(order3,converseshoes,1,0,60);
+			orderProduct33 = orderProductRepository.save(orderProduct33);
+
 			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,2,0,2200);
 			orderProduct4 = orderProductRepository.save(orderProduct4);
 			OrderProduct orderProduct5 = new OrderProduct(order5,applewatch,2,0,450);

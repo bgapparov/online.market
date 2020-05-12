@@ -1,8 +1,13 @@
 package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.*;
+import edu.miu.cs545.group01.online.market.domain.Address;
+import edu.miu.cs545.group01.online.market.domain.BillingInfo;
+import edu.miu.cs545.group01.online.market.domain.BillingInfoCreditCard;
+import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.service.AddressService;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
+import edu.miu.cs545.group01.online.market.service.OrderService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,20 +20,22 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/buyer")
-public class BuyerController extends BaseController{
+public class BuyerController extends BaseController {
 
     @Autowired
     BillingInfoService billingInfoService;
     @Autowired
     AddressService addressService;
+    @Autowired
+    OrderService orderService;
 
     @GetMapping("/")
-    public String buyer(){
+    public String buyer() {
         return "buyer/buyerCabinet";
     }
 
     @GetMapping("/billing/list")
-    public String getBills(Model model){
+    public String getBills(Model model) {
         model.addAttribute("bills", billingInfoService.getBillsByBuyer(getCurrentBuyer()));
         return "buyer/billing/list";
     }
@@ -124,7 +131,7 @@ public class BuyerController extends BaseController{
     }
 
     @GetMapping("/address/save")
-    public String createAddress(@ModelAttribute("address") Address address){
+    public String createAddress(@ModelAttribute("address") Address address) {
         return "buyer/address/create";
     }
 
@@ -134,6 +141,7 @@ public class BuyerController extends BaseController{
             return "buyer/address/create";
         }
         Address address1 = addressService.createAddress(getCurrentBuyer(), address);
+
         return "redirect:/buyer/address/list";
     }
 
@@ -141,5 +149,18 @@ public class BuyerController extends BaseController{
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteAddress(@PathVariable("addressId") long addressId) throws NotFoundException {
         addressService.deleteAddress(getCurrentBuyer(), addressId);
+    }
+
+
+    @GetMapping("/order/list")
+    public String orderList(Model model){
+        model.addAttribute("orders", orderService.getMyOrders(getCurrentBuyer()));
+
+        return "buyer/order/list";
+    }
+    @DeleteMapping("/order/cancel/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
+        orderService.cancelOrder(getCurrentBuyer(), orderId);
     }
 }

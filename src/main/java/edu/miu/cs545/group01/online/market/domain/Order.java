@@ -4,6 +4,7 @@ import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "orderTable")
 //@Table(name = "order")
@@ -11,7 +12,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
+    private long id;
 
     private Date orderDate;
 
@@ -33,6 +34,8 @@ public class Order {
 
     private Date deliveredDate;
 
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private List<OrderProduct> orderedProducts;
 
     public Order() {
     }
@@ -49,7 +52,7 @@ public class Order {
     }
 
     public long getId() {
-        return Id;
+        return id;
     }
 
     public Date getOrderDate() {
@@ -63,7 +66,41 @@ public class Order {
     public OrderStatus getStatus() {
         return status;
     }
+    public boolean isStatusCreated(){
+        return status == OrderStatus.CREATED;
+    }
+    public boolean isStatusDelivered(){
+        return status == OrderStatus.DELIVERED;
+    }
 
+    public boolean isStatusShipped(){
+        return status == OrderStatus.SHIPPED;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public List<OrderProduct> getOrderedProducts() {
+        return orderedProducts;
+    }
+
+    public void setOrderedProducts(List<OrderProduct> orderedProducts) {
+        this.orderedProducts = orderedProducts;
+    }
+
+    public String getOrderedProductsText(){
+        return orderedProducts.stream().map(o->o.toString()).reduce((op1, op2)->op1+"\r\n"+op2).orElse("");
+//        String result = "";
+//        for (OrderProduct orderProduct : orderedProducts) {
+//            result += orderProduct +"\r\n";
+//        }
+//        return result;
+    }
     public void setStatus(OrderStatus status) {
         this.status = status;
     }

@@ -137,7 +137,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return title + ". price: " + price;
+        return category+"\r\n"+title;
     }
 
     public int getAvgStars(){

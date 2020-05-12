@@ -17,6 +17,7 @@
         <h1 class="h4">Seller menu</h1>
         <div class="list-group">
             <a href="#" th:href="@{/seller/my-products}" class="list-group-item">My products</a>
+            <a href="#" th:href="@{/seller/order/list}" class="list-group-item">Orders</a>
         </div>
     </div>
     <div th:if="${#request.isUserInRole('BUYER')}">
@@ -24,6 +25,7 @@
         <div class="list-group">
             <a href="#" th:href="@{/buyer/address/list}" class="list-group-item">Address</a>
             <a href="#" th:href="@{/buyer/billing/list}" class="list-group-item">Billing Information</a>
+            <a href="#" th:href="@{/buyer/order/list}" class="list-group-item">Orders</a>
         </div>
     </div>
 </div>

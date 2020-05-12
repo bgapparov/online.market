@@ -2,29 +2,28 @@ package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.domain.Seller;
+import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
 import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
+import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.exception.RemoveException;
 import edu.miu.cs545.group01.online.market.exception.UploadImageException;
 import edu.miu.cs545.group01.online.market.helper.Helper;
 import edu.miu.cs545.group01.online.market.service.CategoryService;
+import edu.miu.cs545.group01.online.market.service.OrderService;
 import edu.miu.cs545.group01.online.market.service.ProductService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/seller")
@@ -33,7 +32,8 @@ public class SellerController extends BaseController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
-
+    @Autowired
+    private OrderService orderService;
     @Autowired
     ServletContext servletContext;
 
@@ -91,5 +91,28 @@ public class SellerController extends BaseController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable("productId") long productId) throws NotFoundException, RemoveException {
         productService.deleteProduct(productId);
+    }
+
+
+    @GetMapping("/order/list")
+    public String orderList(Model model){
+        model.addAttribute("orders", orderService.getMyOrders(getCurrentSeller()));
+
+        return "seller/order/list";
+    }
+    @DeleteMapping("/order/cancel/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
+        orderService.setStatus(getCurrentSeller(), orderId, OrderStatus.CANCELED);
+    }
+    @PutMapping("/order/shipped/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void shippedOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
+        orderService.setStatus(getCurrentSeller(), orderId, OrderStatus.SHIPPED);
+    }
+    @PutMapping("/order/delivered/{orderId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deliveredOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
+        orderService.setStatus(getCurrentSeller(), orderId, OrderStatus.DELIVERED);
     }
 }

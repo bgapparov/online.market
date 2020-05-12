@@ -1,11 +1,4 @@
 $(document).ready(function () {
-    function setUpCsrfToken(){
-        let token = $("input[name='_csrf']").val();
-        let header = "X-CSRF-TOKEN";
-        $(document).ajaxSend(function(e, xhr, options) {
-            xhr.setRequestHeader(header, token);
-        });
-    }
     $(".deleteProduct").click(function () {
         setUpCsrfToken();
         let productId = $(this).data("productId");
@@ -18,4 +11,37 @@ $(document).ready(function () {
         });
     });
 
+    $(".cancelOrderBySeller").click(function () {
+        setUpCsrfToken();
+        let orderId = $(this).data("orderId");
+        $.ajax("/seller/order/cancel/" + orderId,
+            {type: "DELETE"})
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
+    $(".makeAsShipped").click(function () {
+        setUpCsrfToken();
+        let orderId = $(this).data("orderId");
+        $.ajax("/seller/order/shipped/" + orderId,
+            {type: "PUT"})
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
+    $(".makeAsDelivered").click(function () {
+        setUpCsrfToken();
+        let orderId = $(this).data("orderId");
+        $.ajax("/seller/order/delivered/" + orderId,
+            {type: "PUT"})
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
 });

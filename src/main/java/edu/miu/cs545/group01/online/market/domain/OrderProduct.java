@@ -18,6 +18,7 @@ public class OrderProduct {
 
     @ManyToOne
     private Product product;
+
     private float pointPayment;
     private float cashPayment;
     private float totalPayment;

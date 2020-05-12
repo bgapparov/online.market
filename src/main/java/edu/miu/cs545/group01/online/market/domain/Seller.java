@@ -14,6 +14,13 @@ public class Seller extends User {
     }
     public Seller(String name, String Email, String Password, UserStatus status) {
         super(name, Email, Password, new HashSet<>(Arrays.asList()), status);//Role.SELLER - because need approve from admin
+        if(status == UserStatus.ACTIVE){
+            addRole(Role.SELLER);
+        }
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
