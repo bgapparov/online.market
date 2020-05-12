@@ -32,10 +32,4 @@ public class ShoppingCartController {
         shoppingCartService.deleteShoppingCart(id);
     }
 
-
-//    @PutMapping("/add/{productId}")
-//    public void additem(@PathVariable String productId, HttpServletRequest request) {
-//
-//    }
-
 }
