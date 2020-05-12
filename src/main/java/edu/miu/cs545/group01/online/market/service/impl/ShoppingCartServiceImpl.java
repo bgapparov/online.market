@@ -6,32 +6,50 @@ import edu.miu.cs545.group01.online.market.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.miu.cs545.group01.online.market.domain.Buyer;
+import edu.miu.cs545.group01.online.market.domain.Product;
+import edu.miu.cs545.group01.online.market.service.ProductService;
+import javassist.NotFoundException;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
-    public class ShoppingCartServiceImpl implements ShoppingCartService {
+public class ShoppingCartServiceImpl implements ShoppingCartService {
+    @Autowired
+    ShoppingCartRepository shoppingCartRepository;
+    @Autowired
+    private ProductService productService;
 
-        @Autowired
-        ShoppingCartRepository shoppingCartRepository;
+    @Override
+    public List<ShoppingCart> getMyShoppingCarts(Buyer buyer) {
+        return shoppingCartRepository.findAllByBuyer(buyer);
+    }
 
-        @Override
-        public ShoppingCart addShoppingCart(ShoppingCart cart) {
-            return shoppingCartRepository.save(cart);
+    @Override
+    public ShoppingCart addShoppingCart(Buyer buyer, long prorductId) throws NotFoundException {
+        Product product = productService.getProduct(prorductId);
+        ShoppingCart shoppingCart = shoppingCartRepository.findByBuyerAndProduct(buyer, product).orElse(null);
+        if (shoppingCart == null) {
+            shoppingCart = new ShoppingCart(buyer, product, 1, new Date());
+        } else {
+            shoppingCart.setQuantity(shoppingCart.getQuantity() + 1);
         }
+        return shoppingCartRepository.save(shoppingCart);
+    }
 
-        @Override
-        public ShoppingCart getShoppingCart(long id) {
+    @Override
+    public ShoppingCart deleteShoppingCart(long buyerId, long id) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(id).orElse(null);
+        if (shoppingCart == null) {
             return null;
         }
 
-        @Override
-        public List<ShoppingCart> getShoppingCarts() {
-            return shoppingCartRepository.findAll();
+        if (shoppingCart.getBuyer().getId() != buyerId) {
+            throw new RuntimeException("Shopping cart cannot be removed");
         }
-
-        @Override
-        public void deleteShoppingCart(long id) {
-            shoppingCartRepository.deleteById(id);
-        }
+        shoppingCartRepository.delete(shoppingCart);
+        return shoppingCart;
     }
+}
 

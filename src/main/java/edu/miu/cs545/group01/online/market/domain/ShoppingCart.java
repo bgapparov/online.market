@@ -14,7 +14,7 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Buyer buyer;
 
     @ManyToOne

@@ -1,35 +1,32 @@
 package edu.miu.cs545.group01.online.market.controller;
-
-
-        import edu.miu.cs545.group01.online.market.domain.ShoppingCart;
         import edu.miu.cs545.group01.online.market.service.ShoppingCartService;
         import org.springframework.beans.factory.annotation.Autowired;
+        import javassist.NotFoundException;
+        import org.springframework.http.HttpStatus;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
         import org.springframework.web.bind.annotation.*;
-        import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-        import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/shoppingcart")
-public class ShoppingCartController {
+@RequestMapping("/buyer/cart")
+public class ShoppingCartController extends BaseController{
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @GetMapping("/")
-    public String createShoppingCart(@ModelAttribute("items") ShoppingCart shoppingCart, Model model) {
-        model.addAttribute("items", shoppingCart);
-        return "shoppingcart/list";
+    @GetMapping("/list")
+    public String myShoppingCart(Model model) {
+        model.addAttribute("items", shoppingCartService.getMyShoppingCarts(getCurrentBuyer()));
+        return "buyer/cart/list";
     }
 
-    @PostMapping("/add")
-    public void saveShoppingCart(ShoppingCart shoppingCart) {
-        shoppingCartService.addShoppingCart(shoppingCart);
+    @PostMapping("/add/{productId}")
+    public void addToShoppingCart(@PathVariable("productId") long productId) throws NotFoundException {
+        shoppingCartService.addShoppingCart(getCurrentBuyer(), productId );
     }
-    @DeleteMapping("/delete/{id}")
-    public void deleteShoppingCart(@PathVariable("id") long id) {
-        shoppingCartService.deleteShoppingCart(id);
+    @DeleteMapping("/delete/{cartId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteShoppingCart(@PathVariable("cartId") long id) {
+        shoppingCartService.deleteShoppingCart(getCurrentBuyer().getId(), id);
     }
 
 }
