@@ -28,10 +28,7 @@ public abstract class User {
 
     @JsonIgnore
     @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "userRole", joinColumns = @JoinColumn(name = "userId"))
-//    @Column(name = "authority", nullable = false)
     @Enumerated(EnumType.STRING)
-    @Size(min = 1)
     private Set<Role> roles;
 
     @Enumerated(EnumType.STRING)

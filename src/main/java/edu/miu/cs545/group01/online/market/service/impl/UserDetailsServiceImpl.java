@@ -1,9 +1,8 @@
 package edu.miu.cs545.group01.online.market.service.impl;
 
-import edu.miu.cs545.group01.online.market.domain.MarketUserDetails;
+import edu.miu.cs545.group01.online.market.domain.security.MarketUserDetails;
 import edu.miu.cs545.group01.online.market.domain.User;
 import edu.miu.cs545.group01.online.market.repository.UserRepository;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

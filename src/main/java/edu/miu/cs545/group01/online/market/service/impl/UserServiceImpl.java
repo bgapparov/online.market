@@ -2,6 +2,7 @@ package edu.miu.cs545.group01.online.market.service.impl;
 
 import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.domain.enums.UserStatus;
+import edu.miu.cs545.group01.online.market.domain.UserRegistrationModel;
 import edu.miu.cs545.group01.online.market.repository.BuyerRepository;
 import edu.miu.cs545.group01.online.market.repository.SellerRepository;
 import edu.miu.cs545.group01.online.market.repository.UserRepository;

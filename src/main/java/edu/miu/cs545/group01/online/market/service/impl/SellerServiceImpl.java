@@ -1,6 +1,7 @@
 package edu.miu.cs545.group01.online.market.service.impl;
 
 import edu.miu.cs545.group01.online.market.domain.Seller;
+import edu.miu.cs545.group01.online.market.domain.enums.Role;
 import edu.miu.cs545.group01.online.market.domain.enums.UserStatus;
 import edu.miu.cs545.group01.online.market.repository.SellerRepository;
 import edu.miu.cs545.group01.online.market.service.SellerService;
@@ -23,6 +24,7 @@ public class SellerServiceImpl implements SellerService {
     public void approveSeller(long sellerId) throws NotFoundException{
         Seller seller = sellerRepository.findById(sellerId).orElseThrow(()->new NotFoundException("Seller does not exist"));
         seller.setStatus(UserStatus.ACTIVE);
+        seller.addRole(Role.SELLER);
         seller = sellerRepository.save(seller);
     }
     @Override

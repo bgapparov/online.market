@@ -1,6 +1,7 @@
 package edu.miu.cs545.group01.online.market.service;
 
 import edu.miu.cs545.group01.online.market.domain.*;
+import edu.miu.cs545.group01.online.market.domain.UserRegistrationModel;
 
 import java.util.List;
 

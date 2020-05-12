@@ -48,6 +48,7 @@ public class MainController extends BaseController {
         if(curUser == null){
             return "redirect:/";
         }
+        resetAuthentication();
         return "homepage";
     }
 }

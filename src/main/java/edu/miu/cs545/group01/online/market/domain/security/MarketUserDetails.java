@@ -1,5 +1,6 @@
-package edu.miu.cs545.group01.online.market.domain;
+package edu.miu.cs545.group01.online.market.domain.security;
 
+import edu.miu.cs545.group01.online.market.domain.User;
 import edu.miu.cs545.group01.online.market.domain.enums.UserStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
