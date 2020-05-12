@@ -143,4 +143,15 @@ public class BillingInfo {
     public void setStatus(BillingInfoStatus status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return cardNo +
+                ", " + cardName +
+                ", " + expirationDate +
+                ", " + securityNumber +
+                ", " + accountName +
+                ", " + accountNumber +
+                ", " + routingNumber;
+    }
 }

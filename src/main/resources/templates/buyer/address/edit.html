@@ -3,13 +3,13 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Create Address</title>
+    <title>Details Address</title>
 </head>
 <body>
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
-        <form method="POST" action="#" th:action="@{/buyer/address/save}" th:object="${address}">
+        <form method="POST" action="#" th:object="${address}" th:action="@{/buyer/address/edit/{addressId}(addressId=${address.id})}">
             <div class="form-group">
                 <label for="city">City</label>
                 <input type="text" class="form-control" id="city" th:field="*{city}" placeholder="City">
@@ -47,7 +47,7 @@
                     Incorrect Phone Number</p>
             </div>
             <div id="form-group">
-                <input class="btn btn-primary btn-sm" name="save" value="Save" type="submit"/>
+                <input class="btn btn-primary btn-sm" name="save" value="Update" type="submit"/>
             </div>
         </form>
     </div>
