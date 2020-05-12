@@ -29,11 +29,6 @@ import java.util.List;
             return shoppingCartRepository.findAll();
         }
 
-//        @Override
-//        public void update(String cartId, ShoppingCart cart) {
-//            cartRepository.update(cartId, cart);
-//        }
-
         @Override
         public void deleteShoppingCart(long id) {
             shoppingCartRepository.deleteById(id);
