@@ -17,4 +17,15 @@ $(document).ready(function () {
             alert("Request failed: " + textStatus);
         });
     });
+    $(".deleteBilling").click(function () {
+        setUpCsrfToken();
+        let billingId = $(this).data("billingId");
+        $.ajax("/buyer/billing/delete/" + billingId,
+            {type: "DELETE"})
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
 });

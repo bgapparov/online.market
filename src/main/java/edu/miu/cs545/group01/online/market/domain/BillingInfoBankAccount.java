@@ -1,7 +1,5 @@
 package edu.miu.cs545.group01.online.market.domain;
 
-import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -18,8 +16,13 @@ public class BillingInfoBankAccount extends BillingInfo {
     public BillingInfoBankAccount() {
     }
 
-    public BillingInfoBankAccount(Buyer buyer, String accountName, String accountNumber, String routingNumber, Address billingAddress, BillingInfoStatus status) {
-        super(buyer, billingAddress, status);
+    @Override
+    public String getType() {
+        return "bank";
+    }
+
+    public BillingInfoBankAccount(Buyer buyer, String accountName, String accountNumber, String routingNumber, Address billingAddress) {
+        super(buyer, billingAddress);
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.routingNumber = routingNumber;

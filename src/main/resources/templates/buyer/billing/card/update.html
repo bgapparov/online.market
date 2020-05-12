@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Information</title>
+</head>
+<body>
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+        <form method="POST" action="#" th:action="@{/buyer/billing/card/update/{creditcardId}(creditcardId=${card.id})}" th:object="${card}">
+            <div class="form-group">
+                <label for="cardNo">Card Number</label>
+                <input type="text" class="form-control" id="cardNo" th:field="*{cardNo}" placeholder="Card Number">
+                <p th:if="${#fields.hasErrors('cardNo')}" th:errors="*{cardNo}" th:class="${'text-danger'}">
+                    Incorrect Card Number</p>
+            </div>
+            <div class="form-group">
+                <label for="cardName">Card Name</label>
+                <input type="text" class="form-control" id="cardName" th:field="*{cardName}" placeholder="Card Name">
+                <p th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}" th:class="${'text-danger'}">
+                    Incorrect Card Name</p>
+            </div>
+            <div class="form-group">
+                <label for="expirationDate">Expiration Date</label>
+                <input type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}" placeholder="Expiration Date">
+                <p th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}" th:class="${'text-danger'}">
+                    Incorrect Expiration Date</p>
+            </div>
+            <div class="form-group">
+                <label for="securityNumber">Security Number</label>
+                <input type="text" class="form-control" id="securityNumber" th:field="*{securityNumber}" placeholder="Security Number">
+                <p th:if="${#fields.hasErrors('securityNumber')}" th:errors="*{securityNumber}" th:class="${'text-danger'}">
+                    Incorrect Security Number</p>
+            </div>
+            <div class="form-group">
+                <label for="address">Billing Address</label>
+                <select class="form-control" th:field="*{billingAddress}" id="address" required>
+                    <option value="">Select Address</option>
+                    <option th:each="add : ${addresses}" th:value="${add.id}" th:text="${add}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('billingAddress')}" th:errors="*{billingAddress}" th:class="${'text-danger'}">
+                    Incorrect Address</p>
+            </div>
+            <div id="form-group">
+                <input class="btn btn-primary btn-sm" id="update" value="Update" type="submit"/>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

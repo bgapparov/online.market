@@ -1,7 +1,6 @@
 package edu.miu.cs545.group01.online.market.service.impl;
 
 import edu.miu.cs545.group01.online.market.domain.*;
-import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
 import edu.miu.cs545.group01.online.market.repository.BillingInfoRepository;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
 import javassist.NotFoundException;
@@ -17,41 +16,62 @@ public class BillingInfoServiceImpl implements BillingInfoService {
     BillingInfoRepository billingInfoRepository;
 
     @Override
-    public BillingInfo createBilling(BillingInfo billingInfo){
-        return billingInfoRepository.save(billingInfo);
+    public BillingInfo createCreditCard(BillingInfoCreditCard card, Buyer buyer){
+        card.setBuyer(buyer);
+        return billingInfoRepository.save(card);
+    }
+
+    @Override
+    public BillingInfo createBankAccount(BillingInfoBankAccount bank, Buyer buyer){
+        bank.setBuyer(buyer);
+        return billingInfoRepository.save(bank);
     }
 
     @Override
     public List<BillingInfo> getBillsByBuyer(Buyer buyer) {
-        return billingInfoRepository.findAllByStatusAndBuyer(BillingInfoStatus.ACTIVE, buyer);
+        return billingInfoRepository.findAllByBuyer(buyer);
     }
 
     @Override
-    public BillingInfo getBilling(Long id){
-        return billingInfoRepository.findById(id).orElse(null);
+    public BillingInfo getBilling(Buyer buyer, Long id){
+        BillingInfo result = billingInfoRepository.findById(id).orElse(null);
+        if(result != null && result.getBuyer().getId() != buyer.getId()){
+            return null;
+        }
+        return result;
     }
 
     @Override
-    public BillingInfo updateCreditCard(long id, BillingInfoCreditCard card) throws NotFoundException {
-        BillingInfoCreditCard bill = (BillingInfoCreditCard)billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("BillingInfoCreditCard is not found"));
-        bill.setCardNo(card.getCardNo());
-        bill.setCardName(card.getCardName());
-        bill.setExpirationDate(card.getExpirationDate());
-        bill.setSecurityNumber(card.getSecurityNumber());
-        return billingInfoRepository.save(bill);
+    public BillingInfo updateCreditCard(Buyer buyer, long id, BillingInfoCreditCard card) throws NotFoundException {
+        BillingInfoCreditCard result = (BillingInfoCreditCard)billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("BillingInfoCreditCard is not found"));
+        if(result != null && result.getBuyer().getId() != buyer.getId()){
+            return null;
+        }
+        result.setCardNo(card.getCardNo());
+        result.setCardName(card.getCardName());
+        result.setExpirationDate(card.getExpirationDate());
+        result.setSecurityNumber(card.getSecurityNumber());
+        return billingInfoRepository.save(result);
     }
 
     @Override
-    public BillingInfo updateBankAccount(long id, BillingInfoBankAccount bank) throws NotFoundException {
-        BillingInfoBankAccount bill = (BillingInfoBankAccount)billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("BillingInfoBankAccount is not found"));
-        bill.setAccountName(bank.getAccountName());
-        bill.setAccountNumber(bank.getAccountNumber());
-        bill.setRoutingNumber(bank.getRoutingNumber());
-        return billingInfoRepository.save(bill);
+    public BillingInfo updateBankAccount(Buyer buyer, long id, BillingInfoBankAccount bank) throws NotFoundException {
+        BillingInfoBankAccount result = (BillingInfoBankAccount)billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("BillingInfoBankAccount is not found"));
+        if(result != null && result.getBuyer().getId() != buyer.getId()){
+            return null;
+        }
+        result.setAccountName(bank.getAccountName());
+        result.setAccountNumber(bank.getAccountNumber());
+        result.setRoutingNumber(bank.getRoutingNumber());
+        return billingInfoRepository.save(result);
     }
 
     @Override
-    public void deleteBilling(long id) throws NotFoundException {
-        billingInfoRepository.deleteById(id);
+    public void deleteBilling(Buyer buyer, long id) throws NotFoundException {
+        BillingInfo result = billingInfoRepository.findById(id).orElseThrow(()->new NotFoundException("Address is not found"));
+        if(result != null && result.getBuyer().getId() != buyer.getId()){
+            return;
+        }
+        billingInfoRepository.deleteById(result.getId());
     }
 }

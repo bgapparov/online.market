@@ -1,8 +1,5 @@
 package edu.miu.cs545.group01.online.market.domain;
 
-import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
-import edu.miu.cs545.group01.online.market.domain.enums.BillingType;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Date;
@@ -22,8 +19,13 @@ public class BillingInfoCreditCard extends BillingInfo {
     public BillingInfoCreditCard() {
     }
 
-    public BillingInfoCreditCard(Buyer buyer, long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress, BillingInfoStatus status) {
-        super(buyer, billingAddress, status);
+    @Override
+    public String getType() {
+        return "card";
+    }
+
+    public BillingInfoCreditCard(Buyer buyer, long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress) {
+        super(buyer, billingAddress);
 
         this.cardNo = cardNo;
         this.cardName = cardName;

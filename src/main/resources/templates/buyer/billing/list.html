@@ -10,9 +10,9 @@
         <div th:replace="components/userAccessMenu :: mnu">User menu</div>
         <div class="col-lg-9">
             <div class="panel-body">
-                <a href="#" class="btn btn-secondary btn-sm" th:href="@{/buyer/billing/save}" >Add</a>
+                <a href="#" class="btn btn-secondary btn-sm" th:href="@{/buyer/billing/bank/save}" >Add Bank Account</a><span>&nbsp;</span>
+                <a href="#" class="btn btn-secondary btn-sm" th:href="@{/buyer/billing/card/save}" >Add Credit Card</a>
             </div>
-
             <table class="table">
                 <thead>
                 <tr>
@@ -26,8 +26,8 @@
                     <th scope="row" th:text="${iter.index+1}">1</th>
                     <td th:text="${billing}">Billing Information</td>
                     <td>
-                        <a href="#" th:href="@{/buyer/billing/edit/{billingId}(billingId=${billing.id})}">Edit</a>
-                        <a href="#" class="deleteBilling" th:data-address-id="${billing.id}">Remove</a>
+                        <a href="#" th:href="@{/buyer/billing/{billingType}/update/{billingId}(billingType=${billing.type},billingId=${billing.id})}">Edit</a>
+                        <a href="#" class="deleteBilling" th:data-billing-id="${billing.id}">Remove</a>
                     </td>
                 </tr>
                 </tbody>
@@ -35,7 +35,7 @@
         </div>
     </div>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/billing.js}"></script>
+        <script th:src="@{/js/buyer.js}"></script>
     </th:block>
 </body>
 </html>
