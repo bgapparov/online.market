@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"  layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Billing</title>
+</head>
+<body>
+    <div id="contents" class="row" layout:fragment="main-content">
+        <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+        <div class="col-lg-9">
+            <h4>Add Bank Account</h4>
+            <form method="POST" action="#" th:action="@{/buyer/billing/bank/save}" th:object="${bank}">
+                <div class="form-group">
+                    <label for="accountName">Account Name</label>
+                    <input type="text" class="form-control" id="accountName" th:field="*{accountName}" placeholder="Account Name">
+                    <p th:if="${#fields.hasErrors('accountName')}" th:errors="*{accountName}" th:class="${'text-danger'}">
+                        Incorrect Account Name</p>
+                </div>
+                <div class="form-group">
+                    <label for="accountNumber">Account Number</label>
+                    <input type="text" class="form-control" id="accountNumber" th:field="*{accountNumber}" placeholder="Account Number">
+                    <p th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}" th:class="${'text-danger'}">
+                        Incorrect Account Number</p>
+                </div>
+                <div class="form-group">
+                    <label for="accountNumber">Routing Number</label>
+                    <input type="text" class="form-control" id="routingNumber" th:field="*{routingNumber}" placeholder="Routing Number">
+                    <p th:if="${#fields.hasErrors('routingNumber')}" th:errors="*{routingNumber}" th:class="${'text-danger'}">
+                        Incorrect Routing Number</p>
+                </div>
+                <div class="form-group">
+                    <label for="address">Billing Address</label>
+                    <select class="form-control" th:field="*{billingAddress}" id="address" required>
+                        <option value="">Select Address</option>
+                        <option th:each="add : ${addresses}" th:value="${add.id}" th:text="${add}"></option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('billingAddress')}" th:errors="*{billingAddress}" th:class="${'text-danger'}">
+                        Incorrect Address</p>
+                </div>
+                <div id="form-group">
+                    <input class="btn btn-primary btn-sm" id="submit" value="Save" type="submit"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

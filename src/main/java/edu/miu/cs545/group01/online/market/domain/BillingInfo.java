@@ -1,19 +1,15 @@
 package edu.miu.cs545.group01.online.market.domain;
 
-import edu.miu.cs545.group01.online.market.domain.enums.BillingInfoStatus;
-import edu.miu.cs545.group01.online.market.domain.enums.BillingType;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(
-        name="billingType",
+        name = "billingType",
         discriminatorType=DiscriminatorType.STRING
 )
 public abstract class BillingInfo {
@@ -28,15 +24,12 @@ public abstract class BillingInfo {
     @ManyToOne
     private Address billingAddress;
 
-    private BillingInfoStatus status;
-
     public BillingInfo() {
     }
 
-    public BillingInfo(Buyer buyer, Address billingAddress, BillingInfoStatus status) {
+    public BillingInfo(Buyer buyer, Address billingAddress) {
         this.buyer = buyer;
         this.billingAddress = billingAddress;
-        this.status = status;
     }
     public long getId() {
         return id;
@@ -62,12 +55,5 @@ public abstract class BillingInfo {
         this.billingAddress = billingAddress;
     }
 
-    public BillingInfoStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BillingInfoStatus status) {
-        this.status = status;
-    }
-
+    public abstract String getType();
 }

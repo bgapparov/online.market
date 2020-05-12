@@ -1,9 +1,6 @@
 package edu.miu.cs545.group01.online.market.controller;
 
-import edu.miu.cs545.group01.online.market.domain.Address;
-import edu.miu.cs545.group01.online.market.domain.BillingInfo;
-import edu.miu.cs545.group01.online.market.domain.BillingInfoCreditCard;
-import edu.miu.cs545.group01.online.market.domain.Product;
+import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.service.AddressService;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
 import javassist.NotFoundException;
@@ -11,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/buyer")
@@ -34,50 +33,93 @@ public class BuyerController extends BaseController{
         return "buyer/billing/list";
     }
 
-    @GetMapping("/billing/edit/{billingId}")
-    public String getBilling(@PathVariable("billingId") long id, Model model){
-        model.addAttribute("billing", billingInfoService.getBilling(id));
-        return "buyer/billing/edit";
+    @GetMapping("/billing/bank/update/{billingId}")
+    public String getBillingBankAccount(@ModelAttribute("bank") BillingInfoBankAccount bank, @PathVariable("billingId") long billingId, Model model){
+        model.addAttribute("bank", billingInfoService.getBilling(getCurrentBuyer(), billingId));
+        model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
+        return "buyer/billing/bank/update";
     }
 
-    @PostMapping("/billing/edit/{billingId}")
-    public String editBilling(@PathVariable("billingId") long id, BillingInfoCreditCard billingInfo) throws NotFoundException{
-        BillingInfo updateBilling = billingInfoService.updateCreditCard(id, billingInfo);
+    @PostMapping("/billing/bank/update/{billingId}")
+    public String updateBillingBankAccount(@Valid @PathVariable("billingId") long billingId, BillingInfoBankAccount billingInfoBankAccount, BindingResult bindingResult, Model model) throws NotFoundException{
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", billingInfoService.getBilling(getCurrentBuyer(), billingId));
+            return "buyer/billing/bank/update";
+        }
+        BillingInfo updateBilling = billingInfoService.updateBankAccount(getCurrentBuyer(), billingId, billingInfoBankAccount);
         return "redirect:/buyer/billing/list";
     }
 
-    @GetMapping("/billing/save")
-    public String createBilling(@ModelAttribute("billing") BillingInfo billingInfo){
-        return "buyer/billing/create";
+    @GetMapping("/billing/card/update/{billingId}")
+    public String getBillingCreditCard(@ModelAttribute("card") BillingInfoCreditCard card, @PathVariable("billingId") long billingId, Model model){
+        model.addAttribute("card", billingInfoService.getBilling(getCurrentBuyer(), billingId));
+        model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
+        return "buyer/billing/card/update";
     }
 
-    @PostMapping("/billing/save")
-    public String saveBilling(@ModelAttribute("billing") BillingInfo billingInfo){
-        BillingInfo billingInfo1 = billingInfoService.createBilling(billingInfo);
+
+    @PostMapping("/billing/card/update/{billingId}")
+    public String updateBillingCreditCard(@Valid @PathVariable("billingId") long billingId, @ModelAttribute("card") BillingInfoCreditCard card, BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult, Model model) throws NotFoundException{
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("card", billingInfoService.getBilling(getCurrentBuyer(), billingId));
+            return "buyer/billing/card/update";
+        }
+        BillingInfo updateBilling = billingInfoService.updateCreditCard(getCurrentBuyer(),billingId, billingInfoCreditCard);
+        return "redirect:/buyer/billing/list";
+    }
+
+    @GetMapping("/billing/bank/save")
+    public String createBillingBankAccount(@ModelAttribute("bank") BillingInfoBankAccount bank, Model model){
+        model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
+        return "buyer/billing/bank/create";
+    }
+
+    @PostMapping("/billing/bank/save")
+    public String saveBillingBankAccount(@Valid @ModelAttribute("bank") BillingInfoBankAccount billingInfoBankAccount, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "buyer/billing/bank/create";
+        }
+        BillingInfo billingInfo1 = billingInfoService.createBankAccount(billingInfoBankAccount, getCurrentBuyer());
+        return "redirect:/buyer/billing/list";
+    }
+
+
+    @GetMapping("/billing/card/save")
+    public String createBillingCreditCard(@ModelAttribute("card") BillingInfoCreditCard card, Model model){
+        model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
+        return "buyer/billing/card/create";
+    }
+
+    @PostMapping("/billing/card/save")
+    public String saveBillingCreditCard(@Valid @ModelAttribute("card") BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "buyer/billing/card/create";
+        }
+        BillingInfo billingInfo1 = billingInfoService.createCreditCard(billingInfoCreditCard, getCurrentBuyer());
         return "redirect:/buyer/billing/list";
     }
 
     @DeleteMapping("/billing/delete/{billingId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteBilling(@PathVariable("billingId") long id)  throws NotFoundException{
-        billingInfoService.deleteBilling(id);
+        billingInfoService.deleteBilling(getCurrentBuyer(), id);
     }
 
-        @GetMapping("/address/list")
+    @GetMapping("/address/list")
     public String getAddresses(Model model){
-        model.addAttribute("addresses", addressService.getAddresses());
+        model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/address/list";
     }
 
-    @GetMapping("/address/edit/{addressId}")
+    @GetMapping("/address/update/{addressId}")
     public String getAddress(@PathVariable("addressId") long id, Model model){
-        model.addAttribute("address",addressService.getAddress(id));
-        return "buyer/address/edit";
+        model.addAttribute("address",addressService.getMyAddress(getCurrentBuyer(), id));
+        return "buyer/address/update";
     }
 
-    @PostMapping("/address/edit/{addressId}")
-    public String editAddress(@PathVariable("addressId") long id, Address address) throws NotFoundException{
-        Address updateAddress = addressService.updateAddress(id, address);
+    @PostMapping("/address/update/{addressId}")
+    public String updateAddress(@PathVariable("addressId") long id, Address address) throws NotFoundException{
+        Address updateAddress = addressService.updateAddress(getCurrentBuyer(), id, address);
         return "redirect:/buyer/address/list";
     }
 
@@ -87,14 +129,17 @@ public class BuyerController extends BaseController{
     }
 
     @PostMapping("/address/save")
-    public String saveAddress(Address address){
-        Address address1 = addressService.createAddress(address);
+    public String saveAddress(@Valid Address address, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return "buyer/address/create";
+        }
+        Address address1 = addressService.createAddress(getCurrentBuyer(), address);
         return "redirect:/buyer/address/list";
     }
 
     @DeleteMapping("/address/delete/{addressId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteAddress(@PathVariable("addressId") long addressId) throws NotFoundException {
-        addressService.deleteAddress(addressId);
+        addressService.deleteAddress(getCurrentBuyer(), addressId);
     }
 }

@@ -6,10 +6,11 @@ import javassist.NotFoundException;
 import java.util.List;
 
 public interface BillingInfoService {
-    BillingInfo createBilling(BillingInfo billingInfo);
+    BillingInfo createCreditCard(BillingInfoCreditCard card, Buyer buyer);
+    BillingInfo createBankAccount(BillingInfoBankAccount bank, Buyer buyer);
     List<BillingInfo> getBillsByBuyer(Buyer buyer);
-    BillingInfo getBilling(Long id);
-    BillingInfo updateCreditCard(long id, BillingInfoCreditCard card) throws NotFoundException;
-    BillingInfo updateBankAccount(long id, BillingInfoBankAccount bank) throws NotFoundException;
-    void deleteBilling(long id) throws NotFoundException;
+    BillingInfo getBilling(Buyer buyer, Long id);
+    BillingInfo updateCreditCard(Buyer buyer, long id, BillingInfoCreditCard card) throws NotFoundException;
+    BillingInfo updateBankAccount(Buyer buyer, long id, BillingInfoBankAccount bank) throws NotFoundException;
+    void deleteBilling(Buyer buyer, long id) throws NotFoundException;
 }

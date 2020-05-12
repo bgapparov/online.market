@@ -25,7 +25,7 @@
                             <th scope="row" th:text="${iter.index+1}">1</th>
                             <td th:text="${address}">address</td>
                             <td>
-                                <a href="#" th:href="@{/buyer/address/edit/{addressId}(addressId=${address.id})}">Edit</a>
+                                <a href="#" th:href="@{/buyer/address/update/{addressId}(addressId=${address.id})}">Edit</a>
                                 <a href="#" class="deleteAddress" th:data-address-id="${address.id}">Remove</a>
                             </td>
                         </tr>
