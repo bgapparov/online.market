@@ -9,24 +9,32 @@
         <div id="contents" class="row" layout:fragment="main-content">
             <div th:replace="components/userAccessMenu :: mnu">User menu</div>
             <div class="col-lg-9">
-                <form method="post" action="/buyer/billing/save">
-                    <input name="" value="Add" type="submit">
-                </form>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Address</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="address : ${addresses}">
-                        <th scope="row">1</th>
-                        <td th:text="${address}">address</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="panel-body">
+                    <a href="#" class="btn btn-secondary btn-sm" th:href="@{/buyer/address/save}" >Add</a>
+                </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="address, iter : ${addresses}">
+                            <th scope="row" th:text="${iter.index+1}">1</th>
+                            <td th:text="${address}">address</td>
+                            <td>
+                                <a href="#" th:href="@{/buyer/address/edit/{addressId}(addressId=${address.id})}">Edit</a>
+                                <a href="#" class="deleteAddress" th:data-address-id="${address.id}">Remove</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
+        <th:block layout:fragment="script">
+            <script th:src="@{/js/buyer.js}"></script>
+        </th:block>
 </body>
 </html>

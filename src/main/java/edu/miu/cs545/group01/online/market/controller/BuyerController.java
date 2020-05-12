@@ -2,16 +2,16 @@ package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.Address;
 import edu.miu.cs545.group01.online.market.domain.BillingInfo;
-import edu.miu.cs545.group01.online.market.domain.User;
+import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.service.AddressService;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/buyer")
@@ -33,33 +33,33 @@ public class BuyerController extends BaseController{
         return "buyer/billing/list";
     }
 
-    @GetMapping("/billing/get")
-    public String getBilling(@RequestParam("id") long id, Model model){
+    @GetMapping("/billing/edit/{billingId}")
+    public String getBilling(@PathVariable("billingId") long id, Model model){
         model.addAttribute("billing", billingInfoService.getBilling(id));
-        return "buyer/billing/details";
+        return "buyer/billing/edit";
+    }
+
+    @PostMapping("/billing/edit/{billingId}")
+    public String editBilling(@PathVariable("billingId") long id, BillingInfo billingInfo) throws NotFoundException{
+        BillingInfo updateBilling = billingInfoService.updateAddress(id, billingInfo);
+        return "redirect:/buyer/billing/list";
     }
 
     @GetMapping("/billing/save")
-    public String createBilling(){
+    public String createBilling(@ModelAttribute("billing") BillingInfo billingInfo){
         return "buyer/billing/create";
     }
 
     @PostMapping("/billing/save")
-    public String saveBilling(BillingInfo billingInfo, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("billingInfo",billingInfoService.createBilling(billingInfo));
-        return "redirect:/buyer/billing/details";
+    public String saveBilling(@ModelAttribute("billing") BillingInfo billingInfo){
+        BillingInfo billingInfo1 = billingInfoService.createBilling(billingInfo);
+        return "redirect:/buyer/billing/list";
     }
 
-    @GetMapping("/billing/details")
-    public String detailsBilling(BillingInfo billingInfo, Model model){
-        model.addAttribute("billingInfo",billingInfo);
-        return "buyer/billing/details";
-    }
-
-    @DeleteMapping("/billing/delete")
-    public String deleteBilling(BillingInfo billingInfo) throws Exception{
-        billingInfoService.deleteBilling(billingInfo.getId());
-        return "buyer/billing/delete";
+    @DeleteMapping("/billing/delete/{billingId}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteBilling(@PathVariable("billingId") long id)  throws NotFoundException{
+        billingInfoService.deleteBilling(id);
     }
 
         @GetMapping("/address/list")
@@ -68,32 +68,32 @@ public class BuyerController extends BaseController{
         return "buyer/address/list";
     }
 
-    @GetMapping("/address/get")
-    public String getAddress(@RequestParam("id") long id, Model model){
-        model.addAttribute("addresses", addressService.getAddress(id));
-        return "buyer/address/details";
+    @GetMapping("/address/edit/{addressId}")
+    public String getAddress(@PathVariable("addressId") long id, Model model){
+        model.addAttribute("address",addressService.getAddress(id));
+        return "buyer/address/edit";
+    }
+
+    @PostMapping("/address/edit/{addressId}")
+    public String editAddress(@PathVariable("addressId") long id, Address address) throws NotFoundException{
+        Address updateAddress = addressService.updateAddress(id, address);
+        return "redirect:/buyer/address/list";
     }
 
     @GetMapping("/address/save")
-    public String createAddress(){
+    public String createAddress(@ModelAttribute("address") Address address){
         return "buyer/address/create";
     }
 
     @PostMapping("/address/save")
-    public String saveAddress(Address address, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("address",addressService.createAddress(address));
-        return "redirect:/buyer/address/details";
+    public String saveAddress(Address address){
+        Address address1 = addressService.createAddress(address);
+        return "redirect:/buyer/address/list";
     }
 
-    @GetMapping("/address/details")
-    public String detailsAddress(Address address, Model model){
-        model.addAttribute("address",address);
-        return "buyer/address/details";
-    }
-
-    @DeleteMapping("/address/delete")
-    public String deleteAddress(Address address) throws Exception{
-        addressService.deleteAddress(address.getId());
-        return "buyer/address/delete";
+    @DeleteMapping("/address/delete/{addressId}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteAddress(@PathVariable("addressId") long addressId) throws NotFoundException {
+        addressService.deleteAddress(addressId);
     }
 }
