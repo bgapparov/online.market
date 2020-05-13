@@ -59,10 +59,10 @@ public abstract class BaseController {
 
     public Buyer getCurrentBuyer() {
         User curUser = getCurrentUser();
-        if (curUser == null) {
-            return null;
+        if (curUser instanceof Buyer) {
+            return (Buyer) curUser;
         }
-        return (Buyer) curUser;
+        return null;
     }
 
     @ModelAttribute("currentUser")

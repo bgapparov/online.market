@@ -34,6 +34,7 @@ public class Order {
     private Date shippingDate;
 
     private Date deliveredDate;
+    private Date canceledDate;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderProduct> orderedProducts;
@@ -41,7 +42,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Date orderDate, OrderStatus status, Buyer buyer, Seller seller, Address shippingAddress, BillingInfo billingInfo, Date shippingDate, Date deliveredDate) {
+    public Order(Date orderDate, OrderStatus status, Buyer buyer, Seller seller, Address shippingAddress, BillingInfo billingInfo, Date shippingDate, Date deliveredDate, Date canceledDate) {
         this.orderDate = orderDate;
         this.status = status;
         this.buyer = buyer;
@@ -50,10 +51,19 @@ public class Order {
         this.billingInfo = billingInfo;
         this.shippingDate = shippingDate;
         this.deliveredDate = deliveredDate;
+        this.canceledDate = canceledDate;
     }
 
     public long getId() {
         return id;
+    }
+
+    public Date getCanceledDate() {
+        return canceledDate;
+    }
+
+    public void setCanceledDate(Date canceledDate) {
+        this.canceledDate = canceledDate;
     }
 
     public Date getOrderDate() {

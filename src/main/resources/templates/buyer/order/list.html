@@ -33,11 +33,12 @@
                 <td th:text="${order.totalSum}">$100</td>
                 <td th:text="${order.seller}">Good seller</td>
                 <td th:text="${order.shippingAddress}">05/11/2020</td>
-                <td th:text="${
-                        'Ordered: ' + order.orderDate
-                        +( (order.shippingDate!=null)?'; Shipped: '+order.shippingDate:'')
-                        +( (order.deliveredDate!=null)?'; Delivered: '+order.deliveredDate:'')
-                        }">05/11/2020</td>
+                <td>
+                    <div th:text="${'Ordered: ' + order.orderDate}">05/11/2020</div>
+                    <div th:if="${order.shippingDate!=null}" th:text="${'Shipped: '+order.shippingDate}">05/11/2020</div>
+                    <div th:if="${order.deliveredDate!=null}" th:text="${'Delivered: '+order.deliveredDate}">05/11/2020</div>
+                    <div th:if="${order.canceledDate!=null}" th:text="${'Canceled: '+order.canceledDate}">05/11/2020</div>
+                </td>
                 <td>
                     <a th:if="${order.isStatusCreated()}" href="#" class="cancelOrder" th:data-order-id="${order.id}">Cancel order</a>
                 </td>

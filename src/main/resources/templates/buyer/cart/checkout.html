@@ -16,7 +16,7 @@
             <div class="h4">Products:</div>
             <div class="list-group">
                 <a href="#" th:each="cart : ${carts}" th:href="@{/product/{productId}(productId=${cart.product.id})}"
-                   class="list-group-item list-group-item-action flex-column align-items-start">
+                   class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1" th:text="${cart.product.title}">List group item heading</h5>
                         <small class="text-muted" th:text="${'$'+cart.product.price*cart.quantity}">$100</small>

@@ -127,13 +127,12 @@ public class SellerController extends BaseController {
         productService.deleteProduct(productId);
     }
 
-
     @GetMapping("/order/list")
     public String orderList(Model model){
         model.addAttribute("orders", orderService.getMyOrders(getCurrentSeller()));
-
         return "seller/order/list";
     }
+
     @DeleteMapping("/order/cancel/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
