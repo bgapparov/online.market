@@ -42,7 +42,7 @@
                 <a th:if="${order.isStatusCreated()}" href="#" class="cancelOrder" th:data-order-id="${order.id}">Cancel order</a>
             </td>
                 <td>
-                    <a th:if="${order.isStatusCreated()}" class = "downloadReceipt" th:href="@{/buyer/receipt/download/{orderId}(orderId=${order.id})}" >Download Receipt</a>
+                    <a target="_blank" th:if="${order.isStatusCreated()}" class = "downloadReceipt" th:href="@{/buyer/receipt/download/{orderId}(orderId=${order.id})}" >Download Receipt</a>
                 </td>
             </tr>
             </tbody>

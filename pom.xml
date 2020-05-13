@@ -82,8 +82,9 @@
             <artifactId>spring-security-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>4.2.2</version>
         </dependency>
     </dependencies>
 

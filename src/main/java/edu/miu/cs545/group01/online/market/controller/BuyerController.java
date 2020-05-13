@@ -4,21 +4,23 @@ import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.domain.Address;
 import edu.miu.cs545.group01.online.market.domain.BillingInfo;
 import edu.miu.cs545.group01.online.market.domain.BillingInfoCreditCard;
-import edu.miu.cs545.group01.online.market.domain.Util.PdfDownloadUtil;
+import edu.miu.cs545.group01.online.market.Util.PdfDownloadReceipt;
 import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 
 @Controller
 @RequestMapping("/buyer")
@@ -31,6 +33,8 @@ public class BuyerController extends BaseController {
     @Autowired
     OrderService orderService;
     @Autowired
+    ProductService productService;
+    @Autowired
     FollowService followService;
     @Autowired
     GainPointService gainPointService;
@@ -42,7 +46,7 @@ public class BuyerController extends BaseController {
         return gainPointService.getFreePoints(getCurrentBuyer());
     }
 
-    PdfDownloadUtil  pdfDowloadUtil;
+    PdfDownloadReceipt pdfDowloadUtil;
 
     @GetMapping("/")
     public String buyer(){
@@ -232,9 +236,18 @@ public class BuyerController extends BaseController {
         shoppingCartService.setQuantity(getCurrentBuyer().getId(), cartId, quantity);
     }
 
-    @GetMapping("/receipt/download/{orderId}")
-    public String downloadReceipt(@PathVariable("orderId") long orderId, Model model){
-        model.addAttribute("billinginfo",billingInfoService.getBilling(getCurrentBuyer(), orderService.getMyOrder(getCurrentBuyer(), orderId).getBillingInfo().getId()));
-      return "buyer/order/downloadrecipt";
+    @GetMapping(value = "/receipt/download/{orderId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> downloadReceipt(@PathVariable("orderId") long orderId) throws NotFoundException {
+        Order order = orderService.getOrderProduct(getCurrentBuyer(), orderId);
+        ByteArrayInputStream bis = PdfDownloadReceipt.Report(order);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
   }
 }

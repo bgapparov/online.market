@@ -13,7 +13,7 @@ import java.util.List;
 public interface OrderService {
     List<Order> getMyOrders(Buyer buyer);
     List<Order> getMyOrders(Seller seller);
-    Order getMyOrder(Buyer buyer, long orderId);
+    Order getOrderProduct(Buyer buyer, long orderId) throws NotFoundException;
 
     void cancelOrder(Buyer buyer, long orderId) throws NotFoundException, OrderStatusException;
     void setStatus(Seller seller, long orderId, OrderStatus orderStatus) throws NotFoundException, OrderStatusException;

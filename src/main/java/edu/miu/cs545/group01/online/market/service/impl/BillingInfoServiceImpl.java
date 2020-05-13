@@ -2,6 +2,7 @@ package edu.miu.cs545.group01.online.market.service.impl;
 
 import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.repository.BillingInfoRepository;
+import edu.miu.cs545.group01.online.market.repository.OrderProductRepository;
 import edu.miu.cs545.group01.online.market.service.BillingInfoService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ public class BillingInfoServiceImpl implements BillingInfoService {
 
     @Autowired
     BillingInfoRepository billingInfoRepository;
+    @Autowired
+    OrderProductRepository orderProductRepository;
 
     @Override
     public BillingInfo createCreditCard(BillingInfoCreditCard card, Buyer buyer){
@@ -35,8 +38,8 @@ public class BillingInfoServiceImpl implements BillingInfoService {
     @Override
     public BillingInfo getBilling(Buyer buyer, Long id){
         BillingInfo result = billingInfoRepository.findById(id).orElse(null);
-        if(result != null && result.getBuyer().getId() != buyer.getId()){
-            return null;
+            if(result != null && result.getBuyer().getId() != buyer.getId()){
+                return null;
         }
         return result;
     }

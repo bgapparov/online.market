@@ -41,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getMyOrder(Buyer buyer, long orderId) {
-        return orderRepository.findByBuyerAndId(buyer, orderId).orElse(null);
+    public Order getOrderProduct(Buyer buyer, long orderId) throws NotFoundException {
+        return orderRepository.findByBuyerAndId(buyer, orderId).orElseThrow(()->new NotFoundException("Order is not found"));
     }
 
     @Override
