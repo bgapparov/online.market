@@ -56,4 +56,13 @@ public abstract class BillingInfo {
     }
 
     public abstract String getType();
+
+    @Override
+    public String toString() {
+        return "BillingInfo{" +
+                "id=" + id +
+                ", buyer=" + buyer +
+                ", billingAddress=" + billingAddress +
+                '}';
+    }
 }

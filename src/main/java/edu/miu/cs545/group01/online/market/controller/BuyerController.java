@@ -4,17 +4,26 @@ import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.domain.Address;
 import edu.miu.cs545.group01.online.market.domain.BillingInfo;
 import edu.miu.cs545.group01.online.market.domain.BillingInfoCreditCard;
+import edu.miu.cs545.group01.online.market.Util.PdfDownloadReceipt;
 import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 
 @Controller
 @RequestMapping("/buyer")
@@ -26,6 +35,8 @@ public class BuyerController extends BaseController {
     AddressService addressService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ProductService productService;
     @Autowired
     FollowService followService;
     @Autowired
@@ -72,7 +83,6 @@ public class BuyerController extends BaseController {
         model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/billing/card/update";
     }
-
 
     @PostMapping("/billing/card/update/{billingId}")
     public String updateBillingCreditCard(@Valid @PathVariable("billingId") long billingId, @ModelAttribute("card") BillingInfoCreditCard card, BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult, Model model) throws NotFoundException{
@@ -159,13 +169,12 @@ public class BuyerController extends BaseController {
         addressService.deleteAddress(getCurrentBuyer(), addressId);
     }
 
-
     @GetMapping("/order/list")
     public String orderList(Model model){
         model.addAttribute("orders", orderService.getMyOrders(getCurrentBuyer()));
-
         return "buyer/order/list";
     }
+
     @DeleteMapping("/order/cancel/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
@@ -228,4 +237,18 @@ public class BuyerController extends BaseController {
         shoppingCartService.setQuantity(getCurrentBuyer().getId(), cartId, quantity);
     }
 
+    @GetMapping(value = "/receipt/download/{orderId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> downloadReceipt(@PathVariable("orderId") long orderId) throws NotFoundException {
+        Order order = orderService.getOrderProduct(getCurrentBuyer(), orderId);
+        ByteArrayInputStream bis = PdfDownloadReceipt.Report(order);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+  }
 }
