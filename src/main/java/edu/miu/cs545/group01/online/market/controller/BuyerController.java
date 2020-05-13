@@ -43,14 +43,13 @@ public class BuyerController extends BaseController {
     GainPointService gainPointService;
 
 
-
     @ModelAttribute("myPoints")
-    public float getMyPoints(){
+    public float getMyPoints() {
         return gainPointService.getFreePoints(getCurrentBuyer());
     }
 
     @GetMapping("/")
-    public String buyer(){
+    public String buyer() {
         return "buyer/buyerCabinet";
     }
 
@@ -61,16 +60,17 @@ public class BuyerController extends BaseController {
     }
 
     @GetMapping("/billing/bank/update/{billingId}")
-    public String getBillingBankAccount(@ModelAttribute("bank") BillingInfoBankAccount bank, @PathVariable("billingId") long billingId, Model model){
+    public String getBillingBankAccount(@ModelAttribute("bank") BillingInfoBankAccount bank, @PathVariable("billingId") long billingId, Model model) {
         model.addAttribute("bank", billingInfoService.getBilling(getCurrentBuyer(), billingId));
         model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/billing/bank/update";
     }
 
     @PostMapping("/billing/bank/update/{billingId}")
-    public String updateBillingBankAccount(@Valid @PathVariable("billingId") long billingId, BillingInfoBankAccount billingInfoBankAccount, BindingResult bindingResult, Model model) throws NotFoundException{
+    public String updateBillingBankAccount(@Valid @PathVariable("billingId") long billingId, @Valid @ModelAttribute("bank") BillingInfoBankAccount billingInfoBankAccount, BindingResult bindingResult, Model model) throws NotFoundException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("bank", billingInfoService.getBilling(getCurrentBuyer(), billingId));
+            model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
             return "buyer/billing/bank/update";
         }
         BillingInfo updateBilling = billingInfoService.updateBankAccount(getCurrentBuyer(), billingId, billingInfoBankAccount);
@@ -78,30 +78,30 @@ public class BuyerController extends BaseController {
     }
 
     @GetMapping("/billing/card/update/{billingId}")
-    public String getBillingCreditCard(@ModelAttribute("card") BillingInfoCreditCard card, @PathVariable("billingId") long billingId, Model model){
+    public String getBillingCreditCard(@ModelAttribute("card") BillingInfoCreditCard card, @PathVariable("billingId") long billingId, Model model) {
         model.addAttribute("card", billingInfoService.getBilling(getCurrentBuyer(), billingId));
         model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/billing/card/update";
     }
 
     @PostMapping("/billing/card/update/{billingId}")
-    public String updateBillingCreditCard(@Valid @PathVariable("billingId") long billingId, @ModelAttribute("card") BillingInfoCreditCard card, BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult, Model model) throws NotFoundException{
+    public String updateBillingCreditCard(@PathVariable("billingId") long billingId, @Valid @ModelAttribute("card") BillingInfoCreditCard card, BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult, Model model) throws NotFoundException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("card", billingInfoService.getBilling(getCurrentBuyer(), billingId));
             return "buyer/billing/card/update";
         }
-        BillingInfo updateBilling = billingInfoService.updateCreditCard(getCurrentBuyer(),billingId, billingInfoCreditCard);
+        BillingInfo updateBilling = billingInfoService.updateCreditCard(getCurrentBuyer(), billingId, billingInfoCreditCard);
         return "redirect:/buyer/billing/list";
     }
 
     @GetMapping("/billing/bank/save")
-    public String createBillingBankAccount(@ModelAttribute("bank") BillingInfoBankAccount bank, Model model){
+    public String createBillingBankAccount(@ModelAttribute("bank") BillingInfoBankAccount bank, Model model) {
         model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/billing/bank/create";
     }
 
     @PostMapping("/billing/bank/save")
-    public String saveBillingBankAccount(@Valid @ModelAttribute("bank") BillingInfoBankAccount billingInfoBankAccount, BindingResult bindingResult){
+    public String saveBillingBankAccount(@Valid @ModelAttribute("bank") BillingInfoBankAccount billingInfoBankAccount, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "buyer/billing/bank/create";
         }
@@ -111,13 +111,13 @@ public class BuyerController extends BaseController {
 
 
     @GetMapping("/billing/card/save")
-    public String createBillingCreditCard(@ModelAttribute("card") BillingInfoCreditCard card, Model model){
+    public String createBillingCreditCard(@ModelAttribute("card") BillingInfoCreditCard card, Model model) {
         model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/billing/card/create";
     }
 
     @PostMapping("/billing/card/save")
-    public String saveBillingCreditCard(@Valid @ModelAttribute("card") BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult){
+    public String saveBillingCreditCard(@Valid @ModelAttribute("card") BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "buyer/billing/card/create";
         }
@@ -127,24 +127,24 @@ public class BuyerController extends BaseController {
 
     @DeleteMapping("/billing/delete/{billingId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteBilling(@PathVariable("billingId") long id)  throws NotFoundException{
+    public void deleteBilling(@PathVariable("billingId") long id) throws NotFoundException {
         billingInfoService.deleteBilling(getCurrentBuyer(), id);
     }
 
     @GetMapping("/address/list")
-    public String getAddresses(Model model){
+    public String getAddresses(Model model) {
         model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         return "buyer/address/list";
     }
 
     @GetMapping("/address/update/{addressId}")
-    public String getAddress(@PathVariable("addressId") long id, Model model){
-        model.addAttribute("address",addressService.getMyAddress(getCurrentBuyer(), id));
+    public String getAddress(@PathVariable("addressId") long id, Model model) {
+        model.addAttribute("address", addressService.getMyAddress(getCurrentBuyer(), id));
         return "buyer/address/update";
     }
 
     @PostMapping("/address/update/{addressId}")
-    public String updateAddress(@PathVariable("addressId") long id, Address address) throws NotFoundException{
+    public String updateAddress(@PathVariable("addressId") long id, Address address) throws NotFoundException {
         Address updateAddress = addressService.updateAddress(getCurrentBuyer(), id, address);
         return "redirect:/buyer/address/list";
     }
@@ -155,7 +155,7 @@ public class BuyerController extends BaseController {
     }
 
     @PostMapping("/address/save")
-    public String saveAddress(@Valid Address address, BindingResult bindingResult){
+    public String saveAddress(@Valid @ModelAttribute("address") Address address, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "buyer/address/create";
         }
@@ -170,7 +170,7 @@ public class BuyerController extends BaseController {
     }
 
     @GetMapping("/order/list")
-    public String orderList(Model model){
+    public String orderList(Model model) {
         model.addAttribute("orders", orderService.getMyOrders(getCurrentBuyer()));
         return "buyer/order/list";
     }
@@ -186,6 +186,7 @@ public class BuyerController extends BaseController {
     public void followSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
         followService.followSeller(getCurrentBuyer(), sellerId);
     }
+
     @PutMapping("/unfollow-seller/{sellerId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void unfollowSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
@@ -193,7 +194,7 @@ public class BuyerController extends BaseController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(@ModelAttribute("checkoutModel") CheckoutModel checkoutModel, Model model){
+    public String checkout(@ModelAttribute("checkoutModel") CheckoutModel checkoutModel, Model model) {
         model.addAttribute("carts", shoppingCartService.getMyShoppingCarts(getCurrentBuyer()));
         model.addAttribute("myAddresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
         model.addAttribute("myBillingInfos", billingInfoService.getBillsByBuyer(getCurrentBuyer()));
@@ -202,7 +203,7 @@ public class BuyerController extends BaseController {
     }
 
     @PostMapping("/order/add")
-    public String checkout(@Valid CheckoutModel checkoutModel,  BindingResult bindingResult) throws NotFoundException {
+    public String checkout(@Valid @ModelAttribute("checkoutModel") CheckoutModel checkoutModel, BindingResult bindingResult) throws NotFoundException {
         if (bindingResult.hasErrors()) {
             return "buyer/cart/checkout";
         }
@@ -223,8 +224,9 @@ public class BuyerController extends BaseController {
     @PostMapping("/cart/add/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addToShoppingCart(@PathVariable("productId") long productId) throws NotFoundException {
-        shoppingCartService.addShoppingCart(getCurrentBuyer(), productId );
+        shoppingCartService.addShoppingCart(getCurrentBuyer(), productId);
     }
+
     @DeleteMapping("/cart/delete/{cartId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteShoppingCart(@PathVariable("cartId") long id) {
@@ -239,7 +241,7 @@ public class BuyerController extends BaseController {
 
     @GetMapping(value = "/receipt/download/{orderId}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> downloadReceipt(@PathVariable("orderId") long orderId) throws NotFoundException {
-        Order order = orderService.getOrderProduct(getCurrentBuyer(), orderId);
+        Order order = orderService.getOrder(getCurrentBuyer(), orderId);
         ByteArrayInputStream bis = PdfDownloadReceipt.Report(order);
 
         HttpHeaders headers = new HttpHeaders();
@@ -250,5 +252,22 @@ public class BuyerController extends BaseController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
-  }
+    }
+
+    @GetMapping("/product/leave-review/{orderProductId}")
+    public String leaveReview(@PathVariable("orderProductId") long orderProductId, @ModelAttribute("review") ReviewModel reviewModel, Model model) throws NotFoundException {
+        model.addAttribute("productOrder", orderService.getOrderProduct(getCurrentBuyer(), orderProductId));
+        return "buyer/review/leave-review";
+    }
+    @PostMapping("/product/leave-review/{orderProductId}")
+    public String leaveReview(@PathVariable("orderProductId") long orderProductId, @Valid @ModelAttribute("review") ReviewModel reviewModel, BindingResult bindingResult, Model model) throws NotFoundException {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("productOrder", orderService.getOrderProduct(getCurrentBuyer(), orderProductId));
+            return "buyer/review/leave-review";
+        }
+        orderService.leaveReview(getCurrentBuyer(), orderProductId, reviewModel);
+        return "redirect:/buyer/order/list";
+    }
+
+
 }

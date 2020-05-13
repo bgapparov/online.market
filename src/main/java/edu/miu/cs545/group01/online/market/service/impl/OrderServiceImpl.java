@@ -4,9 +4,11 @@ package edu.miu.cs545.group01.online.market.service.impl;
 import edu.miu.cs545.group01.online.market.domain.*;
 import edu.miu.cs545.group01.online.market.domain.enums.GainPointType;
 import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
+import edu.miu.cs545.group01.online.market.domain.enums.ReviewStatus;
 import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.repository.OrderProductRepository;
 import edu.miu.cs545.group01.online.market.repository.OrderRepository;
+import edu.miu.cs545.group01.online.market.repository.ReviewRepository;
 import edu.miu.cs545.group01.online.market.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
     BillingInfoService billingService;
     @Autowired
     GainPointService gainPointService;
+    @Autowired
+    ReviewRepository reviewRepository;
 
     @Override
     public List<Order> getMyOrders(Buyer buyer) {
@@ -42,8 +46,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderProduct(Buyer buyer, long orderId) throws NotFoundException {
+    public Order getOrder(Buyer buyer, long orderId) throws NotFoundException {
         return orderRepository.findByBuyerAndId(buyer, orderId).orElseThrow(()->new NotFoundException("Order is not found"));
+    }
+    @Override
+    public OrderProduct getOrderProduct(Buyer buyer, long orderProductId) throws NotFoundException {
+        OrderProduct orderProduct = orderProductRepository.findById(orderProductId).orElseThrow(()->new NotFoundException("OrderProduct is not found"));
+        if(orderProduct.getOrder().getBuyer().getId() != buyer.getId()){
+            throw new NotFoundException("OrderProduct is not found");
+        }
+        return  orderProduct;
     }
 
     @Override
@@ -94,6 +106,17 @@ public class OrderServiceImpl implements OrderService {
         }
         shoppingCartService.clearMyShoppingCart(checkoutModel.getBuyer());
         return result;
+    }
+
+    @Override
+    public Review leaveReview(Buyer buyer, long orderProductId, ReviewModel reviewModel) throws NotFoundException {
+        OrderProduct orderProduct = getOrderProduct(buyer, orderProductId);
+        Review review = reviewRepository.findByOrderProductAndBuyer(orderProduct, buyer).orElse(null);
+        if(review != null){
+            throw new RuntimeException("Review already left");
+        }
+        review = new Review(orderProduct, ReviewStatus.CREATED, buyer, new Date(), reviewModel.getStars(), reviewModel.getComment(), null);
+        return reviewRepository.save(review);
     }
 
     private Order createOrder(CheckoutModel checkoutModel, int cartsCount, Long sellerId, List<ShoppingCart> carts) throws NotFoundException {

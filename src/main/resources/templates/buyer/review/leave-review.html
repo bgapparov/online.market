@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Leave a review</title>
+</head>
+<body>
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+        <form action="#" th:object="${review}" method="post"
+              th:action="@{/buyer/product/leave-review/{orderProductId}(orderProductId=${productOrder.id})}">
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li class="text-danger" th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+            <div class="h4">Product:</div>
+            <div class="list-group">
+                <a href="#" th:href="@{/product/{productId}(productId=${productOrder.product.id})}"
+                   class="list-group-item list-group-item-action list-group-item-secondary flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${productOrder.product.title}">List group item heading</h5>
+                        <small class="text-muted" th:text="${productOrder.product.price+'*'+productOrder.quantity+' = $'+productOrder.product.price*productOrder.quantity}">$100</small>
+                    </div>
+                </a>
+            </div>
+            <div class="form-group">
+                <label for="stars">Stars</label>
+                <select class="form-control" th:field="*{stars}" id="stars" required>
+                    <option value="0">Select stars</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <p th:if="${#fields.hasErrors('stars')}" th:errors="*{stars}" th:class="${'text-danger'}">
+                    Incorrect </p>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea  type="text" class="form-control" id="comment" th:field="*{comment}"
+                           placeholder="Comment" rows="5"></textarea>
+                <p th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}" th:class="${'text-danger'}">
+                    Incorrect comment</p>
+            </div>
+            <div id="form-group">
+                <input class="btn btn-primary btn-sm" id="submit" value="Leave a review" type="submit"/>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

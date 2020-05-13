@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/seller/**").hasRole(Role.SELLER.toString())
                     .antMatchers("/buyer/**").hasRole(Role.BUYER.toString())
                     .antMatchers("/homepage").authenticated()
+                    .antMatchers("/seller/get/*").permitAll()
                     .antMatchers("/**").permitAll()// access=none
                     .antMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()

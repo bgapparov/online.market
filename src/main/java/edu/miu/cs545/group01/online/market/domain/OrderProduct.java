@@ -24,7 +24,7 @@ public class OrderProduct {
     private float totalPayment;
     private int quantity;
 
-    @OneToOne(mappedBy = "orderProduct")
+    @OneToOne(mappedBy = "orderProduct", fetch = FetchType.EAGER)
     private Review review;
 
     public OrderProduct() {
@@ -96,6 +96,10 @@ public class OrderProduct {
 
     public float getTotalPayment() {
         return totalPayment;
+    }
+
+    public boolean needReview(){
+        return review == null;
     }
 
     @Override

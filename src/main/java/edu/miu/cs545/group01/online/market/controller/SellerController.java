@@ -50,8 +50,9 @@ public class SellerController extends BaseController {
         return "seller/add-product";
     }
     @PostMapping("/product/add")
-    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) throws UploadImageException, IOException {
+    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) throws UploadImageException, IOException {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.allCategories());
             return "seller/add-product";
         }
         MultipartFile productImage = product.getImage();
@@ -80,8 +81,9 @@ public class SellerController extends BaseController {
         return "seller/edit-product";
     }
     @PostMapping("/product/edit/{productId}")
-    public String updateProduct(@PathVariable("productId") long productId, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult) throws NotFoundException {
+    public String updateProduct(@PathVariable("productId") long productId, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) throws NotFoundException {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryService.allCategories());
             return "seller/edit-product";
         }
         productService.updateProduct(productId, product);
@@ -103,6 +105,7 @@ public class SellerController extends BaseController {
     @PostMapping("/product/edit/image/{productId}")
     public String updateProductImage(@PathVariable("productId") long productId, @Valid @ModelAttribute("productImageModel") ProductImageModel productImageModel, BindingResult bindingResult, Model model) throws NotFoundException, IOException {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("productImageModel", productImageModel);
             return "seller/edit-product-image";
         }
         MultipartFile image = productImageModel.getImage();

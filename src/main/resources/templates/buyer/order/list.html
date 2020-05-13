@@ -6,7 +6,6 @@
     <title>Orders list</title>
 </head>
 <body>
-
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
@@ -35,15 +34,27 @@
                 <td th:text="${order.shippingAddress}">05/11/2020</td>
                 <td>
                     <div th:text="${'Ordered: ' + order.orderDate}">05/11/2020</div>
-                    <div th:if="${order.shippingDate!=null}" th:text="${'Shipped: '+order.shippingDate}">05/11/2020</div>
-                    <div th:if="${order.deliveredDate!=null}" th:text="${'Delivered: '+order.deliveredDate}">05/11/2020</div>
-                    <div th:if="${order.canceledDate!=null}" th:text="${'Canceled: '+order.canceledDate}">05/11/2020</div>
+                    <div th:if="${order.shippingDate!=null}" th:text="${'Shipped: '+order.shippingDate}">05/11/2020
+                    </div>
+                    <div th:if="${order.deliveredDate!=null}" th:text="${'Delivered: '+order.deliveredDate}">
+                        05/11/2020
+                    </div>
+                    <div th:if="${order.canceledDate!=null}" th:text="${'Canceled: '+order.canceledDate}">05/11/2020
+                    </div>
                 </td>
                 <td>
-                <a th:if="${order.isStatusCreated()}" href="#" class="cancelOrder" th:data-order-id="${order.id}">Cancel order</a>
-            </td>
-                <td>
-                    <a target="_blank" th:if="${order.isStatusCreated()}" class = "downloadReceipt" th:href="@{/buyer/receipt/download/{orderId}(orderId=${order.id})}" >Download Receipt</a>
+                    <a th:if="${order.isStatusCreated()}" href="#" class="cancelOrder" th:data-order-id="${order.id}">Cancel
+                        order</a>
+                    <a target="_blank" th:if="${order.isStatusCreated() ||order.isStatusShipped() || order.isStatusDelivered() }" class="downloadReceipt"
+                       th:href="@{/buyer/receipt/download/{orderId}(orderId=${order.id})}">Download Receipt</a>
+                    <div th:each="op : ${order.orderedProducts}">
+                        <a th:if="${order.isStatusDelivered() && op.needReview()}" class="leave-feedback" th:data-product-id="${order.id}"
+                           href="#" th:href="@{/buyer/product/leave-review/{orderProductId}(orderProductId=${op.id})}"
+                            th:text="${'Leave a review on '+op.product.title}">
+                            Leave a review on iPhone
+                        </a>
+                    </div>
+
                 </td>
             </tr>
             </tbody>
