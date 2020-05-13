@@ -20,6 +20,7 @@ public class ShoppingCartController extends BaseController{
     }
 
     @PostMapping("/add/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void addToShoppingCart(@PathVariable("productId") long productId) throws NotFoundException {
         shoppingCartService.addShoppingCart(getCurrentBuyer(), productId );
     }
@@ -29,4 +30,9 @@ public class ShoppingCartController extends BaseController{
         shoppingCartService.deleteShoppingCart(getCurrentBuyer().getId(), id);
     }
 
+    @PostMapping("/set-quantity/{cartId}/{quantity}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setQuantity(@PathVariable("cartId") long cartId, @PathVariable("quantity") int quantity) throws NotFoundException {
+        shoppingCartService.setQuantity(getCurrentBuyer().getId(), cartId, quantity);
+    }
 }

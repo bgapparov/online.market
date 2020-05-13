@@ -13,6 +13,8 @@ public interface ShoppingCartService {
     ShoppingCart addShoppingCart(Buyer buyer, long prorductId) throws NotFoundException;
 
     ShoppingCart deleteShoppingCart(long buyerId, long id);
+
+    void setQuantity(long buyerId, long cartId, int quantity) throws NotFoundException;
 }
 
 

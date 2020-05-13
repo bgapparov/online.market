@@ -51,5 +51,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartRepository.delete(shoppingCart);
         return shoppingCart;
     }
+
+    @Override
+    public void setQuantity(long buyerId, long cartId, int quantity) throws NotFoundException {
+        ShoppingCart cart = shoppingCartRepository.findById(cartId).orElseThrow(()->new NotFoundException("Shopping cart item is not found"));
+        if(cart.getBuyer().getId() != buyerId){
+            throw new NotFoundException("Shopping cart item is not found");
+        }
+        cart.setQuantity(quantity);
+        shoppingCartRepository.save(cart);
+    }
 }
 
