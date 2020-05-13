@@ -180,7 +180,7 @@ public class Application {
 					Path sourceFile = Paths.get(sourceFolder.toString(), "static", "images", fileName);
 					Path targetFile = Paths.get(imagesFolder, fileName);
 					Files.copy(sourceFile, targetFile);
-				}
+				} 
 			}catch (Exception ex){
 				System.out.println(ex.toString());
 			}
