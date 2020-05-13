@@ -49,8 +49,6 @@ public class BuyerController extends BaseController {
         return gainPointService.getFreePoints(getCurrentBuyer());
     }
 
-    PdfDownloadReceipt pdfDowloadUtil;
-
     @GetMapping("/")
     public String buyer(){
         return "buyer/buyerCabinet";
