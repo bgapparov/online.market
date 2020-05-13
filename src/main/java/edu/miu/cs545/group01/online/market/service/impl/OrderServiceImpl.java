@@ -42,6 +42,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order getOrderProduct(Buyer buyer, long orderId) throws NotFoundException {
+        return orderRepository.findByBuyerAndId(buyer, orderId).orElseThrow(()->new NotFoundException("Order is not found"));
+    }
+
+    @Override
     public void cancelOrder(Buyer buyer, long orderId) throws NotFoundException, OrderStatusException {
         Order order = orderRepository.findByBuyerAndId(buyer, orderId).orElseThrow(() -> new NotFoundException("Order is not found"));
         float totalSpentPoints = 0;
