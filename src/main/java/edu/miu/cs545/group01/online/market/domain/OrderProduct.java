@@ -30,11 +30,12 @@ public class OrderProduct {
     public OrderProduct() {
     }
 
-    public OrderProduct(Order order, Product product, int quantity, float pointPayment, float cashPayment) {
+    public OrderProduct(Order order, Product product, int quantity, float pointPayment) {
         this.order = order;
         this.product = product;
         this.quantity = quantity;
         this.pointPayment = pointPayment;
+        float cashPayment = product.getPrice()*quantity - pointPayment;
         this.cashPayment = cashPayment;
         this.totalPayment = pointPayment + cashPayment;
     }

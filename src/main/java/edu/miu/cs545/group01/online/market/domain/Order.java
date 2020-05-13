@@ -16,6 +16,7 @@ public class Order {
 
     private Date orderDate;
 
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @ManyToOne
@@ -93,6 +94,13 @@ public class Order {
         this.orderedProducts = orderedProducts;
     }
 
+    public float getTotalSum(){
+        float result= 0;
+        for (OrderProduct orderProduct : orderedProducts) {
+            result += orderProduct.getTotalPayment();
+        }
+        return  result;
+    }
     public String getOrderedProductsText(){
         return orderedProducts.stream().map(o->o.toString()).reduce((op1, op2)->op1+"\r\n"+op2).orElse("");
 //        String result = "";

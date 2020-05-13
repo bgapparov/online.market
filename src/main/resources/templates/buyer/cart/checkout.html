@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+</head>
+<body>
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+        <form action="#" th:object="${checkoutModel}" th:action="@{/buyer/order/add}" method="post">
+            <ul th:if="${#fields.hasErrors('*')}">
+                <li class="text-danger" th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+            </ul>
+            <div class="h4">Products:</div>
+            <div class="list-group">
+                <a href="#" th:each="cart : ${carts}" th:href="@{/product/{productId}(productId=${cart.product.id})}"
+                   class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${cart.product.title}">List group item heading</h5>
+                        <small class="text-muted" th:text="${'$'+cart.product.price*cart.quantity}">$100</small>
+                    </div>
+                </a>
+            </div>
+            <div class="checkout-total-price" th:text="${'Total sum: $'+#aggregates.sum(carts.![product.price*quantity])}"></div>
+            <div class="form-group">
+                <label for="pointPayment">Payment from point <small><b th:text="${'Available points: '+ availablePoints}"></b></small></label>
+                <input type="number" min="0" step="0.01" th:max="${availablePoints}" class="form-control currency" id="pointPayment" th:field="*{pointPayment}"
+                       placeholder="0.00">
+                <p th:if="${#fields.hasErrors('pointPayment')}" th:errors="*{pointPayment}" th:class="${'text-danger'}">
+                    Incorrect name</p>
+            </div>
+            <div class="form-group">
+                <label for="billingInfoId">Payment method</label>
+                <select class="form-control" th:field="*{billingInfoId}" id="billingInfoId" required>
+                    <option value="">Select payment method</option>
+                    <option th:each="pay : ${myBillingInfos}" th:value="${pay.id}" th:text="${pay}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('billingInfoId')}" th:errors="*{billingInfoId}" th:class="${'text-danger'}">
+                    Incorrect Address</p>
+            </div>
+            <div class="form-group">
+                <label for="shippingAddressId">Shipping Address</label>
+                <select class="form-control" th:field="*{shippingAddressId}" id="shippingAddressId" required>
+                    <option value="">Select Address</option>
+                    <option th:each="add : ${myAddresses}" th:value="${add.id}" th:text="${add}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('shippingAddressId')}" th:errors="*{shippingAddressId}" th:class="${'text-danger'}">
+                    Incorrect Address</p>
+            </div>
+            <div id="form-group">
+                <input class="btn btn-primary btn-sm" id="submit" value="Checkout" type="submit"/>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

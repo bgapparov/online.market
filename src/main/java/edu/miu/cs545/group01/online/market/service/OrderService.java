@@ -1,6 +1,7 @@
 package edu.miu.cs545.group01.online.market.service;
 
 import edu.miu.cs545.group01.online.market.domain.Buyer;
+import edu.miu.cs545.group01.online.market.domain.CheckoutModel;
 import edu.miu.cs545.group01.online.market.domain.Order;
 import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
@@ -15,4 +16,6 @@ public interface OrderService {
 
     void cancelOrder(Buyer buyer, long orderId) throws NotFoundException, OrderStatusException;
     void setStatus(Seller seller, long orderId, OrderStatus orderStatus) throws NotFoundException, OrderStatusException;
+
+    List<Order> createOrder(CheckoutModel checkoutModel) throws NotFoundException;
 }

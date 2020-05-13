@@ -10,6 +10,7 @@ import edu.miu.cs545.group01.online.market.domain.Buyer;
 import edu.miu.cs545.group01.online.market.domain.Product;
 import edu.miu.cs545.group01.online.market.service.ProductService;
 import javassist.NotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -54,12 +55,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void setQuantity(long buyerId, long cartId, int quantity) throws NotFoundException {
-        ShoppingCart cart = shoppingCartRepository.findById(cartId).orElseThrow(()->new NotFoundException("Shopping cart item is not found"));
-        if(cart.getBuyer().getId() != buyerId){
+        ShoppingCart cart = shoppingCartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Shopping cart item is not found"));
+        if (cart.getBuyer().getId() != buyerId) {
             throw new NotFoundException("Shopping cart item is not found");
         }
         cart.setQuantity(quantity);
         shoppingCartRepository.save(cart);
+    }
+
+    @Transactional
+    public void clearMyShoppingCart(Buyer buyer) {
+        shoppingCartRepository.deleteAllByBuyer(buyer);
     }
 }
 

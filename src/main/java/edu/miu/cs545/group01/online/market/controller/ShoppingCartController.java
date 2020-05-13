@@ -1,4 +1,8 @@
 package edu.miu.cs545.group01.online.market.controller;
+        import edu.miu.cs545.group01.online.market.domain.CheckoutModel;
+        import edu.miu.cs545.group01.online.market.service.AddressService;
+        import edu.miu.cs545.group01.online.market.service.BillingInfoService;
+        import edu.miu.cs545.group01.online.market.service.GainPointService;
         import edu.miu.cs545.group01.online.market.service.ShoppingCartService;
         import org.springframework.beans.factory.annotation.Autowired;
         import javassist.NotFoundException;
@@ -12,6 +16,17 @@ package edu.miu.cs545.group01.online.market.controller;
 public class ShoppingCartController extends BaseController{
     @Autowired
     private ShoppingCartService shoppingCartService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private BillingInfoService billingInfoService;
+    @Autowired
+    private GainPointService gainPointService;
+
+    @ModelAttribute("myPoints")
+    public float getMyPoints(){
+        return gainPointService.getFreePoints(getCurrentBuyer());
+    }
 
     @GetMapping("/list")
     public String myShoppingCart(Model model) {

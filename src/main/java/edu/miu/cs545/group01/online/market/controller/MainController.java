@@ -44,10 +44,6 @@ public class MainController extends BaseController {
 
     @GetMapping("/homepage")
     public String homepage(HttpServletRequest request){
-        User curUser = getCurrentUser();
-        if(curUser == null){
-            return "redirect:/";
-        }
         resetAuthentication();
         return "homepage";
     }

@@ -46,7 +46,8 @@ public class Application {
 			OrderProductRepository orderProductRepository,
 			ReviewRepository reviewRepository,
 			ShoppingCartRepository shoppingCartRepository,
-			FollowsRepository followsRepository
+			FollowsRepository followsRepository,
+			GainPointRepository gainPointRepository
 	){
 		return args -> {
 			Admin admin = new Admin("Nurlan Kustutinov","nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
@@ -136,20 +137,30 @@ public class Application {
 			Order order5 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerjirom,mike,jiromAddress,jirombillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) );
 			order5 = orderRepository.save(order5);
 
-			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,1,0,1100);
+
+			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,1,0);
 			orderProduct1 = orderProductRepository.save(orderProduct1);
-			OrderProduct orderProduct2 = new OrderProduct(order2,productLaptop,1,0,1800);
+			OrderProduct orderProduct2 = new OrderProduct(order2,productLaptop,1,0);
 			orderProduct2 = orderProductRepository.save(orderProduct2);
-			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,1,0,3500);
+			OrderProduct orderProduct3 = new OrderProduct(order3,productAserLaptop,1,0);
 			orderProduct3 = orderProductRepository.save(orderProduct3);
 
-			OrderProduct orderProduct33 = new OrderProduct(order3,converseshoes,1,0,60);
+			OrderProduct orderProduct33 = new OrderProduct(order3,converseshoes,1,0);
 			orderProduct33 = orderProductRepository.save(orderProduct33);
 
-			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,2,0,2200);
+			OrderProduct orderProduct4 = new OrderProduct(order4,productIphone,2,0);
 			orderProduct4 = orderProductRepository.save(orderProduct4);
-			OrderProduct orderProduct5 = new OrderProduct(order5,applewatch,2,0,450);
+			OrderProduct orderProduct5 = new OrderProduct(order5,applewatch,2,0);
 			orderProduct5 = orderProductRepository.save(orderProduct5);
+
+
+			GainPoint gainPoint1 = new GainPoint(GainPointType.EARN, order2, buyerRobel,  18);
+			gainPoint1 = gainPointRepository.save(gainPoint1);
+			GainPoint gainPoint2 = new GainPoint(GainPointType.EARN, order4, buyerRobel,  22);
+			gainPoint2 = gainPointRepository.save(gainPoint2);
+			GainPoint gainPoint3 = new GainPoint(GainPointType.EARN, order5, buyerRobel,  9);
+			gainPoint3 = gainPointRepository.save(gainPoint3);
+
 
 			Review review1 = new Review(orderProduct4, ReviewStatus.POSTED, buyerRobel,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));
 			review1 = reviewRepository.save(review1);
@@ -164,6 +175,9 @@ public class Application {
 			shoppingCart2 = shoppingCartRepository.save(shoppingCart2);
 			ShoppingCart shoppingCart3 = new ShoppingCart(buyerYafet,productAserLaptop,1,Helper.getDate(2020,16,04,11,45,22));
 			shoppingCart3 = shoppingCartRepository.save(shoppingCart3);
+
+			ShoppingCart shoppingCart4 = new ShoppingCart(buyerRobel, versaceshoes,1,Helper.getDate(2020,05, 12,14,34,44));
+			shoppingCart4 = shoppingCartRepository.save(shoppingCart4);
 
 			Follows follows1 = new Follows(seller,buyerRobel);
 			follows1 = followsRepository.save(follows1);

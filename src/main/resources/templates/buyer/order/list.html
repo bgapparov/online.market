@@ -16,6 +16,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Status</th>
                 <th scope="col">Ordered products</th>
+                <th scope="col">Total sum</th>
                 <th scope="col">Seller</th>
                 <th scope="col">Sipping address</th>
                 <th scope="col">Dates</th>
@@ -29,6 +30,7 @@
                 <td>
                     <div th:each="op :${order.orderedProducts}" th:text="${op}">iPhone</div>
                 </td>
+                <td th:text="${order.totalSum}">$100</td>
                 <td th:text="${order.seller}">Good seller</td>
                 <td th:text="${order.shippingAddress}">05/11/2020</td>
                 <td th:text="${

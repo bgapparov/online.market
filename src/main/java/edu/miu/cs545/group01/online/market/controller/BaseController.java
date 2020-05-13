@@ -4,6 +4,7 @@ import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.User;
 import edu.miu.cs545.group01.online.market.domain.Buyer;
 import edu.miu.cs545.group01.online.market.domain.enums.Role;
+import edu.miu.cs545.group01.online.market.helper.Helper;
 import edu.miu.cs545.group01.online.market.repository.BuyerRepository;
 import edu.miu.cs545.group01.online.market.repository.UserRepository;
 import edu.miu.cs545.group01.online.market.service.BuyerService;
@@ -16,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.*;
@@ -33,19 +36,19 @@ public abstract class BaseController {
     @Autowired
     BuyerService buyerService;
 
-    protected String getCurrentUserEmail() {
+    public String getCurrentUserEmail() {
         return authenticationFacade.getAuthentication().getName();
     }
 
-    protected User getCurrentUser() {
+    public User getCurrentUser() {
         String email = getCurrentUserEmail();
-        if (!isNullOrEmpty(email) && !"anonymousUser".equalsIgnoreCase(email)) {
+        if (!Helper.isNullOrEmpty(email) && !"anonymousUser".equalsIgnoreCase(email)) {
             return userService.getUserByEmail(email);
         }
         return null;
     }
 
-    protected Seller getCurrentSeller() {
+    public Seller getCurrentSeller() {
         User curUser = getCurrentUser();
         if (curUser == null) {
             return null;
@@ -53,16 +56,12 @@ public abstract class BaseController {
         return (Seller) curUser;
     }
 
-    protected Buyer getCurrentBuyer() {
-        String email = getCurrentUserEmail();
-        if (!isNullOrEmpty(email) && !"anonymousUser".equalsIgnoreCase(email)) {
-            return buyerService.getBuyerByEmail(email);
+    public Buyer getCurrentBuyer() {
+        User curUser = getCurrentUser();
+        if (curUser == null) {
+            return null;
         }
-        return null;
-    }
-
-    protected boolean isNullOrEmpty(String str) {
-        return str == null || "".equalsIgnoreCase(str);
+        return (Buyer) curUser;
     }
 
     @ModelAttribute("currentUser")

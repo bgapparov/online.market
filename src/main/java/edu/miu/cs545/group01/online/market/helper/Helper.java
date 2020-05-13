@@ -49,4 +49,8 @@ public class Helper {
         }
         return dir.toString();
     }
+
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || "".equalsIgnoreCase(str);
+    }
 }

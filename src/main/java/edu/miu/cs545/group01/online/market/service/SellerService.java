@@ -9,4 +9,6 @@ public interface SellerService {
     List<Seller> getPendingSellers();
     void approveSeller(long sellerId) throws NotFoundException;
     void rejectSeller(long sellerId) throws NotFoundException;
+
+    Seller getSellerById(long sellerId) throws NotFoundException;
 }

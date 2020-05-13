@@ -33,4 +33,9 @@ public class SellerServiceImpl implements SellerService {
         seller.setStatus(UserStatus.REJECTED);
         seller = sellerRepository.save(seller);
     }
+
+    @Override
+    public Seller getSellerById(long sellerId) throws NotFoundException {
+        return sellerRepository.findById(sellerId).orElseThrow(()->new NotFoundException("Seller is not found"));
+    }
 }

@@ -15,6 +15,7 @@ public interface ShoppingCartService {
     ShoppingCart deleteShoppingCart(long buyerId, long id);
 
     void setQuantity(long buyerId, long cartId, int quantity) throws NotFoundException;
+    void clearMyShoppingCart(Buyer buyer);
 }
 
 

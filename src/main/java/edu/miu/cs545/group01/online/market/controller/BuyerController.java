@@ -5,10 +5,7 @@ import edu.miu.cs545.group01.online.market.domain.Address;
 import edu.miu.cs545.group01.online.market.domain.BillingInfo;
 import edu.miu.cs545.group01.online.market.domain.BillingInfoCreditCard;
 import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
-import edu.miu.cs545.group01.online.market.service.AddressService;
-import edu.miu.cs545.group01.online.market.service.BillingInfoService;
-import edu.miu.cs545.group01.online.market.service.OrderService;
-import edu.miu.cs545.group01.online.market.service.FollowService;
+import edu.miu.cs545.group01.online.market.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,9 +26,19 @@ public class BuyerController extends BaseController {
     AddressService addressService;
     @Autowired
     OrderService orderService;
-
+    @Autowired
+    private ShoppingCartService shoppingCartService;
     @Autowired
     FollowService followService;
+    @Autowired
+    GainPointService gainPointService;
+
+
+
+    @ModelAttribute("myPoints")
+    public float getMyPoints(){
+        return gainPointService.getFreePoints(getCurrentBuyer());
+    }
 
     @GetMapping("/")
     public String buyer(){
@@ -177,4 +184,25 @@ public class BuyerController extends BaseController {
     public void unfollowSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
         followService.unfollowSeller(getCurrentBuyer(), sellerId);
     }
+
+    @GetMapping("/checkout")
+    public String checkout(@ModelAttribute("checkoutModel") CheckoutModel checkoutModel, Model model){
+        model.addAttribute("carts", shoppingCartService.getMyShoppingCarts(getCurrentBuyer()));
+        model.addAttribute("myAddresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
+        model.addAttribute("myBillingInfos", billingInfoService.getBillsByBuyer(getCurrentBuyer()));
+        model.addAttribute("availablePoints", gainPointService.getFreePoints(getCurrentBuyer()));
+        return "buyer/cart/checkout";
+    }
+
+    @PostMapping("/order/add")
+    public String checkout(@Valid CheckoutModel checkoutModel,  BindingResult bindingResult) throws NotFoundException {
+        if (bindingResult.hasErrors()) {
+            return "buyer/cart/checkout";
+        }
+        checkoutModel.setBuyer(getCurrentBuyer());
+        orderService.createOrder(checkoutModel);
+        return "redirect:/buyer/order/list";
+
+    }
+
 }
