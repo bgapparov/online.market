@@ -66,4 +66,11 @@ public class ProductServiceImpl implements ProductService {
         product.setStatus(ProductStatus.REMOVED);
         return productRepository.save(product);
     }
+
+    @Override
+    public void updatedProductImage(long productId, String imgFileName) throws NotFoundException {
+        Product product = productRepository.findById(productId).orElseThrow(()->new NotFoundException("Product is not found"));
+        product.setImgName(imgFileName);
+        productRepository.save(product);
+    }
 }

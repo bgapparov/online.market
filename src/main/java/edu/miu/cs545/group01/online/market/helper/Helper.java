@@ -38,7 +38,7 @@ public class Helper {
         extensions.add(".png");
         extensions.add(".jpeg");
         extensions.add(".gif");
-        return extensions.contains(extension);
+        return extensions.contains(extension.toLowerCase());
     }
 
     public static String getImagesFolder(ServletContext servletContext) {
