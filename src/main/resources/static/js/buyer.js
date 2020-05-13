@@ -66,4 +66,26 @@ $(document).ready(function () {
             alert("Request failed: " + textStatus);
         });
     });
+    $(".addCart").click(function () {
+        setUpCsrfToken();
+        let productId = $(this).data("productId");
+        $.ajax("/buyer/cart/add/" + productId,
+            {type: "POST"})
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
+    $(".checkoutQuantity").change(function () {
+        setUpCsrfToken();
+        let cartId = $(this).data("cartId");
+        let quantity = $(this).val();
+        $.post("/buyer/cart/set-quantity/" + cartId + "/"+quantity)
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
 });
