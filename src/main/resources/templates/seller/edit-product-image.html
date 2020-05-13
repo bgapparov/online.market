@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product Image</title>
+</head>
+<body>
+<div id="contents" class="row" layout:fragment="main-content">
+    <div th:replace="components/userAccessMenu :: mnu">User menu</div>
+    <div class="col-lg-9">
+        <form th:object="${productImageModel}" action="#" th:action="@{/seller/product/edit/image/{productId}(productId=${productImageModel.id})}" enctype="multipart/form-data"
+              method="post">
+            <h4>Product Photo</h4>
+            <div class="form-group">
+                <img class="card-img-top img-fluid" src="http://placehold.it/900x400"
+                     th:src="@{/img/{imgName}(imgName=*{imgName})}" alt="">
+                <label for="image">Product photo:</label>
+                <input id="image" name="image" type="file" class="form-control-file">
+                <p th:if="${#fields.hasErrors('image')}" th:errors="*{image}"
+                   th:class="${'text-danger'}">Incorrect file</p>
+            </div>
+            <div id="form-group">
+                <input class="btn btn-primary btn-sm" id="submit" type="submit" value="Update Image"/>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

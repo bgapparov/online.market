@@ -34,6 +34,7 @@
                 <td th:text="${product.description}">Cool phone</td>
                 <td>
                     <a href="#" class="editProduct" th:href="@{/seller/product/edit/{productId}(productId=${product.id})}">Edit</a>
+                    <a href="#" class="editProductImage" th:href="@{/seller/product/edit/image/{productId}(productId=${product.id})}">Image</a>
                     <a href="#" class="deleteProduct" th:data-product-id="${product.id}">Remove</a>
                 </td>
             </tr>

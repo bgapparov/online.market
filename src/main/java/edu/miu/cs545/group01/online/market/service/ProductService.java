@@ -14,4 +14,6 @@ public interface ProductService {
     Product  getProduct(Long id) throws NotFoundException;
     Product updateProduct(Long id, Product product) throws NotFoundException;
     Product deleteProduct(Long id) throws NotFoundException, RemoveException;
+
+    void updatedProductImage(long productId, String imgFileName) throws NotFoundException;
 }

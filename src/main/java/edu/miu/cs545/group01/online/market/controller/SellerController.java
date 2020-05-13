@@ -1,6 +1,7 @@
 package edu.miu.cs545.group01.online.market.controller;
 
 import edu.miu.cs545.group01.online.market.domain.Product;
+import edu.miu.cs545.group01.online.market.domain.ProductImageModel;
 import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
 import edu.miu.cs545.group01.online.market.domain.enums.ProductStatus;
@@ -86,6 +87,39 @@ public class SellerController extends BaseController {
         productService.updateProduct(productId, product);
 
         return "redirect:/seller/my-products";
+    }
+    @GetMapping("/product/edit/image/{productId}")
+    public String editProductImage(@PathVariable("productId") long productId, Model model) throws NotFoundException {
+        Product product = productService.getProduct(productId);
+
+        if(product.getSeller().getId() != getCurrentSeller().getId()){
+            throw new NotFoundException("Product is not found");
+        }
+        ProductImageModel productImageModel = new ProductImageModel(product.getId(), product.getImgName());
+
+        model.addAttribute("productImageModel", productImageModel);
+        return "seller/edit-product-image";
+    }
+    @PostMapping("/product/edit/image/{productId}")
+    public String updateProductImage(@PathVariable("productId") long productId, @Valid @ModelAttribute("productImageModel") ProductImageModel productImageModel, BindingResult bindingResult, Model model) throws NotFoundException, IOException {
+        if (bindingResult.hasErrors()) {
+            return "seller/edit-product-image";
+        }
+        MultipartFile image = productImageModel.getImage();
+        String imgFileName = "";
+        if (image != null && !image.isEmpty()) {
+            String extension = Helper.getExtension(image.getOriginalFilename());
+            if(!Helper.isItImage(extension) ){
+                throw new UploadImageException("File must be image");
+            }
+
+            imgFileName = java.util.UUID.randomUUID() + extension;
+            String dir = Helper.getImagesFolder(servletContext);
+            image.transferTo(new File(dir, imgFileName));
+        }
+        productService.updatedProductImage(productId, imgFileName);
+        return "redirect:/seller/my-products";
+
     }
     @DeleteMapping("/product/remove/{productId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
