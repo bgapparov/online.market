@@ -17,8 +17,6 @@ import javax.validation.Valid;
 
 @Controller
 public class AuthorizationController extends BaseController {
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/login")
     public String login(){

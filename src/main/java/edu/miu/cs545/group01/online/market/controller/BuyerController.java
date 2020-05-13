@@ -27,8 +27,6 @@ public class BuyerController extends BaseController {
     @Autowired
     OrderService orderService;
     @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
     FollowService followService;
     @Autowired
     GainPointService gainPointService;
@@ -203,6 +201,31 @@ public class BuyerController extends BaseController {
         orderService.createOrder(checkoutModel);
         return "redirect:/buyer/order/list";
 
+    }
+
+
+    @GetMapping("/cart/list")
+    public String myShoppingCart(Model model) {
+        model.addAttribute("items", shoppingCartService.getMyShoppingCarts(getCurrentBuyer()));
+        return "buyer/cart/list";
+    }
+
+
+    @PostMapping("/cart/add/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addToShoppingCart(@PathVariable("productId") long productId) throws NotFoundException {
+        shoppingCartService.addShoppingCart(getCurrentBuyer(), productId );
+    }
+    @DeleteMapping("/cart/delete/{cartId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteShoppingCart(@PathVariable("cartId") long id) {
+        shoppingCartService.deleteShoppingCart(getCurrentBuyer().getId(), id);
+    }
+
+    @PostMapping("/cart/set-quantity/{cartId}/{quantity}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setQuantity(@PathVariable("cartId") long cartId, @PathVariable("quantity") int quantity) throws NotFoundException {
+        shoppingCartService.setQuantity(getCurrentBuyer().getId(), cartId, quantity);
     }
 
 }

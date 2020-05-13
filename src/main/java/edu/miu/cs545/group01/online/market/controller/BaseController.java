@@ -9,6 +9,7 @@ import edu.miu.cs545.group01.online.market.repository.BuyerRepository;
 import edu.miu.cs545.group01.online.market.repository.UserRepository;
 import edu.miu.cs545.group01.online.market.service.BuyerService;
 import edu.miu.cs545.group01.online.market.service.IAuthenticationFacade;
+import edu.miu.cs545.group01.online.market.service.ShoppingCartService;
 import edu.miu.cs545.group01.online.market.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,15 +27,15 @@ import java.util.stream.Collectors;
 
 public abstract class BaseController {
     @Autowired
-    IAuthenticationFacade authenticationFacade;
-
+    private IAuthenticationFacade authenticationFacade;
     @Autowired
-    BuyerRepository buyerRepository;
-
+    protected BuyerRepository buyerRepository;
     @Autowired
-    UserService userService;
+    protected UserService userService;
     @Autowired
-    BuyerService buyerService;
+    protected BuyerService buyerService;
+    @Autowired
+    protected ShoppingCartService shoppingCartService;
 
     public String getCurrentUserEmail() {
         return authenticationFacade.getAuthentication().getName();
@@ -69,6 +70,14 @@ public abstract class BaseController {
         return getCurrentUser();
     }
 
+    @ModelAttribute("cartCount")
+    public int getCartCount(){
+        Buyer buyere = getCurrentBuyer();
+        if(buyere==null){
+            return 0;
+        }
+        return shoppingCartService.getMyShoppingCarts(buyere).size();
+    }
 
     static Map<String, Long> updatedLastRuntime = new HashMap<>();
 

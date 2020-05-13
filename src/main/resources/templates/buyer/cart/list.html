@@ -32,12 +32,13 @@
             </tr>
             <tr>
                 <th colspan="3">Total sum</th>
-                <td th:text="${'$'+ #aggregates.sum(items.![product.price*quantity])}">$100</td>
+                <th th:text="${#lists.isEmpty(items)}?'$0':${'$'+ #aggregates.sum(items.![product.price*quantity])}">$100</th>
                 <td>
                 </td>
             </tr>
-            <tr><td colspan="2"></td>
-            <td><a class="btn btn-secondary" href="#" th:href="@{/buyer/checkout}">Proceed to checkout</a></td>
+            <tr th:if="${!#lists.isEmpty(items)}">
+                <td colspan="3"></td>
+                <td colspan="2"><a class="btn btn-secondary" href="#" th:href="@{/buyer/checkout}">Proceed to checkout</a></td>
             </tr>
             </tbody>
         </table>

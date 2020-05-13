@@ -25,21 +25,18 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
+                        <a class="nav-link" href="/">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <a  class="nav-link" href="/homepage" th:text="${currentUser.name}">UserName</a>
+                        <a  class="nav-link" href="#" th:href="@{/homepage}" th:text="${currentUser.name}">UserName</a>
+                    </li>
+                    <li sec:authorize="hasRole('BUYER')" class="nav-item">
+                        <a  class="nav-link" href="#" th:href="@{/buyer/cart/list}">
+                            <img style="max-width: 21px;" src="#" th:src="@{/images/cart.png}" alt="Shopping cart">
+                            <span th:if="${cartCount>0}" class="cart-count" id="cart-count" th:text="${cartCount}">1</span>
+                        </a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
                         <form action="/logout" th:action="@{/logout}" method="post">
@@ -47,7 +44,7 @@
                         </form>
                     </li>
                     <li sec:authorize="!isAuthenticated()" class="nav-item">
-                        <a  class="nav-link" href="/login">Login</a>
+                        <a  class="nav-link" href="#" th:href="@{/login}">Login</a>
                     </li>
                     <li sec:authorize="!isAuthenticated()" class="nav-item">
                         <a  class="nav-link" href="#" th:href="@{/signup/select-user-type}">Signup</a>

@@ -7,30 +7,31 @@
 </head>
 <body>
 <div id="contents" layout:fragment="main-content">
-    <div class="alert-danger" th:if="${param.error}">
-        Invalid username and password.
+    <div class="login-form">
+        <h2 class="text-center">Log in</h2>
+        <form name='f' th:action="@{/login}" method="post">
+            <div class="form-group">
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email" required="required">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                       required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-secondary btn-block">Log in</button>
+            </div>
+            <div class="clearfix">
+                <label class="pull-left checkbox-inline"><input type="checkbox" name="keepMe"> Remember me</label>
+            </div>
+            <div class="alert-danger" th:if="${param.error}">
+                Invalid username and password.
+            </div>
+            <div class="alert-info" th:if="${param.logout}">
+                You have been logged out.
+            </div>
+        </form>
+        <p class="text-center"><a href="#" th:href="@{/signup/select-user-type}">Create an Account</a></p>
     </div>
-    <div class="alert-info" th:if="${param.logout}">
-        You have been logged out.
-    </div>
-    <form name='f' th:action="@{/login}" method="post">
-        <table>
-            <tr>
-                <td><label for="email"> Email:</label></td><td><input type="text" id="email" name="email"/> </td>
-            </tr>
-            <tr>
-                <td><label for="password"> Password:  </label></td> <td> <input type="password" id="password" name="password"/></td>
-            </tr>
-            <tr><td></td>
-                <td>
-                    <input type ="checkbox" name="keepMe"/> Remember Me?
-                </td>
-            </tr>
-            <tr>
-                <td></td><td><input type="submit" value="Sign In"/></td>
-            </tr>
-        </table>
-    </form>
 </div>
 
 </body>
