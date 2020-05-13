@@ -52,8 +52,8 @@ public class Application {
 		return args -> {
 			Admin admin = new Admin("Nurlan Kustutinov","nurlan985@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			admin = adminRepository.save(admin);
-			Seller seller = new Seller("Girma","girma@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
-			seller = sellerRepository.save(seller);
+			Seller sellerGirma = new Seller("Girma","girma@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
+			sellerGirma = sellerRepository.save(sellerGirma);
 			Seller seller2 = new Seller("Jirom","jirom@gmail.com", passwordEncoder.encode("123"), UserStatus.ACTIVE);
 			seller2 = sellerRepository.save(seller2);
 			Seller mike = new Seller("Mike","Mike@gmail.com", passwordEncoder.encode("123"), UserStatus.PENDING);
@@ -95,47 +95,55 @@ public class Application {
 			BillingInfo jirombillingInfo = new BillingInfoCreditCard(buyerjirom, 100876, "323-111-222", Helper.getDate(2024,11,01, 19), "123", jiromAddress);
 			jirombillingInfo = billingInfoRepository.save(jirombillingInfo);
 
-			Product productIphone = new Product("iPhone 11",category, 1100, ProductStatus.ACTIVE, "iphone.jpg", "Brand new", seller );
+			Product productIphone = new Product("iPhone 11",category, 1100, ProductStatus.ACTIVE, "iphone.jpg", "Brand new", sellerGirma );
 			productIphone = productRepository.save(productIphone);
 			Product productLaptop = new Product("mac book",category, 1800, ProductStatus.SOLDOUT, "laptop1.jpg", "Old Version", seller2 );
 			productLaptop = productRepository.save(productLaptop);
-			Product productAserLaptop =new Product ( "Aser laptop" , category, 3500, ProductStatus.ACTIVE,"laptop-aser.jpg","Brand new", seller);
+			Product productAserLaptop =new Product ( "Aser laptop" , category, 3500, ProductStatus.ACTIVE,"laptop-aser.jpg","Brand new", sellerGirma);
 			productAserLaptop = productRepository.save(productAserLaptop);
-			Product converseshoes =new Product ( "converse shoes" , fashion, 60, ProductStatus.ACTIVE,"converseshoes.jpg","Brand new", seller);
+			Product converseshoes =new Product ( "converse shoes" , fashion, 60, ProductStatus.ACTIVE,"converseshoes.jpg","Brand new", sellerGirma);
 			converseshoes = productRepository.save(converseshoes);
-			Product applewatch = new Product("Apple Watch",category, 450, ProductStatus.ACTIVE, "applewatch.jpg", "Brand new", seller );
+			Product applewatch = new Product("Apple Watch",category, 450, ProductStatus.ACTIVE, "applewatch.jpg", "Brand new", sellerGirma );
 			applewatch = productRepository.save(applewatch);
-			Product samsungNote10 = new Product("Samsung Note 10",category, 1200, ProductStatus.ACTIVE, "samsung10plus.jpg", "Brand new", seller );
+			Product samsungNote10 = new Product("Samsung Note 10",category, 1200, ProductStatus.ACTIVE, "samsung10plus.jpg", "Brand new", sellerGirma );
 			samsungNote10 = productRepository.save(samsungNote10);
 			Product kidscar = new Product("Kids Car Toy",toys, 3200, ProductStatus.ACTIVE, "kidscar.jpg", "Brand new", seller2 );
 			kidscar = productRepository.save(kidscar);
-			Product ball = new Product("Balls",toys, 70, ProductStatus.ACTIVE, "ball.jpg", "All Sport Ball", seller );
+			Product ball = new Product("Balls",toys, 70, ProductStatus.ACTIVE, "ball.jpg", "All Sport Ball", sellerGirma );
 			ball = productRepository.save(ball);
 			Product greenMenSuit =new Product ( "Green Men Suit" , fashion, 360, ProductStatus.ACTIVE,"greensuit.jpg","Brand new", seller2);
 			greenMenSuit = productRepository.save(greenMenSuit);
 			Product womenredshoes =new Product ( "Women high-hill" , fashion, 200, ProductStatus.ACTIVE,"highhillshoes.jpg","fashin shoes", seller2);
 			womenredshoes = productRepository.save(womenredshoes);
-			Product greendress =new Product ( "Women Dress" , fashion, 150, ProductStatus.ACTIVE,"greendress.jpg","New style", seller);
+			Product greendress =new Product ( "Women Dress" , fashion, 150, ProductStatus.ACTIVE,"greendress.jpg","New style", sellerGirma);
 			greendress = productRepository.save(greendress);
-			Product pinksuit =new Product ( "Men Pink Suit" , fashion, 450, ProductStatus.ACTIVE,"pinksuit.jpg","New style", seller);
+			Product pinksuit =new Product ( "Men Pink Suit" , fashion, 450, ProductStatus.ACTIVE,"pinksuit.jpg","New style", sellerGirma);
 			pinksuit = productRepository.save(pinksuit);
 			Product versaceshoes =new Product ( "Men Versace shoes" , fashion, 2450, ProductStatus.ACTIVE,"versaceshoes.jpg","Funcy shoes", seller2);
 			versaceshoes = productRepository.save(versaceshoes);
-			Product mendressingshoes =new Product ( "Men Dressing shoes" , fashion, 250, ProductStatus.ACTIVE,"mendressingshoes.jpg","Nice Shoes", seller);
+			Product mendressingshoes =new Product ( "Men Dressing shoes" , fashion, 250, ProductStatus.ACTIVE,"mendressingshoes.jpg","Nice Shoes", sellerGirma);
 			mendressingshoes = productRepository.save(mendressingshoes);
 			Product womenflatshoes =new Product ( "Woman Flat shoes" , fashion, 80, ProductStatus.ACTIVE,"redflatshoes.jpg","Nice Shoes", seller2);
 			womenflatshoes = productRepository.save(womenflatshoes);
 
-			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,seller, yafetaddress, yafetbillingInfoCard,null, null, null);
+			Order order1 = new Order(Helper.getDate(2020, 5, 10, 13, 50, 8), OrderStatus.CREATED,buyerYafet,sellerGirma, yafetaddress, yafetbillingInfoCard,null, null, null);
 			order1 = orderRepository.save(order1);
-			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
+			Order order2 = new Order(Helper.getDate(2020,05, 9,14,34,44),OrderStatus.DELIVERED, buyerRobel,sellerGirma,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
 			order2 = orderRepository.save(order2);
-			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,seller,yafetaddress, yafetbillingInfoCard,Helper.getDate(2020,05,16,13,00,00), null, null);
+			Order order3 = new Order(Helper.getDate(2020,16,04,9,45,22),OrderStatus.SHIPPED,buyerYafet,sellerGirma,yafetaddress, yafetbillingInfoCard,Helper.getDate(2020,05,16,13,00,00), null, null);
 			order3 = orderRepository.save(order3);
-			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,seller,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
+			Order order4 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerRobel,sellerGirma,robelAddress,robelbillingInfoBank, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
 			order4 = orderRepository.save(order4);
-			Order order5 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED, buyerjirom,mike,jiromAddress,jirombillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
+			Order order5 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED,
+					buyerjirom,
+					sellerGirma,
+					jiromAddress,jirombillingInfo, Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
 			order5 = orderRepository.save(order5);
+			Order order6 = new Order(Helper.getDate(2020,05, 10,14,34,44),OrderStatus.DELIVERED,
+					buyerYafet,
+					sellerGirma,yafetaddress,yafetbillingInfoCard,
+					Helper.getDate(2020,05, 12,14,34,44),Helper.getDate(2020,05, 15,14,34,44) , null);
+			order6 = orderRepository.save(order6);
 
 
 			OrderProduct orderProduct1 = new OrderProduct(order1,productIphone,1,0);
@@ -152,6 +160,11 @@ public class Application {
 			orderProduct4 = orderProductRepository.save(orderProduct4);
 			OrderProduct orderProduct5 = new OrderProduct(order5,applewatch,2,0);
 			orderProduct5 = orderProductRepository.save(orderProduct5);
+
+			OrderProduct orderProduct6 = new OrderProduct(order6,applewatch,2,0);
+			orderProduct6 = orderProductRepository.save(orderProduct6);
+			OrderProduct orderProduct7 = new OrderProduct(order6,pinksuit,1,0);
+			orderProduct7 = orderProductRepository.save(orderProduct7);
 
 
 			GainPoint gainPoint1 = new GainPoint(GainPointType.EARN, order2, buyerRobel,  18);
@@ -179,7 +192,7 @@ public class Application {
 			ShoppingCart shoppingCart4 = new ShoppingCart(buyerRobel, versaceshoes,1,Helper.getDate(2020,05, 12,14,34,44));
 			shoppingCart4 = shoppingCartRepository.save(shoppingCart4);
 
-			Follows follows1 = new Follows(seller,buyerRobel);
+			Follows follows1 = new Follows(sellerGirma,buyerRobel);
 			follows1 = followsRepository.save(follows1);
 
 

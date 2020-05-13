@@ -6,14 +6,11 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import edu.miu.cs545.group01.online.market.domain.Order;
 import edu.miu.cs545.group01.online.market.domain.OrderProduct;
-import edu.miu.cs545.group01.online.market.domain.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.parameters.P;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 public class PdfDownloadReceipt {
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);

@@ -36,13 +36,14 @@
                 </div>
                 <div class="card-body">
                     <div th:each="review: ${product.reviews}">
-                        <p th:text="${review.comment}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam
-                            inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam
-                            fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted" th:text="${'Posted by '+review.buyer + ' on '+ review.createdDate}">Posted by Anonymous on 3/1/17</small>
-                        <hr>
+                        <th:block th:if="${review.isPosted()}">
+                            <p th:text="${review.comment}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam
+                                inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam
+                                fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                            <small class="text-muted" th:text="${'Posted by '+review.buyer.toString() + ' on '+ review.createdDate}">Posted by Anonymous on 3/1/17</small>
+                            <hr>
+                        </th:block>
                     </div>
-                    <a href="#" class="btn btn-success">Leave a Review</a>
                 </div>
             </div>
     </div>

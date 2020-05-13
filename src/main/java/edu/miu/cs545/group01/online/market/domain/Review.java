@@ -19,7 +19,7 @@ public class Review {
     @Enumerated(EnumType.STRING)
     private ReviewStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Buyer buyer;
 
     private Date createdDate;
@@ -101,5 +101,9 @@ public class Review {
 
     public void setBuyer(Buyer buyer) {
         this.buyer = buyer;
+    }
+
+    public boolean isPosted(){
+        return status == ReviewStatus.POSTED;
     }
 }
