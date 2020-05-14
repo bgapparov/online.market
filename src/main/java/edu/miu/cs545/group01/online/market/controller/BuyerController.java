@@ -176,16 +176,16 @@ public class BuyerController extends BaseController {
         orderService.cancelOrder(getCurrentBuyer(), orderId);
     }
 
-    @PutMapping("/follow-seller/{sellerId}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void followSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
+    @GetMapping("/follow-seller/{sellerId}")
+    public String followSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
         followService.followSeller(getCurrentBuyer(), sellerId);
+        return "redirect:/seller/get/"+sellerId;
     }
 
-    @PutMapping("/unfollow-seller/{sellerId}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void unfollowSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
+    @GetMapping("/unfollow-seller/{sellerId}")
+    public String unfollowSeller(@PathVariable("sellerId") long sellerId) throws NotFoundException {
         followService.unfollowSeller(getCurrentBuyer(), sellerId);
+        return "redirect:/seller/get/"+sellerId;
     }
 
     @GetMapping("/checkout")

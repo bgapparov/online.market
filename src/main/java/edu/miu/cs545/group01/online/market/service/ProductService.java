@@ -13,6 +13,7 @@ public interface ProductService {
     List<Product> getTop9Products(int categoryId);
     List<Product> findAllProductsBySeller(Seller seller);
     Product  getProduct(Long id) throws NotFoundException;
+    Seller  getSellerByProductId(Buyer buyer, Long id) throws NotFoundException;
     Product updateProduct(Long id, Product product) throws NotFoundException;
     Product deleteProduct(Long id) throws NotFoundException, RemoveException;
 

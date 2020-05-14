@@ -1,5 +1,6 @@
 package edu.miu.cs545.group01.online.market.service.impl;
 
+import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.ShoppingCart;
 import edu.miu.cs545.group01.online.market.repository.ShoppingCartRepository;
 import edu.miu.cs545.group01.online.market.service.ShoppingCartService;
@@ -66,6 +67,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Transactional
     public void clearMyShoppingCart(Buyer buyer) {
         shoppingCartRepository.deleteAllByBuyer(buyer);
+    }
+
+    @Override
+    public boolean checkProductInCart(Buyer buyer, long productId) {
+        for(ShoppingCart shoppingCart: shoppingCartRepository.findAllByBuyer(buyer)){
+            if(productId == shoppingCart.getProduct().getId()) return true;
+        }
+        return false;
     }
 }
 
