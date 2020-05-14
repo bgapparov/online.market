@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" layout:decorate="~{layouts/layout}" xmlns:th="http://www.thymeleaf.org/"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Product</title>
@@ -25,9 +26,16 @@
                 <pre class="card-text" th:text="${product.description}">Lorem ipsum dolor sit amet, consectetur
                     adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores,
                     sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</pre>
-                <p><a href="#" class="addCart" th:data-product-id="${product.id}">Add Cart</a></p>
+                <p sec:authorize="hasRole('BUYER')">
+                    <button href="#" class="addCart" th:data-product-id="${product.id}">Add Cart</button>
+                    <span th:if="${isproductincart}">
+                        <span>&nbsp;</span> This item in shopping cart<span>&nbsp;</span><span>&nbsp;</span>
+                        <a href="#" style="text-decoration: none" th:href="@{/buyer/cart/list}">click to view</a>
+                    </span>
+                </p>
                 <span class="text-warning">[(${product.starsText})]</span>
                 <span th:text="${product.avgStars}"> 4.0</span> stars
+                <p>Follow Seller <a href="#" style="text-decoration: none" th:href="@{/seller/get/{sellerId}(sellerId=${seller.id})}" th:text="${seller.name}">Seller Name </a> </p>
             </div>
 
             <div class="card card-outline-secondary my-4">
@@ -51,6 +59,7 @@
 </div>
 <th:block layout:fragment="script">
     <script th:src="@{/js/buyer.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>
 </html>

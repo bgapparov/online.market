@@ -19,10 +19,6 @@ public class FollowServiceImpl implements FollowService {
     private SellerRepository sellerRepository;
     @Autowired
     private FollowsRepository followsRepository;
-    @Override
-    public List<Seller> getPendingSellers() {
-        return sellerRepository.findAllByStatusPending();
-    }
 
     @Override
     public Follows followSeller(Buyer buyer, long sellerId) throws NotFoundException {
@@ -39,5 +35,14 @@ public class FollowServiceImpl implements FollowService {
         }
         followsRepository.delete(follows);
         return follows;
+    }
+
+
+    @Override
+    public boolean isFollow(Seller seller, Buyer buyer) {
+        if(seller == null || buyer == null) {
+            return false;
+        }
+        return followsRepository.findBySellerAndBuyer(seller, buyer) != null;
     }
 }

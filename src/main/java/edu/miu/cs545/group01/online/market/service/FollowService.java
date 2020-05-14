@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface FollowService {
 
-    List<Seller> getPendingSellers();
     Follows followSeller(Buyer buyer, long sellerId) throws NotFoundException;
     Follows unfollowSeller(Buyer buyer, long sellerId) throws NotFoundException;
+
+    boolean isFollow(Seller seller, Buyer buyer);
 }
