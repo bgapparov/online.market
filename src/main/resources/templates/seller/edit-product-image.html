@@ -9,6 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
+        <div class="h4">Edit product image</div>
         <form th:object="${productImageModel}" action="#" th:action="@{/seller/product/edit/image/{productId}(productId=${productImageModel.id})}" enctype="multipart/form-data"
               method="post">
             <h4>Product Photo</h4>

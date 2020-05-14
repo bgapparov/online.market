@@ -9,6 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
+        <div class="h4">Edit Bank Account</div>
         <form method="POST" action="#" th:action="@{/buyer/billing/bank/update/{accountId}(accountId=${bank.id})}" th:object="${bank}">
             <div class="form-group">
                 <label for="accountName">Account Name</label>

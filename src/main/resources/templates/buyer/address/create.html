@@ -9,6 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
+        <div class="h4">Add address</div>
         <form method="POST" action="#" th:action="@{/buyer/address/save}" th:object="${address}">
             <div class="form-group">
                 <label for="city">City</label>

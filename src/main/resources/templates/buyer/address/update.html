@@ -9,6 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
+        <div class="h4">Edit address</div>
         <form method="POST" action="#" th:object="${address}" th:action="@{/buyer/address/update/{addressId}(addressId=${address.id})}">
             <div class="form-group">
                 <label for="city">City</label>

@@ -9,7 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
-                <div class="h4">Shopping cart</div>
+        <div class="h4">Shopping cart</div>
         <table class="table">
             <thead>
             <tr>
@@ -24,7 +24,8 @@
             <tr th:each="cart, iter : ${items}">
                 <th scope="row" th:text="${iter.index+1}">1</th>
                 <td th:text="${cart.product}">iPhone</td>
-                <td><input th:value="${cart.quantity}"  style="width:4em" type="number"  min="1" step="1" class="form-control currency checkoutQuantity" th:data-cart-id="${cart.id}"></td>
+                <td><input th:value="${cart.quantity}" style="width:4em" type="number" min="1" step="1"
+                           class="form-control currency checkoutQuantity" th:data-cart-id="${cart.id}"></td>
                 <td th:text="${'$'+cart.product.price*cart.quantity}">$0.00</td>
                 <td>
                     <a href="#" class="remove-shopping-cart" th:data-cart-id="${cart.id}">Remove</a>
@@ -32,13 +33,16 @@
             </tr>
             <tr>
                 <th colspan="3">Total sum</th>
-                <th th:text="${#lists.isEmpty(items)}?'$0':${'$'+ #aggregates.sum(items.![product.price*quantity])}">$100</th>
+                <th th:text="${#lists.isEmpty(items)}?'$0':${'$'+ #aggregates.sum(items.![product.price*quantity])}">
+                    $100
+                </th>
                 <td>
                 </td>
             </tr>
             <tr th:if="${!#lists.isEmpty(items)}">
                 <td colspan="3"></td>
-                <td colspan="2"><a class="btn btn-secondary" href="#" th:href="@{/buyer/checkout}">Proceed to checkout</a></td>
+                <td colspan="2"><a class="btn btn-secondary" href="#" th:href="@{/buyer/checkout}">Proceed to
+                    checkout</a></td>
             </tr>
             </tbody>
         </table>

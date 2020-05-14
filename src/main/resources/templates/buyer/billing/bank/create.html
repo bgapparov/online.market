@@ -9,7 +9,7 @@
     <div id="contents" class="row" layout:fragment="main-content">
         <div th:replace="components/userAccessMenu :: mnu">User menu</div>
         <div class="col-lg-9">
-            <h4>Add Bank Account</h4>
+            <div class="h4">Add Bank Account</div>
             <form method="POST" action="#" th:action="@{/buyer/billing/bank/save}" th:object="${bank}">
                 <div class="form-group">
                     <label for="accountName">Account Name</label>

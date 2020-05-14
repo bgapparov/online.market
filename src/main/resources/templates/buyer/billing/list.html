@@ -9,6 +9,7 @@
     <div id="contents" class="row" layout:fragment="main-content">
         <div th:replace="components/userAccessMenu :: mnu">User menu</div>
         <div class="col-lg-9">
+            <div class="h4">Billing info</div>
             <div class="panel-body">
                 <a href="#" class="btn btn-secondary btn-sm" th:href="@{/buyer/billing/bank/save}" >Add Bank Account</a><span>&nbsp;</span>
                 <a href="#" class="btn btn-secondary btn-sm" th:href="@{/buyer/billing/card/save}" >Add Credit Card</a>

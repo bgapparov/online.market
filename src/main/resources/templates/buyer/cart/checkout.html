@@ -9,6 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
+        <div class="h4">Checkout</div>
         <form action="#" th:object="${checkoutModel}" th:action="@{/buyer/order/add}" method="post">
             <ul th:if="${#fields.hasErrors('*')}">
                 <li class="text-danger" th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>

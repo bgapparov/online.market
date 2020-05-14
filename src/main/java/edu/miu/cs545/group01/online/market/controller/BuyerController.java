@@ -48,11 +48,6 @@ public class BuyerController extends BaseController {
         return gainPointService.getFreePoints(getCurrentBuyer());
     }
 
-    @GetMapping("/")
-    public String buyer() {
-        return "buyer/buyerCabinet";
-    }
-
     @GetMapping("/billing/list")
     public String getBills(Model model) {
         model.addAttribute("bills", billingInfoService.getBillsByBuyer(getCurrentBuyer()));

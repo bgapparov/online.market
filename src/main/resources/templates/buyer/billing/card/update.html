@@ -9,6 +9,7 @@
 <div id="contents" class="row" layout:fragment="main-content">
     <div th:replace="components/userAccessMenu :: mnu">User menu</div>
     <div class="col-lg-9">
+        <div class="h4">Edit Credit Card</div>
         <form method="POST" action="#" th:action="@{/buyer/billing/card/update/{creditcardId}(creditcardId=${card.id})}" th:object="${card}">
             <div class="form-group">
                 <label for="cardNo">Card Number</label>

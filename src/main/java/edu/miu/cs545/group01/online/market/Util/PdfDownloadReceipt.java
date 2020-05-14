@@ -24,9 +24,9 @@ public class PdfDownloadReceipt {
 
         try {
 
-            PdfPTable table = new PdfPTable(4);
+            PdfPTable table = new PdfPTable(6);
             table.setWidthPercentage(100);
-            table.setWidths(new int[]{3, 1, 1, 1});
+            table.setWidths(new int[]{3, 1, 1, 1, 1, 1});
 
             Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
             PdfPCell hcell;
@@ -42,11 +42,20 @@ public class PdfDownloadReceipt {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
+            hcell = new PdfPCell(new Phrase("Point payment", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+            hcell = new PdfPCell(new Phrase("Cash payment", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
             hcell = new PdfPCell(new Phrase("Total", headFont));
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
             int totalQuantity = 0;
             float totalSum = 0;
+            float totalPointSum = 0;
+            float totalCashSum = 0;
             for (OrderProduct orderProduct : order.getOrderedProducts()) {
                 PdfPCell cell;
                 cell = new PdfPCell(new Phrase(orderProduct.getProduct().toString()));
@@ -66,6 +75,23 @@ public class PdfDownloadReceipt {
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 table.addCell(cell);
+
+                float points = orderProduct.getPointPayment();
+                totalPointSum += points;
+                cell = new PdfPCell(new Phrase(String.valueOf(points)));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setPaddingRight(5);
+                table.addCell(cell);
+
+                float cash = orderProduct.getCashPayment();
+                totalCashSum += cash;
+                cell = new PdfPCell(new Phrase(String.valueOf(cash)));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setPaddingRight(5);
+                table.addCell(cell);
+
                 float total = orderProduct.getTotalPayment();
                 totalSum += total;
                 cell = new PdfPCell(new Phrase(String.valueOf(total)));
@@ -82,6 +108,14 @@ public class PdfDownloadReceipt {
             table.addCell(hcell);
 
             hcell = new PdfPCell(new Phrase(totalQuantity + "", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            table.addCell(hcell);
+
+            hcell = new PdfPCell(new Phrase(totalPointSum+"", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            table.addCell(hcell);
+
+            hcell = new PdfPCell(new Phrase(totalCashSum+"", headFont));
             hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             table.addCell(hcell);
 
