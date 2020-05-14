@@ -173,6 +173,8 @@ public class Application {
 			gainPoint2 = gainPointRepository.save(gainPoint2);
 			GainPoint gainPoint3 = new GainPoint(GainPointType.EARN, order5, buyerRobel,  9);
 			gainPoint3 = gainPointRepository.save(gainPoint3);
+			GainPoint gainPoint4 = new GainPoint(GainPointType.EARN, order6, buyerYafet,  13.5f);
+			gainPoint4 = gainPointRepository.save(gainPoint4);
 
 
 			Review review1 = new Review(orderProduct4, ReviewStatus.POSTED, buyerRobel,Helper.getDate(2020,06,10,13,00,00),5,"Excellent Product", Helper.getDate(2020,06,16,13,00,00));
