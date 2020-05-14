@@ -30,17 +30,17 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getTop9Products(int categoryId) {
         List<Product> result;
         if(categoryId<0){
-            result = productRepository.findTop9ByOrderByIdDesc();
+            result = productRepository.findTop9ByStatusOrderByIdDesc(ProductStatus.ACTIVE);
 
         }else {
-            result = productRepository.findTop9ByCategoryOrderByIdDesc(categoryRepository.getOne(categoryId));
+            result = productRepository.findTop9ByCategoryAndStatusOrderByIdDesc(categoryRepository.getOne(categoryId), ProductStatus.ACTIVE);
         }
         return result;
     }
 
     @Override
     public List<Product> findAllProductsBySeller(Seller seller) {
-        return productRepository.findAllNotRemovedProductsBySeller(seller);
+        return productRepository.findAllBySellerAndStatus(seller, ProductStatus.ACTIVE);
     }
 
     @Override
