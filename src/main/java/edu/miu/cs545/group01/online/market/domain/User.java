@@ -19,7 +19,7 @@ public abstract class User {
     private long id;
 
     @Column(unique = true)
-    @NotBlank(message = "this field is required")
+    @NotBlank(message = "{user.email}")
     @Email
     private String email;
 
@@ -34,7 +34,7 @@ public abstract class User {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @NotBlank
+    @NotBlank(message = "{user.name}")
     private String name;
 
     public User() {

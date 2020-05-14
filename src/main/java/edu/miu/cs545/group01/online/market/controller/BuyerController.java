@@ -80,12 +80,12 @@ public class BuyerController extends BaseController {
     }
 
     @PostMapping("/billing/card/update/{billingId}")
-    public String updateBillingCreditCard(@PathVariable("billingId") long billingId, @Valid @ModelAttribute("card") BillingInfoCreditCard card, BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult, Model model) throws NotFoundException {
+    public String updateBillingCreditCard(@PathVariable("billingId") long billingId, @Valid @ModelAttribute("card") BillingInfoCreditCard card, BindingResult bindingResult, Model model) throws NotFoundException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("card", billingInfoService.getBilling(getCurrentBuyer(), billingId));
             return "buyer/billing/card/update";
         }
-        BillingInfo updateBilling = billingInfoService.updateCreditCard(getCurrentBuyer(), billingId, billingInfoCreditCard);
+        BillingInfo updateBilling = billingInfoService.updateCreditCard(getCurrentBuyer(), billingId, card);
         return "redirect:/buyer/billing/list";
     }
 
@@ -112,8 +112,9 @@ public class BuyerController extends BaseController {
     }
 
     @PostMapping("/billing/card/save")
-    public String saveBillingCreditCard(@Valid @ModelAttribute("card") BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult) {
+    public String saveBillingCreditCard(@Valid @ModelAttribute("card") BillingInfoCreditCard billingInfoCreditCard, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("addresses", addressService.getAddressesByBuyer(getCurrentBuyer()));
             return "buyer/billing/card/create";
         }
         BillingInfo billingInfo1 = billingInfoService.createCreditCard(billingInfoCreditCard, getCurrentBuyer());

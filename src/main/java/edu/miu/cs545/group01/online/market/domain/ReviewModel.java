@@ -5,10 +5,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 public class ReviewModel {
-    @NotBlank
+    @NotBlank(message = "{reviewmodel.comment}")
     private String comment;
-    @Min(1)
-    @Max(5)
+    @Min(value = 1, message = "{reviewmodel.stars}")
+    @Max(value = 5, message = "{reviewmodel.stars}")
     private int stars;
 
     public int getStars() {

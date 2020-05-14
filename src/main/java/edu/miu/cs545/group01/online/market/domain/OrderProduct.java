@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity(name = "orderProduct")
 public class OrderProduct {
@@ -18,10 +19,13 @@ public class OrderProduct {
 
     @ManyToOne
     private Product product;
-
+    @Min(value = 0, message = "{orderproduct.pointPayment}")
     private float pointPayment;
+    @Min(value = 0, message = "{orderproduct.cashPayment}")
     private float cashPayment;
+    @Min(value = 0, message = "{orderproduct.totalPayment}")
     private float totalPayment;
+    @Min(value = 0, message = "{orderproduct.quantity}")
     private int quantity;
 
     @OneToOne(mappedBy = "orderProduct", fetch = FetchType.EAGER)

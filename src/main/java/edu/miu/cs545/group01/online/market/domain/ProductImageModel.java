@@ -2,9 +2,18 @@ package edu.miu.cs545.group01.online.market.domain;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
 public class ProductImageModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @NotBlank(message = "{productimage.imgname}")
     private String imgName;
+
     private MultipartFile image;
 
     public ProductImageModel() {

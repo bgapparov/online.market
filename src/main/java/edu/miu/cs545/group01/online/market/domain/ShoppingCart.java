@@ -1,10 +1,14 @@
 package edu.miu.cs545.group01.online.market.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -19,9 +23,10 @@ public class ShoppingCart {
 
     @ManyToOne
     private Product product;
-
+    @Min(value = 1, message = "{shoppingcart.quantity}")
     private int quantity;
-
+    @NotNull(message = "{shoppingcart.date}")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date addDate;
 
     public ShoppingCart() {

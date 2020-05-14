@@ -1,9 +1,10 @@
 package edu.miu.cs545.group01.online.market.domain;
 
 import edu.miu.cs545.group01.online.market.domain.enums.ReviewStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -21,13 +22,16 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Buyer buyer;
-
+    @NotNull(message = "{review.createdDate}")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date createdDate;
-
+    @Min(value = 1, message = "{review.stars}")
+    @Max(value = 5, message = "{review.stars}")
     private int stars;
-
+    @NotBlank(message = "{review.comment}")
     private String comment;
-
+    @NotNull(message = "{review.decision}")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date decision;
 
     public Review() {

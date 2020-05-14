@@ -1,19 +1,25 @@
 package edu.miu.cs545.group01.online.market.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 @DiscriminatorValue("CreditCard")
 public class BillingInfoCreditCard extends BillingInfo {
 
-    private long cardNo;
-
+    @NotBlank(message = "{card.cardNo}")
+    private String cardNo;
+    @NotBlank(message = "{card.cardName}")
     private  String cardName;
-
+    @NotNull(message = "{card.expirationDate}")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date expirationDate;
-
+    @NotBlank(message = "{card.securityNumber}")
     private String securityNumber;
 
     public BillingInfoCreditCard() {
@@ -24,7 +30,7 @@ public class BillingInfoCreditCard extends BillingInfo {
         return "card";
     }
 
-    public BillingInfoCreditCard(Buyer buyer, long cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress) {
+    public BillingInfoCreditCard(Buyer buyer, String cardNo, String cardName, Date expirationDate, String securityNumber, Address billingAddress) {
         super(buyer, billingAddress);
 
         this.cardNo = cardNo;
@@ -33,11 +39,11 @@ public class BillingInfoCreditCard extends BillingInfo {
         this.securityNumber = securityNumber;
     }
 
-    public long getCardNo() {
+    public String getCardNo() {
         return cardNo;
     }
 
-    public void setCardNo(long cardNo) {
+    public void setCardNo(String cardNo) {
         this.cardNo = cardNo;
     }
 

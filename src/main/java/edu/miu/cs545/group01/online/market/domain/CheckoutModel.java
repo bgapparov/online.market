@@ -5,12 +5,11 @@ import edu.miu.cs545.group01.online.market.validator.PointValidation;
 import javax.validation.constraints.NotNull;
 
 public class CheckoutModel {
-    @NotNull
+    @NotNull(message = "{checkout.shippingAddressId}")
     private Long shippingAddressId;
-    @NotNull
+    @NotNull(message = "{checkout.billingInfoId}")
     private Long billingInfoId;
-
-    @PointValidation
+    @PointValidation(message = "{checkout.pointPayment}")
     private float pointPayment;
 
     private Buyer buyer;

@@ -3,6 +3,7 @@ package edu.miu.cs545.group01.online.market.domain;
 import edu.miu.cs545.group01.online.market.domain.enums.GainPointType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 public class GainPoint {
@@ -18,7 +19,7 @@ public class GainPoint {
 
     @ManyToOne
     private Buyer buyer;
-
+    @Min(value = 0, message = "{gainPoint.point}")
     private float point;
 
     public GainPoint() {

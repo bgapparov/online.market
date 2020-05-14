@@ -1,9 +1,12 @@
 package edu.miu.cs545.group01.online.market.config;
 
 import edu.miu.cs545.group01.online.market.converter.StringToUserTypeEnum;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,15 +17,21 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource messageSource
+                = new ReloadableResourceBundleMessageSource();
 
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver() {
-//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-//        resolver.setDefaultEncoding("utf-8");
-//        resolver.setMaxUploadSize(10240000);
-//        return resolver;
-//    }
-
+        messageSource.setBasename("classpath:errorMessages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
+    }
+    @Bean
+    public LocalValidatorFactoryBean getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(messageSource());
+        return bean;
+    }
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
 //        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
