@@ -46,4 +46,8 @@ public class MainController extends BaseController {
         model.addAttribute("myPoints", gainPointService.getFreePoints(getCurrentBuyer()));
         return "homepage";
     }
+    @GetMapping("/accessDeniedPage")
+    public String accessDeniedPage(){
+        return "/accessDenied";
+    }
 }

@@ -73,6 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .key("uniqueAndSecret")
                         .tokenValiditySeconds(86400)
                         .userDetailsService(getUserDetailsService())
+                    .and()
+                    .exceptionHandling().accessDeniedPage("/accessDeniedPage")
                     .and().csrf().ignoringAntMatchers("/h2-console/**");
             http
                     .sessionManagement()
