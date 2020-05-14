@@ -140,7 +140,10 @@ public class BuyerController extends BaseController {
     }
 
     @PostMapping("/address/update/{addressId}")
-    public String updateAddress(@PathVariable("addressId") long id, Address address) throws NotFoundException {
+    public String updateAddress(@PathVariable("addressId") long id,@Valid @ModelAttribute("address") Address address, BindingResult bindingResult) throws NotFoundException {
+        if(bindingResult.hasErrors()){
+            return "buyer/address/update";
+        }
         Address updateAddress = addressService.updateAddress(getCurrentBuyer(), id, address);
         return "redirect:/buyer/address/list";
     }
