@@ -15,26 +15,22 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank
-    @Size(min=5,max=6)
+    @Size(min=5,max=6, message = "{address.zipcode}")
     private String zipcode;
 
-    @NotBlank
+    @NotBlank(message = "{address.street}")
     private String street;
 
-    @NotBlank
+    @NotBlank(message = "{address.city}")
     private String city;
 
-    @NotBlank
-    @Size(min=3)
+    @Size(min=2, message = "{address.state}")
     private String state;
 
-    @NotBlank
-    @Size(min=10, max=13)
+    @Size(min=10, max=13, message = "{address.phoneNo}")
     private String phoneNo;
 
-    @NotBlank
-    @Size(min=3)
+    @Size(min=3, message = "{address.country}")
     private String country;
 
     @ManyToOne

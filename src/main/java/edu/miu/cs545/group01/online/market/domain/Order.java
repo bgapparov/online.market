@@ -1,8 +1,10 @@
 package edu.miu.cs545.group01.online.market.domain;
 
 import edu.miu.cs545.group01.online.market.domain.enums.OrderStatus;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +15,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    @NotNull(message = "{order.orderDate}")
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
     private Date orderDate;
 
     @Enumerated(EnumType.STRING)
@@ -31,9 +34,11 @@ public class Order {
     @ManyToOne
     private BillingInfo billingInfo;
 
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
     private Date shippingDate;
-
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
     private Date deliveredDate;
+    @DateTimeFormat(pattern = "MM/dd/yyyy HH:mm:ss")
     private Date canceledDate;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)

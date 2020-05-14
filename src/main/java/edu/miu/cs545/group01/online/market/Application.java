@@ -88,11 +88,11 @@ public class Application {
 			jiromAddress = addressRepository.save(jiromAddress);
 
 
-			BillingInfo yafetbillingInfoCard = new BillingInfoCreditCard(buyerYafet, 123456, "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress);
+			BillingInfo yafetbillingInfoCard = new BillingInfoCreditCard(buyerYafet, "123456", "000-111-222", Helper.getDate(2024,12,01, 19), "123", yafetaddress);
 			yafetbillingInfoCard = billingInfoRepository.save(yafetbillingInfoCard);
 			BillingInfo robelbillingInfoBank = new BillingInfoBankAccount(buyerRobel, "Robel's MidWestBank", "0123456","014444", robelAddress);
 			robelbillingInfoBank = billingInfoRepository.save(robelbillingInfoBank);
-			BillingInfo jirombillingInfo = new BillingInfoCreditCard(buyerjirom, 100876, "323-111-222", Helper.getDate(2024,11,01, 19), "123", jiromAddress);
+			BillingInfo jirombillingInfo = new BillingInfoCreditCard(buyerjirom, "100876", "323-111-222", Helper.getDate(2024,11,01, 19), "123", jiromAddress);
 			jirombillingInfo = billingInfoRepository.save(jirombillingInfo);
 
 			Product productIphone = new Product("iPhone 11",category, 1100, ProductStatus.ACTIVE, "iphone.jpg", "Brand new", sellerGirma );

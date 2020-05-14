@@ -13,17 +13,17 @@ import javax.validation.constraints.Size;
 public class UserRegistrationModel {
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20, message = "{registration.username}")
     private String userName;
 
-    @NotBlank
+    @NotBlank(message = "{registration.email}")
     @Email
     @DuplicateEmail
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "{registration.password}")
     private String password;
-    @NotEmpty
+    @NotEmpty(message = "{registration.confirm}")
     private String confirmPassword;
 
     public UserRegistrationModel() {

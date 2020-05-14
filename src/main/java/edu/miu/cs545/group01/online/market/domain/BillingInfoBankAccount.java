@@ -2,15 +2,17 @@ package edu.miu.cs545.group01.online.market.domain;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @DiscriminatorValue("BankAccount")
 public class BillingInfoBankAccount extends BillingInfo {
 
+    @NotBlank(message = "{bank.accountName}")
     private String accountName;
-
+    @NotBlank(message = "{bank.accountNumber}")
     private String accountNumber;
-
+    @NotBlank(message = "{bank.routingNumber}")
     private String routingNumber;
 
     public BillingInfoBankAccount() {

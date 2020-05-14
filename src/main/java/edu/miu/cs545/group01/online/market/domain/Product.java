@@ -18,23 +18,24 @@ public class Product {
     private  long id;
 
     @NotBlank
-    @Size(min=4, max = 50)
+    @Size(min=4, max = 50, message = "{product.title}")
     private String title;
 
     @ManyToOne
     @NotNull
     private Category category;
 
-
+    @Min(value = 0, message = "{product.price}")
     private float price;
 
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
+    @NotBlank(message = "{product.imgName}")
     private String imgName;
 
     @NotBlank
-    @Size(min=4, max = 512)
+    @Size(min=4, max = 512, message = "{product.description}")
     private String description;
 
     @ManyToOne
