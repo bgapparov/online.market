@@ -11,7 +11,7 @@ public class ProductImageModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @NotBlank(message = "{productimage.imgname}")
+//    @NotBlank(message = "{productimage.imgname}")
     private String imgName;
 
     private MultipartFile image;

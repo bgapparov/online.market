@@ -31,7 +31,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
-    @NotBlank(message = "{product.imgName}")
+//    @NotBlank(message = "{product.imgName}")
     private String imgName;
 
     @NotBlank
