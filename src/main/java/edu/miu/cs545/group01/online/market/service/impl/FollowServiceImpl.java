@@ -23,7 +23,9 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public Follows followSeller(Buyer buyer, long sellerId) throws NotFoundException {
         Seller seller = sellerRepository.findById(sellerId).orElseThrow(()->new NotFoundException("Seller does not exist"));
-        return followsRepository.save(new Follows(seller, buyer));
+        unfollowSeller(buyer, sellerId);
+        Follows follows = new Follows(seller, buyer);
+        return followsRepository.save(follows);
     }
 
     @Override

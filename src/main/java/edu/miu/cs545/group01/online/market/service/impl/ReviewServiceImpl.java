@@ -10,6 +10,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void postReview(long reviewId) throws NotFoundException {
         Review review = reviewRepository.findById(reviewId).orElseThrow(()->new NotFoundException("Seller does not exist"));
         review.setStatus(ReviewStatus.POSTED);
+        review.setDecision(new Date());
         review = reviewRepository.save(review);
     }
 
@@ -32,6 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void declineReview(long reviewId) throws NotFoundException {
         Review review = reviewRepository.findById(reviewId).orElseThrow(()->new NotFoundException("Seller does not exist"));
         review.setStatus(ReviewStatus.DECLINED);
+        review.setDecision(new Date());
         review = reviewRepository.save(review);
     }
 }

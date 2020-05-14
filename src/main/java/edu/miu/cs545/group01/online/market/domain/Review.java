@@ -30,7 +30,6 @@ public class Review {
     private int stars;
     @NotBlank(message = "{review.comment}")
     private String comment;
-    @NotNull(message = "{review.decision}")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date decision;
 
