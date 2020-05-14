@@ -88,4 +88,15 @@ $(document).ready(function () {
             alert("Request failed: " + textStatus);
         });
     });
+    $(".addFollow").change(function () {
+        setUpCsrfToken();
+        let sellerId = $(this).data("sellerId");
+        let quantity = $(this).val();
+        $.post("/buyer/follow-seller/" + sellerId)
+            .done(function (result) {
+                location.reload();
+            }).fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    });
 });

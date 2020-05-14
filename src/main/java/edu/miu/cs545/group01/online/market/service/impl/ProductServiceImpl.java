@@ -49,6 +49,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Seller getSellerByProductId(Buyer buyer, Long id) throws NotFoundException {
+        return productRepository.findById(id).orElseThrow(()->new NotFoundException("Product is not found. ProductId = "+id)).getSeller();
+    }
+
+    @Override
     public Product updateProduct(Long id, Product product) throws NotFoundException {
         Product prod = productRepository.findById(id).orElseThrow(()->new NotFoundException("Product is not found. ProductId = "+id));
         prod.setCategory(product.getCategory());

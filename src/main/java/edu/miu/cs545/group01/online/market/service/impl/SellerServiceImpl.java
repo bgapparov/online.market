@@ -1,9 +1,11 @@
 package edu.miu.cs545.group01.online.market.service.impl;
 
+import edu.miu.cs545.group01.online.market.domain.Buyer;
 import edu.miu.cs545.group01.online.market.domain.Seller;
 import edu.miu.cs545.group01.online.market.domain.enums.Role;
 import edu.miu.cs545.group01.online.market.domain.enums.UserStatus;
 import edu.miu.cs545.group01.online.market.repository.SellerRepository;
+import edu.miu.cs545.group01.online.market.service.FollowService;
 import edu.miu.cs545.group01.online.market.service.SellerService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import java.util.List;
 public class SellerServiceImpl implements SellerService {
     @Autowired
     private SellerRepository sellerRepository;
+    @Autowired
+    private FollowService followService;
     @Override
     public List<Seller> getPendingSellers() {
         return sellerRepository.findAllByStatusPending();
@@ -38,4 +42,5 @@ public class SellerServiceImpl implements SellerService {
     public Seller getSellerById(long sellerId) throws NotFoundException {
         return sellerRepository.findById(sellerId).orElseThrow(()->new NotFoundException("Seller is not found"));
     }
+
 }

@@ -44,11 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
+                    .antMatchers("/seller/get/*").permitAll()
                     .antMatchers("/admin/**").hasRole(Role.ADMIN.toString())
                     .antMatchers("/seller/**").hasRole(Role.SELLER.toString())
                     .antMatchers("/buyer/**").hasRole(Role.BUYER.toString())
                     .antMatchers("/homepage").authenticated()
-                    .antMatchers("/seller/get/*").permitAll()
                     .antMatchers("/**").permitAll()// access=none
                     .antMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()

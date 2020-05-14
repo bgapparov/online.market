@@ -9,9 +9,7 @@ import edu.miu.cs545.group01.online.market.exception.OrderStatusException;
 import edu.miu.cs545.group01.online.market.exception.RemoveException;
 import edu.miu.cs545.group01.online.market.exception.UploadImageException;
 import edu.miu.cs545.group01.online.market.helper.Helper;
-import edu.miu.cs545.group01.online.market.service.CategoryService;
-import edu.miu.cs545.group01.online.market.service.OrderService;
-import edu.miu.cs545.group01.online.market.service.ProductService;
+import edu.miu.cs545.group01.online.market.service.*;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +35,10 @@ public class SellerController extends BaseController {
     private OrderService orderService;
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    SellerService sellerService;
+    @Autowired
+    FollowService followService;
 
     @GetMapping("/my-products")
     public String myProducts(Model model){
@@ -150,5 +152,13 @@ public class SellerController extends BaseController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deliveredOrder(@PathVariable("orderId") long orderId) throws NotFoundException, OrderStatusException {
         orderService.setStatus(getCurrentSeller(), orderId, OrderStatus.DELIVERED);
+    }
+    @GetMapping("/get/{sellerId}")
+    public String getSeller(@PathVariable("sellerId") long sellerId, Model model) throws NotFoundException{
+        Seller seller = sellerService.getSellerById(sellerId);
+        model.addAttribute("seller", seller);
+        model.addAttribute("isFollow", followService.isFollow(seller, getCurrentBuyer()));
+        model.addAttribute("categories", categoryService.allCategories());
+        return "seller/seller-page";
     }
 }
